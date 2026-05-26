@@ -1,0 +1,17 @@
+# Claude Code settings (personal/local)
+.claude/
+
+# Screenshots folder
+ss/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+*.code-workspace
+
+# Env files (just in case)
+.env
+.env.*
+*.env

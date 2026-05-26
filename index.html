@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Profit District — Comunitate Elite de Trading. Program de Mentorat Gratuit 30 de Zile. Educație, semnale live și sisteme de copytrading. Locuri limitate disponibile lunar.">
+  <meta property="og:title" content="Profit District — Comunitate Elite de Trading & Mentorat">
+  <meta property="og:description" content="Alătură-te comunității noastre elite de trading. Mentorat Gratuit 30 de Zile, semnale live și sisteme de copytrading dovedite. Locuri limitate disponibile.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="logo/2.png">
+  <meta property="og:url" content="https://profitdistrict.ro">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Profit District — Comunitate Elite de Trading & Mentorat">
+  <meta name="twitter:description" content="Alătură-te comunității noastre elite de trading. Mentorat Gratuit 30 de Zile, semnale live și sisteme de copytrading dovedite.">
+  <meta name="twitter:image" content="logo/2.png">
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <title>Profit District — Comunitate Elite de Trading & Mentorat</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body:    ['Outfit', 'sans-serif'],
+            mono:    ['DM Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ─────────────────────────────────────────
+       CSS DESIGN TOKENS
+    ───────────────────────────────────────── */
+    :root {
+      --bg-base:          #0a0a0b;
+      --bg-surface:       #111113;
+      --bg-elevated:      #18181b;
+      --bg-floating:      #1f1f23;
+
+      --gold:             #c9a84c;
+      --gold-bright:      #e2bf6a;
+      --gold-dim:         #8a6e2f;
+      --gold-glow:        rgba(201,168,76,0.18);
+      --gold-glow-soft:   rgba(201,168,76,0.07);
+      --gold-glow-mid:    rgba(201,168,76,0.12);
+
+      --green:            #00ff88;
+      --green-dim:        rgba(0,255,136,0.12);
+      --red:              #ff5c5c;
+
+      --text-primary:     #f0ece0;
+      --text-secondary:   #a09880;
+      --text-tertiary:    #5c5848;
+
+      --border-subtle:    rgba(201,168,76,0.10);
+      --border-mid:       rgba(201,168,76,0.22);
+      --border-strong:    rgba(201,168,76,0.45);
+
+      --shadow-card:
+        0 2px 4px rgba(0,0,0,0.4),
+        0 8px 24px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(201,168,76,0.07);
+      --shadow-glow:
+        0 0 24px rgba(201,168,76,0.20),
+        0 0 64px rgba(201,168,76,0.08);
+      --shadow-button:
+        0 4px 16px rgba(201,168,76,0.28),
+        0 1px 3px rgba(0,0,0,0.6);
+      --shadow-input:
+        0 0 0 1px rgba(201,168,76,0.10),
+        inset 0 1px 3px rgba(0,0,0,0.5);
+      --shadow-input-focus:
+        0 0 0 2px rgba(201,168,76,0.38),
+        inset 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* ─────────────────────────────────────────
+       BASE RESET
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--bg-base);
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ─────────────────────────────────────────
+       GRAIN OVERLAY
+    ───────────────────────────────────────── */
+    #grain {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.038;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 180px 180px;
+    }
+
+    /* ─────────────────────────────────────────
+       KEYFRAMES
+    ───────────────────────────────────────── */
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @keyframes pulse-ring {
+      0%,100% { transform: scale(1);    opacity: 1;   box-shadow: 0 0 0 0 rgba(0,255,136,0.55); }
+      50%      { transform: scale(1.2); opacity: 0.75; box-shadow: 0 0 0 7px rgba(0,255,136,0); }
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gold-shimmer {
+      0%   { background-position: 0%   center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes float-glow {
+      0%,100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      50%      { opacity: 1;   transform: translateX(-50%) scale(1.06); }
+    }
+
+    /* ─────────────────────────────────────────
+       REVEAL SYSTEM
+    ───────────────────────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        opacity  0.75s cubic-bezier(0.16,1,0.3,1),
+        transform 0.75s cubic-bezier(0.16,1,0.3,1);
+    }
+    /* Stagger children tagged with data-stagger */
+    [data-reveal].is-visible [data-stagger] {
+      animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    [data-reveal].is-visible [data-stagger]:nth-child(1) { animation-delay: 0.04s; }
+    [data-reveal].is-visible [data-stagger]:nth-child(2) { animation-delay: 0.12s; }
+    [data-reveal].is-visible [data-stagger]:nth-child(3) { animation-delay: 0.20s; }
+    [data-reveal].is-visible [data-stagger]:nth-child(4) { animation-delay: 0.28s; }
+    [data-reveal].is-visible [data-stagger]:nth-child(5) { animation-delay: 0.36s; }
+
+
+    /* ─────────────────────────────────────────
+       SECTION LABEL
+    ───────────────────────────────────────── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.66rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ─────────────────────────────────────────
+       BUTTONS
+    ───────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: var(--bg-base);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
+      padding: 0.9rem 1.75rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform    0.22s cubic-bezier(0.34,1.56,0.64,1),
+        box-shadow   0.22s ease,
+        background   0.22s ease;
+      box-shadow: var(--shadow-button);
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .btn-primary:hover {
+      background: var(--gold-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,168,76,0.48), 0 1px 3px rgba(0,0,0,0.6);
+    }
+    .btn-primary:active {
+      transform: translateY(0px);
+      box-shadow: 0 2px 8px rgba(201,168,76,0.25);
+    }
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.9rem 1.75rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-mid);
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        transform      0.22s cubic-bezier(0.34,1.56,0.64,1),
+        box-shadow     0.22s ease,
+        background     0.22s ease,
+        border-color   0.22s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(201,168,76,0.09);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(201,168,76,0.15);
+    }
+    .btn-outline:active  { transform: translateY(0); }
+    .btn-outline:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .btn-full  { width: 100%; }
+    .btn-large { font-size: 1.05rem; padding: 1.1rem 2.75rem; }
+
+    /* ─────────────────────────────────────────
+       FORM
+    ───────────────────────────────────────── */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .field-group label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--gold-dim);
+    }
+    .field-group input {
+      background: var(--bg-elevated);
+      border: none;
+      border-radius: 4px;
+      padding: 0.875rem 1rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 0.925rem;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-input);
+      outline: none;
+      transition: box-shadow 0.2s ease;
+      width: 100%;
+    }
+    .field-group input::placeholder { color: var(--text-tertiary); }
+    .field-group input:focus { box-shadow: var(--shadow-input-focus); }
+
+    /* ─────────────────────────────────────────
+       URGENCY BADGE
+    ───────────────────────────────────────── */
+    .urgency-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 100px;
+      padding: 0.4rem 1.1rem 0.4rem 0.65rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+    .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      animation: pulse-ring 1.9s cubic-bezier(0.4,0,0.6,1) infinite;
+    }
+
+    /* ─────────────────────────────────────────
+       SHARED SECTION LAYOUT
+    ───────────────────────────────────────── */
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin-top: 0.5rem;
+    }
+    .section-header .sub {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    /* ─────────────────────────────────────────
+       INTRO PAGE
+    ───────────────────────────────────────── */
+    #intro-page {
+      position: relative;
+      height: 350vh;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+    }
+
+    /* ── Background image — full cover, subtle slow zoom ── */
+    .intro-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      animation: intro-bg-zoom 12s ease-in-out infinite;
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .intro-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+      transform: translateZ(0);
+      image-rendering: auto;
+      filter: brightness(1.1) saturate(1.2) contrast(1.05);
+    }
+    @keyframes intro-bg-zoom {
+      0%   { transform: scale(1.00); }
+      50%  { transform: scale(1.08); }
+      100% { transform: scale(1.00); }
+    }
+
+    /* ── Overlay — minimal pe imagine deja întunecată ── */
+    .intro-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.55) 0%,
+          rgba(0,0,0,0.10) 30%,
+          rgba(0,0,0,0.10) 70%,
+          rgba(0,0,0,0.65) 100%
+        );
+    }
+
+    /* ── Gold radial glow at center — ties image warmth to text glow ── */
+    .intro-overlay-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(
+        ellipse 55% 45% at 50% 50%,
+        rgba(201,168,76,0.07) 0%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    /* ── Content ── */
+    .intro-content {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      text-align: center;
+      padding: 0 1.5rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .intro-h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(2.2rem, 5.8vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      /* Puternic — text clar deasupra imaginii */
+      text-shadow:
+        0 0 30px rgba(201,168,76,0.55),
+        0 0 70px rgba(201,168,76,0.25),
+        0 2px 20px rgba(0,0,0,0.95),
+        0 4px 40px rgba(0,0,0,0.80);
+      margin-bottom: 1.1rem;
+      animation: fade-up 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;
+    }
+
+    .intro-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.65;
+      margin-bottom: 3.5rem;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.90), 0 1px 4px rgba(0,0,0,0.80);
+      animation: fade-up 1s cubic-bezier(0.16,1,0.3,1) 0.65s both;
+    }
+
+    /* ── Scroll indicator: vertical line + moving white bar ── */
+    .intro-scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) 1.2s both;
+      cursor: pointer;
+    }
+    .intro-scroll-indicator:hover .intro-scroll-line { background: rgba(255,255,255,0.4); }
+
+    .intro-scroll-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.04em;
+    }
+
+    .intro-scroll-line {
+      width: 2px;
+      height: 40px;
+      background: rgba(255,255,255,0.28);
+      position: relative;
+      overflow: hidden;
+      border-radius: 1px;
+      transition: background 0.2s ease;
+    }
+    .intro-scroll-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 12px;
+      background: #fff;
+      border-radius: 1px;
+      animation: intro-scroll-move 1.5s ease-in-out infinite;
+    }
+    @keyframes intro-scroll-move {
+      0%   { transform: translateY(-12px); opacity: 0;   }
+      20%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(40px);  opacity: 0;   }
+    }
+
+    /* Fade out intro on scroll */
+    #intro-page.intro-fading {
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ─────────────────────────────────────────
+       HERO SECTION
+    ───────────────────────────────────────── */
+    /* ─────────────────────────────────────────
+       NAVBAR
+    ───────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(10,10,11,0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(10,10,11,0.96);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.22s ease;
+      transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      font-family: 'Outfit', sans-serif !important;
+      font-weight: 600 !important;
+      font-size: 0.78rem !important;
+      letter-spacing: 0.04em !important;
+      text-transform: none !important;
+      background: var(--gold);
+      color: var(--bg-base) !important;
+      padding: 0.5rem 1.1rem;
+      border-radius: 4px;
+      transition: background 0.2s ease, transform 0.2s ease !important;
+    }
+    .nav-cta:hover { background: var(--gold-bright); transform: translateY(-1px); color: var(--bg-base) !important; }
+    .nav-cta::after { display: none !important; }
+    /* Mobile nav */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 62px; left: 0; right: 0;
+        background: rgba(10,10,11,0.97);
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        backdrop-filter: blur(14px);
+      }
+    }
+
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 7rem 1.5rem 5rem;
+    }
+
+    .hero-glow-1 {
+      position: absolute;
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 960px;
+      height: 720px;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.065) 0%, transparent 65%);
+      pointer-events: none;
+      animation: float-glow 8s ease-in-out infinite;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      bottom: -80px;
+      right: -60px;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.035) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    /* Subtle grid line decoration */
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image:
+        linear-gradient(var(--gold) 1px, transparent 1px),
+        linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 920px) {
+      .hero-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: center;
+      }
+    }
+
+    /* Hero text animations — staggered via animation-delay */
+    .hero-text .section-label        { animation: fade-up 0.5s cubic-bezier(0.16,1,0.3,1) 0.08s  both; }
+    .hero-text .hero-h1              { animation: fade-up 0.65s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
+    .hero-text .hero-sub             { animation: fade-up 0.5s cubic-bezier(0.16,1,0.3,1) 0.32s both; }
+    .hero-text .urgency-badge        { animation: fade-up 0.5s cubic-bezier(0.16,1,0.3,1) 0.45s both; }
+    .hero-text .hero-community-btns  { animation: fade-up 0.5s cubic-bezier(0.16,1,0.3,1) 0.56s both; }
+    #apply-form                      { animation: fade-up 0.65s cubic-bezier(0.16,1,0.3,1) 0.28s both; }
+
+    .hero-community-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: clamp(3.2rem, 7.5vw, 5.75rem);
+      line-height: 0.93;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin: 0.6rem 0 1.2rem;
+    }
+    .hero-h1 .gold-line {
+      display: block;
+      background: linear-gradient(100deg, var(--gold-dim) 0%, var(--gold) 35%, var(--gold-bright) 60%, var(--gold) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gold-shimmer 4.5s linear infinite;
+    }
+
+    .hero-sub {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 1.75rem;
+    }
+
+    /* Apply form card */
+    #apply-form {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 2.25rem;
+      box-shadow: var(--shadow-card), 0 0 0 1px rgba(201,168,76,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+    }
+
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-top: 0.2rem;
+      margin-bottom: 0.2rem;
+    }
+    .form-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .form-trust {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--text-tertiary);
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─────────────────────────────────────────
+       SOCIAL PROOF
+    ───────────────────────────────────────── */
+    #social-proof {
+      background: var(--bg-surface);
+      padding: 6.5rem 1.5rem;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    @media (min-width: 768px) {
+      .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .card-testimonial {
+      position: relative;
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--gold);
+      border-radius: 6px;
+      padding: 1.75rem;
+      box-shadow:
+        -5px 0 14px rgba(201,168,76,0.07),
+        var(--shadow-card);
+      transition:
+        transform   0.3s cubic-bezier(0.16,1,0.3,1),
+        box-shadow  0.3s ease,
+        border-left-color 0.25s ease;
+    }
+    .card-testimonial:hover {
+      transform: translateY(-5px);
+      border-left-color: var(--gold-bright);
+      box-shadow:
+        -5px 0 22px rgba(201,168,76,0.2),
+        0 16px 40px rgba(0,0,0,0.65);
+    }
+
+    .verified-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      background: var(--green-dim);
+      border-radius: 3px;
+      padding: 2px 7px;
+    }
+
+    /* ─────────────────────────────────────────
+       SCROLLING TESTIMONIAL COLUMNS
+    ───────────────────────────────────────── */
+    /* ContainerScroll — perspective wrapper */
+    .cs-perspective {
+      perspective: 1000px;
+      perspective-origin: center 40%;
+    }
+
+    .t-scroll-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      max-height: 740px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+      margin-bottom: 4rem;
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+
+    .t-col {
+      flex: 1;
+      min-width: 0;
+      max-width: 320px;
+      overflow: hidden;
+    }
+    .t-col-md { display: none; }
+    .t-col-lg { display: none; }
+
+    @media (min-width: 768px) {
+      .t-col-md { display: block; }
+    }
+    @media (min-width: 1100px) {
+      .t-col-lg { display: block; }
+    }
+
+    .t-track {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      animation: t-scroll-up var(--dur, 20s) linear infinite;
+    }
+
+    @keyframes t-scroll-up {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+
+    .t-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      flex-shrink: 0;
+      transition:
+        border-color 0.25s ease,
+        box-shadow   0.25s ease;
+    }
+    .t-card:hover {
+      border-color: var(--border-mid);
+      box-shadow:
+        0 16px 40px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(201,168,76,0.18),
+        0 0 28px rgba(201,168,76,0.1);
+    }
+    .t-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+    }
+
+    .card-testimonial blockquote {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+    }
+    .t-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
+    }
+    .t-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--text-secondary);
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding-top: 3.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    @media (min-width: 640px) {
+      .stats-row { flex-direction: row; justify-content: center; gap: 0; }
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0 3rem;
+    }
+    @media (min-width: 640px) {
+      .stat-item { border-right: 1px solid var(--border-subtle); }
+      .stat-item:last-child { border-right: none; }
+    }
+    .stat-number {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      letter-spacing: -0.03em;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .stat-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.67rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--text-tertiary);
+    }
+
+    /* ─────────────────────────────────────────
+       SYSTEMS SECTION
+    ───────────────────────────────────────── */
+    #systems {
+      background: var(--bg-base);
+      padding: 6.5rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle background lines */
+    #systems::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.018;
+      background-image: linear-gradient(var(--gold) 1px, transparent 1px);
+      background-size: 100% 60px;
+    }
+
+    .copytrading-group {
+      border: 1px solid var(--border-mid);
+      border-radius: 12px;
+      padding: 1.5rem;
+      background: linear-gradient(160deg, rgba(201,168,76,0.03) 0%, transparent 60%);
+      box-shadow: 0 0 40px rgba(201,168,76,0.05);
+    }
+    .copytrading-group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .copytrading-group-header svg { color: var(--gold); flex-shrink: 0; }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 720px) {
+      .systems-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1100px) {
+      .systems-grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
+    }
+
+    .card-system {
+      position: relative;
+      background: linear-gradient(160deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition:
+        transform  0.3s cubic-bezier(0.16,1,0.3,1),
+        box-shadow 0.3s ease;
+    }
+    .card-system:hover {
+      transform: translateY(-7px);
+      box-shadow:
+        0 24px 56px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(201,168,76,0.14);
+    }
+
+    .sys-accent {
+      height: 3px;
+      width: 100%;
+    }
+    .card-sys-alpha .sys-accent { background: var(--gold); }
+    .card-sys-gold  .sys-accent { background: var(--gold); }
+    .card-sys-omega .sys-accent {
+      background: var(--green);
+      box-shadow: 0 -5px 18px rgba(0,255,136,0.22);
+    }
+
+    .sys-body { padding: 1.8rem; }
+
+    .featured-ribbon {
+      position: absolute;
+      top: 3px; /* after accent line */
+      right: 0;
+      background: var(--gold);
+      color: var(--bg-base);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      padding: 4px 14px 4px 10px;
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .sys-code {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 0.9rem;
+    }
+    .card-sys-gold  .sys-code { color: var(--gold-dim); }
+    .card-sys-omega .sys-code { color: rgba(0,255,136,0.45); }
+
+    .sys-return {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5vw, 3.6rem);
+      letter-spacing: -0.045em;
+      line-height: 1;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+    .card-sys-gold .sys-return { color: var(--text-primary); }
+
+    .sys-period {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .sys-divider {
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin-bottom: 1.5rem;
+    }
+
+    .sys-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+    .sys-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sys-stat-row dt {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+    }
+    .sys-stat-row dd {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .sys-desc {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 1.75rem;
+    }
+
+    /* card-sys-gold uses default border-subtle like other cards */
+
+    /* ─────────────────────────────────────────
+       ZOOM PARALLAX
+    ───────────────────────────────────────── */
+    .zoom-parallax-outer {
+      position: relative;
+      height: 220vh;           /* scroll travel distance */
+      margin-top: 4rem;
+    }
+    .zoom-parallax-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-base);
+    }
+
+    /* Vignette — soft edge fade, keeps focus on logo center */
+    .zoom-parallax-sticky::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 70% 70% at 50% 50%,
+        transparent 25%,
+        rgba(10,10,11,0.55) 65%,
+        rgba(10,10,11,0.92) 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Bottom fade — blends into the next section */
+    .zoom-parallax-sticky::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(to bottom, transparent, var(--bg-base));
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Single logo image — contained, centered, with breathing room */
+    .zoom-parallax-img {
+      position: absolute;
+      /* Constrain logo to 62% of viewport's smaller dimension — breathing room all around */
+      width: min(62vh, 62vw);
+      height: min(62vh, 62vw);
+      top: 50%;
+      left: 50%;
+      /* Base translate for centering — JS will prepend scale() keeping this intact */
+      margin-top: calc(min(62vh, 62vw) / -2);
+      margin-left: calc(min(62vh, 62vw) / -2);
+      object-fit: contain;
+      will-change: transform;
+      transform-origin: center center;
+      z-index: 1;
+      /* Subtle gold glow around the logo */
+      filter: drop-shadow(0 0 40px rgba(201,168,76,0.22)) drop-shadow(0 0 120px rgba(201,168,76,0.08));
+    }
+
+    .zoom-parallax-label {
+      position: absolute;
+      bottom: 12%;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      text-align: center;
+      pointer-events: none;
+    }
+    .zoom-parallax-label span {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.55);
+    }
+
+    /* ─────────────────────────────────────────
+       COMMUNITY SECTION
+    ───────────────────────────────────────── */
+    #community {
+      background: var(--bg-surface);
+      padding: 6.5rem 1.5rem;
+    }
+
+    .community-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+    @media (min-width: 900px) {
+      .community-split {
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+    }
+
+    .community-left h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin: 0.5rem 0 1.25rem;
+    }
+    .community-desc {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.975rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    .community-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    @media (min-width: 480px) {
+      .community-btns { flex-direction: row; flex-wrap: wrap; }
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem 2rem;
+    }
+    .benefits-grid-6 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .benefit-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .benefit-icon {
+      width: 46px;
+      height: 46px;
+      background: var(--gold-glow-soft);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .benefit-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .benefit-item h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+    .benefit-item p {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* ─────────────────────────────────────────
+       FINAL CTA
+    ───────────────────────────────────────── */
+    #final-cta {
+      background: var(--bg-base);
+      padding: 8rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+    /* Override all text in CTA to use Inter */
+    #final-cta .section-label,
+    #final-cta h2,
+    #final-cta .urgency-badge,
+    #final-cta .btn-primary,
+    #final-cta .cta-trust {
+      font-family: 'Inter', sans-serif;
+    }
+    #final-cta h2 {
+      letter-spacing: -0.03em;
+      font-weight: 700;
+    }
+
+    /* ── PulseBeams ── */
+    .pulse-beams-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Ring 1 — tight, solid */
+    .pulse-beams-wrap::before,
+    .pulse-beams-wrap::after {
+      content: '';
+      position: absolute;
+      border-radius: 6px;
+      border: 1px solid var(--gold);
+      pointer-events: none;
+    }
+    .pulse-beams-wrap::before {
+      inset: -5px;
+      animation: pulse-beam-ring 2s ease-in-out infinite;
+    }
+    /* Ring 2 — outer halo, offset timing */
+    .pulse-beams-wrap::after {
+      inset: -10px;
+      border-color: var(--gold-dim);
+      animation: pulse-beam-ring 2s ease-in-out 0.5s infinite;
+    }
+    @keyframes pulse-beam-ring {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50%       { opacity: 0.55; transform: scale(1.018); }
+    }
+
+    .cta-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 560px;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    #final-cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+      letter-spacing: -0.045em;
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin: 0.75rem 0 1.75rem;
+    }
+
+    .cta-badge-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2.25rem;
+    }
+
+    .cta-trust {
+      margin-top: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-tertiary);
+      letter-spacing: 0.06em;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.01em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--text-tertiary);
+      margin-bottom: 1rem;
+    }
+    .footer-disclaimer {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Grain overlay ─────────────────────── -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav id="navbar" aria-label="Navigare principală">
+  <a href="#hero" class="nav-logo" aria-label="Profit District - acasă">
+    <img src="logo/logo.png" alt="Profit District logo">
+    <span class="nav-logo-text">Profit District</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#community">Despre Noi</a></li>
+    <li><a href="#systems">Copytrading</a></li>
+    <li><a href="#mentori">Mentori</a></li>
+    <li><a href="#educatie">Educație</a></li>
+    <li><a href="#apply-form" class="nav-cta">Aplică Acum</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Deschide meniu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO — Form (prima secțiune)
+════════════════════════════════════════ -->
+<section id="hero" aria-label="Hero — aplică pentru mentorat">
+  <div class="hero-glow-1" aria-hidden="true"></div>
+  <div class="hero-glow-2" aria-hidden="true"></div>
+  <div class="hero-grid-lines" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+
+    <!-- STÂNGA: Text -->
+    <div class="hero-text">
+      <h1 class="hero-h1">
+        Profit<br>
+        <span class="gold-line">District</span>
+      </h1>
+      <p class="hero-sub">
+        Educație. Mentorat. Copytrading.<br>
+        Un întreg ecosistem. Avantaj nelimitat.
+      </p>
+      <div class="urgency-badge" role="status">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        Doar 14 locuri rămase luna aceasta
+      </div>
+      <div class="hero-community-btns">
+        <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer" class="btn-primary" role="button" aria-label="Alătură-te comunității noastre Telegram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.281c-.144.658-.537.818-1.083.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.033 13.39l-2.969-.924c-.643-.204-.656-.643.135-.953l11.572-4.461c.535-.194 1.004.131.835.953l-.044-.757z"/></svg>
+          Alătură-te pe Telegram
+        </a>
+        <a href="https://discord.gg/YZBmgYWj" target="_blank" rel="noopener noreferrer" class="btn-outline" role="button" aria-label="Alătură-te serverului nostru Discord">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Alătură-te pe Discord
+        </a>
+      </div>
+    </div>
+
+    <!-- DREAPTA: Formular de aplicare -->
+    <form id="apply-form" aria-label="Aplică pentru mentorat gratuit 30 de zile">
+      <div>
+        <span class="section-label" style="margin-bottom:0.25rem;">Mentorat Gratuit 30 de Zile</span>
+        <p class="form-title">Aplică pentru Locul Tău</p>
+        <p class="form-subtitle">Locuri limitate acceptate lunar. Analizăm fiecare aplicație în 24 de ore.</p>
+      </div>
+
+      <div class="field-group">
+        <label for="name">Nume Complet</label>
+        <input type="text" id="name" name="name" placeholder="Numele tău complet" required autocomplete="name">
+      </div>
+
+      <div class="field-group">
+        <label for="handle">Username Telegram sau Discord</label>
+        <input type="text" id="handle" name="handle" placeholder="@username" required>
+      </div>
+
+      <div class="field-group">
+        <label for="email">Adresă de Email</label>
+        <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+      </div>
+
+      <button type="submit" class="btn-primary btn-full" style="font-size:0.95rem; padding:1rem 1.75rem;">
+        Aplică Acum — Locuri Limitate
+      </button>
+
+      <p class="form-trust">Fără spam &nbsp;·&nbsp; Analizat în 24h &nbsp;·&nbsp; Anulare oricând</p>
+
+      <div id="form-success" style="display:none; text-align:center; padding:1.5rem; border:1px solid var(--border-mid); border-radius:8px; background:rgba(0,255,136,0.06);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" style="margin:0 auto 0.75rem;display:block;" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.4rem;">Aplicație trimisă!</p>
+        <p style="font-family:'Outfit',sans-serif;font-size:0.875rem;color:var(--text-secondary);">Te contactăm în maxim 24 de ore. Verifică și folderul Spam.</p>
+      </div>
+    </form>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SOCIAL PROOF
+════════════════════════════════════════ -->
+<section id="social-proof" aria-label="Feedback membri">
+  <div class="section-inner">
+
+    <div class="section-header" data-reveal>
+      <span class="section-label">Apreciat de Traderi</span>
+      <h2>Rezultate Reale.<br>Comunitate Reală.</h2>
+    </div>
+
+    <!-- Coloane animate cu scroll infinit — ContainerScroll wrapper -->
+    <div class="cs-perspective">
+    <div class="t-scroll-wrap" id="cs-feedback-card" aria-label="Galerie feedback membri">
+
+      <!-- Coloana 1 (mereu vizibilă) — viteză 20s -->
+      <div class="t-col">
+        <div class="t-track" style="--dur:20s">
+          <!-- Set 1 -->
+          <div class="t-card">
+            <img src="feedback/photo_5913775568791390309_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_5992129795342404492_w.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_5992163218777902009_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <!-- Set 2 (duplicat pentru loop fără întrerupere) -->
+          <div class="t-card">
+            <img src="feedback/photo_5913775568791390309_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_5992129795342404492_w.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_5992163218777902009_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Coloana 2 (vizibilă de la 768px) — viteză 26s -->
+      <div class="t-col t-col-md">
+        <div class="t-track" style="--dur:26s">
+          <!-- Set 1 -->
+          <div class="t-card">
+            <img src="feedback/photo_6019276260690824080_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_6041925130776153266_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <!-- Set 2 -->
+          <div class="t-card">
+            <img src="feedback/photo_6019276260690824080_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_6041925130776153266_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_6041925130776153266_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Coloana 3 (vizibilă de la 1100px) — viteză 23s -->
+      <div class="t-col t-col-lg">
+        <div class="t-track" style="--dur:23s">
+          <!-- Set 1 -->
+          <div class="t-card">
+            <img src="feedback/photo_6041925130776153267_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_5913775568791390309_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_6019276260690824080_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <!-- Set 2 -->
+          <div class="t-card">
+            <img src="feedback/photo_6041925130776153267_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_5913775568791390309_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+          <div class="t-card">
+            <img src="feedback/photo_6019276260690824080_y.jpg" alt="Feedback membru comunitate" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div><!-- /.cs-perspective -->
+
+
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     COPYTRADING SYSTEMS
+════════════════════════════════════════ -->
+<section id="systems" aria-label="Copy Trading — Sisteme verificate">
+  <div class="section-inner">
+
+    <div class="section-header" data-reveal>
+      <span class="section-label">Copytrading · Performanță Verificabilă</span>
+      <h2>Sisteme de Copytrading</h2>
+      <p class="sub">Diversificarea portofoliului prin copytrading până la 10 sisteme cu istoric transparent verificabil în timp real.</p>
+    </div>
+
+    <div class="copytrading-group" data-reveal>
+      <div class="copytrading-group-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>6 Sisteme Active &nbsp;·&nbsp; Toate Verificate Public</span>
+      </div>
+
+    <div class="systems-grid">
+
+      <!-- 1. HANE — RECOMANDAT -->
+      <article class="card-system card-sys-gold" data-stagger>
+        <div class="sys-accent"></div>
+        <div class="featured-ribbon">Recomandat</div>
+        <div class="sys-body">
+          <p class="sys-code">MyFxBook · Verified</p>
+          <p class="sys-return" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:0.3rem;">Hane</p>
+          <p class="sys-period">Risc moderat · Randament consistent</p>
+          <hr class="sys-divider">
+          <dl class="sys-stats">
+            <div class="sys-stat-row"><dt>Depozit minim</dt><dd>100$ <span style="color:var(--text-tertiary);font-size:0.8em;">/ rec. 500$</span></dd></div>
+            <div class="sys-stat-row"><dt>Max. Drawdown</dt><dd>44%</dd></div>
+            <div class="sys-stat-row"><dt>Return lunar (medie)</dt><dd style="color:var(--green)">12%</dd></div>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="https://www.myfxbook.com/portfolio/profit-district/12026855"
+               target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
+              Vezi Istoricul
+            </a>
+            <a href="#apply-form" class="btn-outline btn-full"
+               onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+              Începe Copierea
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. SKYLARK — RECOMANDAT -->
+      <article class="card-system card-sys-gold" data-stagger>
+        <div class="sys-accent"></div>
+        <div class="featured-ribbon">Recomandat</div>
+        <div class="sys-body">
+          <p class="sys-code">MyFxBook · Mid Risk</p>
+          <p class="sys-return" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:0.3rem;">Skylark</p>
+          <p class="sys-period">Risc mediu · Randament ridicat</p>
+          <hr class="sys-divider">
+          <dl class="sys-stats">
+            <div class="sys-stat-row"><dt>Depozit minim</dt><dd>300$</dd></div>
+            <div class="sys-stat-row"><dt>Max. Drawdown</dt><dd>52%</dd></div>
+            <div class="sys-stat-row"><dt>Return lunar (medie)</dt><dd style="color:var(--green)">25%</dd></div>
+          </dl>
+          <p class="sys-desc" style="font-size:0.8rem;margin-bottom:1rem;">
+            ✔️ Acces la sesiuni live cu traderul<br>
+            ✔️ Acces la canalele de educație
+          </p>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="https://www.myfxbook.com/id/members/SkyLarkCapitaL/skylark-capital/11817528"
+               target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
+              Vezi Istoricul
+            </a>
+            <a href="#apply-form" class="btn-outline btn-full"
+               onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+              Începe Copierea
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. INFINITY VAULT — RECOMANDAT -->
+      <article class="card-system card-sys-gold" data-stagger>
+        <div class="sys-accent"></div>
+        <div class="featured-ribbon">Recomandat</div>
+        <div class="sys-body">
+          <p class="sys-code">CopyTradeProz · Low Risk</p>
+          <p class="sys-return" style="font-size:clamp(1.2rem,2.5vw,1.8rem);margin-bottom:0.3rem;">Infinity Vault</p>
+          <p class="sys-period">Risc scăzut · Stabilitate pe termen lung</p>
+          <hr class="sys-divider">
+          <dl class="sys-stats">
+            <div class="sys-stat-row"><dt>Depozit minim</dt><dd>300$</dd></div>
+            <div class="sys-stat-row"><dt>Max. Drawdown</dt><dd>19%</dd></div>
+            <div class="sys-stat-row"><dt>Return lunar (medie)</dt><dd style="color:var(--green)">9%</dd></div>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="https://www.myfxbook.com/members/CopyTradeProz/infinity-vault/11865905"
+               target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
+              Vezi Istoricul
+            </a>
+            <a href="#apply-form" class="btn-outline btn-full"
+               onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+              Începe Copierea
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. LONGVIEW CAPITAL -->
+      <article class="card-system card-sys-alpha" data-stagger>
+        <div class="sys-accent"></div>
+        <div class="sys-body">
+          <p class="sys-code">MyFxBook · Mid Risk</p>
+          <p class="sys-return" style="font-size:clamp(1.2rem,2.5vw,1.8rem);margin-bottom:0.3rem;">Longview Capital</p>
+          <p class="sys-period">Risc mediu · Randament conservator</p>
+          <hr class="sys-divider">
+          <dl class="sys-stats">
+            <div class="sys-stat-row"><dt>Depozit minim</dt><dd>1.000€</dd></div>
+            <div class="sys-stat-row"><dt>Max. Drawdown</dt><dd>20%</dd></div>
+            <div class="sys-stat-row"><dt>Return lunar (medie)</dt><dd style="color:var(--green)">3%</dd></div>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="https://www.myfxbook.com/members/LongviewCapital/longview-capital/11796871"
+               target="_blank" rel="noopener noreferrer" class="btn-outline btn-full">
+              Vezi Istoricul
+            </a>
+            <a href="#apply-form" class="btn-outline btn-full"
+               onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+              Începe Copierea
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. QUANTUM -->
+      <article class="card-system card-sys-omega" data-stagger>
+        <div class="sys-accent"></div>
+        <div class="sys-body">
+          <p class="sys-code">SignalStart · Verified</p>
+          <p class="sys-return" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:0.3rem;">Quantum</p>
+          <p class="sys-period">Risc ridicat · Randament agresiv</p>
+          <hr class="sys-divider">
+          <dl class="sys-stats">
+            <div class="sys-stat-row"><dt>Depozit minim</dt><dd>500€</dd></div>
+            <div class="sys-stat-row"><dt>Max. Drawdown</dt><dd>43%</dd></div>
+            <div class="sys-stat-row"><dt>Return lunar (medie)</dt><dd style="color:var(--green)">17%</dd></div>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="https://www.signalstart.com/analysis/quantum-king/283385"
+               target="_blank" rel="noopener noreferrer" class="btn-outline btn-full">
+              Vezi Istoricul
+            </a>
+            <a href="#apply-form" class="btn-outline btn-full"
+               onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+              Începe Copierea
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. NEXUS STRONGHOLD -->
+      <article class="card-system card-sys-alpha" data-stagger>
+        <div class="sys-accent"></div>
+        <div class="sys-body">
+          <p class="sys-code">CopyTradeProz · Verified</p>
+          <p class="sys-return" style="font-size:clamp(1.2rem,2.5vw,1.7rem);margin-bottom:0.3rem;">Nexus Stronghold</p>
+          <p class="sys-period">Risc ridicat · Randament maxim</p>
+          <hr class="sys-divider">
+          <dl class="sys-stats">
+            <div class="sys-stat-row"><dt>Depozit minim</dt><dd>300$</dd></div>
+            <div class="sys-stat-row"><dt>Max. Drawdown</dt><dd>55%</dd></div>
+            <div class="sys-stat-row"><dt>Return lunar (medie)</dt><dd style="color:var(--green)">27%</dd></div>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="https://www.myfxbook.com/members/CopyTradeProz/nexus-stronghold"
+               target="_blank" rel="noopener noreferrer" class="btn-outline btn-full">
+              Vezi Istoricul
+            </a>
+            <a href="#apply-form" class="btn-outline btn-full"
+               onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+              Începe Copierea
+          </a>
+        </div>
+      </article>
+
+    </div>
+    </div><!-- /.copytrading-group -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     COMMUNITY
+════════════════════════════════════════ -->
+<section id="community" aria-label="Beneficii comunitate">
+  <div class="section-inner">
+
+    <div class="community-split" data-reveal>
+
+      <!-- Stânga: text + butoane -->
+      <div class="community-left">
+        <span class="section-label">Alătură-te Comunității Gratuite</span>
+        <h2>Învață. Aplică.<br>Evoluează.</h2>
+        <p class="community-desc">
+          Profit District nu este doar un grup de trading — este un ecosistem complet construit pentru cei care vor să învețe, să evolueze și să devină profitabili pe termen lung. Indiferent dacă ești la început sau ai deja experiență, primești acces la educație structurată, tranzacții live, sesiuni de analiză, mentorat, copytrading, evenimente private și o comunitate activă de oameni ambițioși care cresc împreună în fiecare zi.
+        </p>
+        <div class="community-btns">
+          <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer" class="btn-primary" role="button" aria-label="Alătură-te comunității noastre Telegram">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.281c-.144.658-.537.818-1.083.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.033 13.39l-2.969-.924c-.643-.204-.656-.643.135-.953l11.572-4.461c.535-.194 1.004.131.835.953l-.044-.757z"/></svg>
+            Alătură-te pe Telegram
+          </a>
+          <a href="https://discord.gg/YZBmgYWj" target="_blank" rel="noopener noreferrer" class="btn-outline" role="button" aria-label="Alătură-te serverului nostru Discord">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            Alătură-te pe Discord
+          </a>
+        </div>
+      </div>
+
+      <!-- Dreapta: 2×3 beneficii -->
+      <div class="benefits-grid benefits-grid-6">
+
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Execuții Live</h3>
+          <p>Intrări, stop loss și target-uri explicate în timp real, direct de la mentori cu istoric verificat.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Mentorat</h3>
+          <p>Feedback, sesiuni live și acces direct la traderi cu experiență care te ajută să evoluezi mai rapid.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Educație</h3>
+          <p>Curriculum complet: de la bazele pieței și psihologie până la strategii avansate și management de risc.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Comunitate</h3>
+          <p>O comunitate activă unde traderii împărtășesc analize, experiențe, progres și responsabilitate zilnică.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Copytrading</h3>
+          <p>Posibilitatea de a diversifica portofoliul prin sisteme gestionate și strategii automatizate.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Events &amp; Bootcamps</h3>
+          <p>Experiențe reale, networking și evenimente exclusive pentru membrii comunității.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FINAL CTA
+════════════════════════════════════════ -->
+<section id="final-cta" aria-label="Aplică acum">
+  <div class="cta-glow" aria-hidden="true"></div>
+
+  <div style="position:relative;z-index:1;" data-reveal>
+    <span class="section-label" style="display:block;text-align:center;">Gata să Profiți?</span>
+    <h2>Aplică pentru Locul Tău Astăzi.</h2>
+
+    <div class="cta-badge-wrap">
+      <div class="urgency-badge" role="status">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        Următoarea grupă începe curând — doar 14 locuri rămase
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;">
+      <div class="pulse-beams-wrap">
+        <a href="#apply-form" class="btn-primary btn-large" role="button"
+           onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('name').focus(),500);">
+          Aplică Acum — Locuri Limitate
+        </a>
+      </div>
+    </div>
+
+    <p class="cta-trust">Aplicație analizată în 24 de ore &nbsp;·&nbsp; Fără card de credit &nbsp;·&nbsp; Anulare oricând</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <p class="footer-brand">Profit District</p>
+    <p class="footer-copy">© <span id="footer-year">2026</span> Profit District · Toate Drepturile Rezervate</p>
+    <p class="footer-disclaimer">
+      Tranzacționarea instrumentelor financiare implică un risc semnificativ de pierdere. Performanța trecută a oricărui sistem sau metodologii de trading nu este neapărat indicativă pentru rezultatele viitoare. Informațiile prezentate pe acest site au scop exclusiv educațional și nu constituie consiliere financiară. Tranzacționați responsabil, doar cu capital pe care vă permiteți să îl pierdeți.
+    </p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     FORM VALIDATION + SUBMIT
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var form    = document.getElementById('apply-form');
+  var success = document.getElementById('form-success');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var name   = form.querySelector('#name');
+    var handle = form.querySelector('#handle');
+    var email  = form.querySelector('#email');
+    var valid  = true;
+
+    [name, handle, email].forEach(function (el) {
+      el.style.boxShadow = '';
+    });
+
+    if (!name.value.trim()) {
+      name.style.boxShadow = '0 0 0 2px rgba(255,92,92,0.55)';
+      name.focus();
+      valid = false;
+    }
+    if (!handle.value.trim()) {
+      handle.style.boxShadow = '0 0 0 2px rgba(255,92,92,0.55)';
+      if (valid) handle.focus();
+      valid = false;
+    }
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(email.value.trim())) {
+      email.style.boxShadow = '0 0 0 2px rgba(255,92,92,0.55)';
+      if (valid) email.focus();
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Se trimite...';
+
+    fetch('https://formspree.io/f/haneloreandreea@yahoo.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        nume: name.value.trim(),
+        username: handle.value.trim(),
+        email: email.value.trim()
+      })
+    })
+    .then(function (res) {
+      Array.from(form.children).forEach(function (el) {
+        if (el.id !== 'form-success') el.style.display = 'none';
+      });
+      success.style.display = 'block';
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Aplică Acum — Locuri Limitate';
+      alert('Eroare la trimitere. Încearcă din nou.');
+    });
+  });
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     STATS COUNTER ANIMATION
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var stats = [
+    { el: null, target: 4200, prefix: '', suffix: '+', label: 'Membri Activi' },
+    { el: null, target: 2.1,  prefix: '$', suffix: 'M', label: 'Câștiguri Înregistrate', decimals: 1 },
+    { el: null, target: 87,   prefix: '', suffix: '%', label: 'Rată de Câștig Comunitate' }
+  ];
+
+  var statEls = document.querySelectorAll('.stat-number');
+  statEls.forEach(function (el, i) {
+    if (stats[i]) stats[i].el = el;
+  });
+
+  function animateCount(stat) {
+    var start     = 0;
+    var duration  = 1800;
+    var startTime = null;
+    var decimals  = stat.decimals || 0;
+
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var ease     = 1 - Math.pow(1 - progress, 3);
+      var current  = start + (stat.target - start) * ease;
+      stat.el.textContent = stat.prefix + current.toFixed(decimals) + stat.suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var statsRow = document.querySelector('.stats-row');
+  if (!statsRow) return;
+
+  var fired = false;
+  var io = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting && !fired) {
+      fired = true;
+      stats.forEach(function (s) { if (s.el) animateCount(s); });
+      io.disconnect();
+    }
+  }, { threshold: 0.4 });
+  io.observe(statsRow);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     FOOTER YEAR
+════════════════════════════════════════ -->
+<script>
+  var yr = document.getElementById('footer-year');
+  if (yr) yr.textContent = new Date().getFullYear();
+</script>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR JS
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var navbar = document.getElementById('navbar');
+  var hamburger = document.getElementById('nav-hamburger');
+  var navLinks  = document.getElementById('nav-links');
+
+  /* Scrolled class */
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 40) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  }, { passive: true });
+
+  /* Hamburger toggle */
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+  }
+
+  /* Close menu on nav link click */
+  if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        hamburger && hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /* Smooth scroll for intro button → social-proof */
+  var introBtn = document.getElementById('intro-scroll-btn');
+  var socialProof = document.getElementById('social-proof');
+  if (introBtn && socialProof) {
+    introBtn.addEventListener('click', function () {
+      socialProof.scrollIntoView({ behavior: 'smooth' });
+    });
+    introBtn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') socialProof.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     INTERSECTION OBSERVER
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('[data-reveal]').forEach(function (el) {
+    observer.observe(el);
+  });
+}());
+</script>
+
+<!-- ═══════════════════════════════════════
+     BACKGROUND PATHS — HERO ANIMATION
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var hero = document.getElementById('hero');
+  if (!hero) return;
+
+  var NS  = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 696 316');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+
+  /* ── Generează 36 paths pentru fiecare poziție (1 și -1) ── */
+  function makePath(i, pos) {
+    var a = 380 - i * 5 * pos;   /* M x */
+    var b = 189 + i * 6;         /* M y (negat) */
+    var c = 312 - i * 5 * pos;   /* C ctrl1 x */
+    var d = 216 - i * 6;         /* C ctrl1 y */
+    var e = 152 - i * 5 * pos;   /* C end1 x */
+    var f = 343 - i * 6;         /* C end1 y */
+    var g = 616 - i * 5 * pos;   /* C ctrl2 x */
+    var h = 470 - i * 6;         /* C ctrl2 y */
+    var j = 684 - i * 5 * pos;   /* C end2 x/y */
+    var k = 875 - i * 6;
+    return (
+      'M' + (-a) + ' ' + (-b) +
+      'C' + (-a) + ' ' + (-b) + ' ' + (-c) + ' ' + d + ' ' + e + ' ' + f +
+      'C' + g + ' ' + h + ' ' + j + ' ' + k + ' ' + j + ' ' + k
+    );
+  }
+
+  var pathData = [];
+
+  [1, -1].forEach(function (pos) {
+    for (var i = 0; i < 36; i++) {
+      var el = document.createElementNS(NS, 'path');
+      el.setAttribute('d', makePath(i, pos));
+      el.setAttribute('stroke', '#c9a84c');        /* gold brand color */
+      el.setAttribute('stroke-width', (0.5 + i * 0.03).toFixed(2));
+      svg.appendChild(el);
+
+      pathData.push({
+        el:          el,
+        baseOpacity: 0.03 + i * 0.006,   /* max ~0.24 — subtil, text lizibil */
+        duration:    (20 + Math.random() * 10) * 1000,
+        delay:       Math.random() * 15000,
+        len:         0,
+      });
+    }
+  });
+
+  /* Inserăm SVG-ul ca primul copil al hero (în spatele conținutului) */
+  hero.insertBefore(svg, hero.firstChild);
+
+  /* Calculăm lungimea fiecărui path după ce sunt în DOM */
+  pathData.forEach(function (p) {
+    p.len = p.el.getTotalLength() || 1;
+    var dash = p.len * 0.35;           /* segment vizibil = 35% din lungime */
+    p.el.setAttribute('stroke-dasharray', dash.toFixed(1) + ' ' + (p.len - dash + 20).toFixed(1));
+    p.el.setAttribute('stroke-dashoffset', '0');
+    p.el.setAttribute('stroke-opacity', p.baseOpacity.toFixed(3));
+  });
+
+  /* ── Loop de animație ── */
+  var startTime = null;
+
+  function tick(time) {
+    if (!startTime) startTime = time;
+
+    pathData.forEach(function (p) {
+      var elapsed  = (time - startTime + p.delay) % p.duration;
+      var progress = elapsed / p.duration;           /* 0 → 1 */
+
+      /* pathOffset: segmentul se deplasează de-a lungul curbei */
+      var offset = -(progress * p.len);
+      p.el.setAttribute('stroke-dashoffset', offset.toFixed(1));
+
+      /* opacity: pulsează lin (0.3 → 0.6 → 0.3) */
+      var pulse   = 0.5 + 0.5 * Math.sin(progress * Math.PI * 2);
+      var opacity = p.baseOpacity * (0.3 + 0.7 * pulse);
+      p.el.setAttribute('stroke-opacity', Math.min(opacity, 1).toFixed(3));
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}());
+</script>
+
+<!-- ═══════════════════════════════════════
+     INTRO PAGE — scroll button + fade on scroll
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var intro  = document.getElementById('intro-page');
+  var hero   = document.getElementById('hero');
+  var btn    = document.getElementById('intro-scroll-btn');
+  if (!intro || !hero) return;
+
+  /* Click / Enter / Space on scroll indicator → smooth scroll to hero */
+  if (btn) {
+    btn.addEventListener('click', function () {
+      hero.scrollIntoView({ behavior: 'smooth' });
+    });
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        hero.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  /* Fade + slide intro out as user scrolls away */
+  var ticking = false;
+  function updateIntro() {
+    var scrollY  = window.scrollY || window.pageYOffset;
+    var introH   = intro.offsetHeight;
+    var progress = Math.min(1, scrollY / introH);  /* 0 = top, 1 = fully scrolled past */
+
+    intro.style.opacity   = (1 - progress * 1.4).toFixed(3);
+    intro.style.transform = 'translateY(' + (-progress * 40).toFixed(1) + 'px)';
+    ticking = false;
+  }
+
+  intro.classList.add('intro-fading');
+  window.addEventListener('scroll', function () {
+    if (!ticking) { requestAnimationFrame(updateIntro); ticking = true; }
+  }, { passive: true });
+
+  updateIntro();
+}());
+</script>
+
+
+
+<!-- ═══════════════════════════════════════
+     CONTAINER SCROLL — FEEDBACK 3D TILT
+     Port of Aceternity ContainerScroll to vanilla JS.
+     Tracks scroll progress through #social-proof and maps it to:
+       rotateX  : 20° → 0°   (3D tilt unrolls as section enters viewport)
+       scale    : 1.05 → 1   desktop  |  0.7 → 0.9 mobile
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var section = document.getElementById('social-proof');
+  var card    = document.getElementById('cs-feedback-card');
+  if (!section || !card) return;
+
+  var isMobile = window.innerWidth <= 768;
+
+  /* Initial state — tilted, matching rotateX(20deg) start */
+  card.style.transform = 'rotateX(20deg) scale(' + (isMobile ? '0.7' : '1.05') + ')';
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function getProgress() {
+    var r    = section.getBoundingClientRect();
+    var winH = window.innerHeight;
+    /* 0 = section top at viewport bottom  |  1 = section bottom at viewport top */
+    return Math.max(0, Math.min(1, (winH - r.top) / (r.height + winH)));
+  }
+
+  var ticking = false;
+
+  function update() {
+    var p         = getProgress();
+    var scaleFrom = isMobile ? 0.7  : 1.05;
+    var scaleTo   = isMobile ? 0.9  : 1.0;
+    var rotX      = lerp(20, 0, p);
+    var sc        = lerp(scaleFrom, scaleTo, p);
+    card.style.transform =
+      'rotateX(' + rotX.toFixed(2) + 'deg) scale(' + sc.toFixed(4) + ')';
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+
+  window.addEventListener('resize', function () {
+    isMobile = window.innerWidth <= 768;
+    update();
+  });
+
+  /* Run once on load to set the correct initial transform */
+  update();
+}());
+</script>
+
+</body>
+</html>
