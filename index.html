@@ -469,7 +469,15 @@
       width: 22px; height: 2px;
       background: var(--gold);
       border-radius: 2px;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: transform 0.42s cubic-bezier(0.16,1,0.3,1), opacity 0.28s ease;
+    }
+    @keyframes menu-in {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes menu-item-in {
+      from { opacity: 0; transform: translateX(-14px); }
+      to   { opacity: 1; transform: translateX(0); }
     }
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -484,7 +492,16 @@
         padding: 1.5rem 2rem;
         gap: 1.25rem;
         backdrop-filter: blur(14px);
+        animation: menu-in 0.32s cubic-bezier(0.16,1,0.3,1) both;
       }
+      .nav-links.open li {
+        animation: menu-item-in 0.38s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      .nav-links.open li:nth-child(1) { animation-delay: 0.04s; }
+      .nav-links.open li:nth-child(2) { animation-delay: 0.09s; }
+      .nav-links.open li:nth-child(3) { animation-delay: 0.14s; }
+      .nav-links.open li:nth-child(4) { animation-delay: 0.19s; }
+      .nav-links.open li:nth-child(5) { animation-delay: 0.24s; }
     }
 
     #hero {
