@@ -2030,17 +2030,16 @@
   svg.setAttribute('aria-hidden', 'true');
   svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
 
-  /* ── Generează 36 paths pentru fiecare poziție (1 și -1) ── */
   function makePath(i, pos) {
-    var a = 380 - i * 5 * pos;   /* M x */
-    var b = 189 + i * 6;         /* M y (negat) */
-    var c = 312 - i * 5 * pos;   /* C ctrl1 x */
-    var d = 216 - i * 6;         /* C ctrl1 y */
-    var e = 152 - i * 5 * pos;   /* C end1 x */
-    var f = 343 - i * 6;         /* C end1 y */
-    var g = 616 - i * 5 * pos;   /* C ctrl2 x */
-    var h = 470 - i * 6;         /* C ctrl2 y */
-    var j = 684 - i * 5 * pos;   /* C end2 x/y */
+    var a = 380 - i * 5 * pos;
+    var b = 189 + i * 6;
+    var c = 312 - i * 5 * pos;
+    var d = 216 - i * 6;
+    var e = 152 - i * 5 * pos;
+    var f = 343 - i * 6;
+    var g = 616 - i * 5 * pos;
+    var h = 470 - i * 6;
+    var j = 684 - i * 5 * pos;
     var k = 875 - i * 6;
     return (
       'M' + (-a) + ' ' + (-b) +
@@ -2049,19 +2048,19 @@
     );
   }
 
+  /* 16 paths per side = 32 total (față de 72 anterior) */
   var pathData = [];
-
   [1, -1].forEach(function (pos) {
-    for (var i = 0; i < 36; i++) {
+    for (var i = 0; i < 16; i++) {
+      var idx = i * 2; /* distribuie uniform peste intervalul vizual */
       var el = document.createElementNS(NS, 'path');
-      el.setAttribute('d', makePath(i, pos));
-      el.setAttribute('stroke', '#c9a84c');        /* gold brand color */
-      el.setAttribute('stroke-width', (0.5 + i * 0.03).toFixed(2));
+      el.setAttribute('d', makePath(idx, pos));
+      el.setAttribute('stroke', '#c9a84c');
+      el.setAttribute('stroke-width', (0.5 + idx * 0.03).toFixed(2));
       svg.appendChild(el);
-
       pathData.push({
         el:          el,
-        baseOpacity: 0.03 + i * 0.006,   /* max ~0.24 — subtil, text lizibil */
+        baseOpacity: 0.03 + idx * 0.006,
         duration:    (20 + Math.random() * 10) * 1000,
         delay:       Math.random() * 15000,
         len:         0,
@@ -2069,52 +2068,52 @@
     }
   });
 
-  /* Inserăm SVG-ul ca primul copil al hero (în spatele conținutului) */
-  hero.insertBefore(svg, hero.firstChild);
+  /* ── Defer tot după primul paint — double rAF ── */
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
 
-  /* Calculăm lungimea fiecărui path după ce sunt în DOM */
-  pathData.forEach(function (p) {
-    p.len = p.el.getTotalLength() || 1;
-    var dash = p.len * 0.35;           /* segment vizibil = 35% din lungime */
-    p.el.setAttribute('stroke-dasharray', dash.toFixed(1) + ' ' + (p.len - dash + 20).toFixed(1));
-    p.el.setAttribute('stroke-dashoffset', '0');
-    p.el.setAttribute('stroke-opacity', p.baseOpacity.toFixed(3));
-  });
+      hero.insertBefore(svg, hero.firstChild);
 
-  /* ── Loop de animație ── */
-  var startTime = null;
-  var animPaused = false;
+      /* getTotalLength după ce SVG e în DOM și browserul a pictat */
+      pathData.forEach(function (p) {
+        p.len = p.el.getTotalLength() || 1;
+        var dash = p.len * 0.35;
+        p.el.setAttribute('stroke-dasharray', dash.toFixed(1) + ' ' + (p.len - dash + 20).toFixed(1));
+        p.el.setAttribute('stroke-dashoffset', '0');
+        p.el.setAttribute('stroke-opacity', p.baseOpacity.toFixed(3));
+      });
 
-  function tick(time) {
-    if (animPaused) return;
-    if (!startTime) startTime = time;
+      var startTime = null;
+      var animPaused = false;
 
-    pathData.forEach(function (p) {
-      var elapsed  = (time - startTime + p.delay) % p.duration;
-      var progress = elapsed / p.duration;
+      function tick(time) {
+        if (animPaused) return;
+        if (!startTime) startTime = time;
 
-      var offset = -(progress * p.len);
-      p.el.setAttribute('stroke-dashoffset', offset.toFixed(1));
+        pathData.forEach(function (p) {
+          var elapsed  = (time - startTime + p.delay) % p.duration;
+          var progress = elapsed / p.duration;
+          p.el.setAttribute('stroke-dashoffset', (-(progress * p.len)).toFixed(1));
+          var pulse = 0.5 + 0.5 * Math.sin(progress * Math.PI * 2);
+          p.el.setAttribute('stroke-opacity', Math.min(p.baseOpacity * (0.3 + 0.7 * pulse), 1).toFixed(3));
+        });
 
-      var pulse   = 0.5 + 0.5 * Math.sin(progress * Math.PI * 2);
-      var opacity = p.baseOpacity * (0.3 + 0.7 * pulse);
-      p.el.setAttribute('stroke-opacity', Math.min(opacity, 1).toFixed(3));
-    });
+        requestAnimationFrame(tick);
+      }
 
-    requestAnimationFrame(tick);
-  }
+      new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting && !animPaused) {
+          animPaused = true;
+        } else if (entries[0].isIntersecting && animPaused) {
+          animPaused = false;
+          startTime = null;
+          requestAnimationFrame(tick);
+        }
+      }, { threshold: 0 }).observe(hero);
 
-  new IntersectionObserver(function (entries) {
-    if (!entries[0].isIntersecting && !animPaused) {
-      animPaused = true;
-    } else if (entries[0].isIntersecting && animPaused) {
-      animPaused = false;
-      startTime = null;
       requestAnimationFrame(tick);
-    }
-  }, { threshold: 0 }).observe(hero);
-
-  requestAnimationFrame(tick);
+    });
+  });
 }());
 </script>
 
