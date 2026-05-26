@@ -14,6 +14,7 @@
   <meta name="twitter:description" content="Alătură-te comunității noastre elite de trading. Mentorat Gratuit 30 de Zile și sisteme de copytrading dovedite.">
   <meta name="twitter:image" content="https://rappboy77-collab.github.io/profit-district/logo/2.png">
   <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="canonical" href="https://rappboy77-collab.github.io/profit-district/">
   <title>Profit District — Comunitate Elite de Trading & Mentorat</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1212,6 +1213,109 @@
       margin: 0 auto;
       line-height: 1.65;
     }
+
+    /* ─────────────────────────────────────────
+       HAMBURGER → X
+    ───────────────────────────────────────── */
+    .nav-hamburger span {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─────────────────────────────────────────
+       NAVBAR SCROLL SPY
+    ───────────────────────────────────────── */
+    .nav-links a.nav-active { color: var(--gold); }
+    .nav-links a.nav-active::after { transform: scaleX(1); }
+
+    /* ─────────────────────────────────────────
+       SCROLL TO TOP
+    ───────────────────────────────────────── */
+    #scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 800;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, border-color 0.2s ease;
+      pointer-events: none;
+    }
+    #scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    #scroll-top:hover { background: var(--bg-floating); border-color: var(--border-strong); }
+    #scroll-top svg { stroke: var(--gold); width: 18px; height: 18px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ─────────────────────────────────────────
+       SUBMIT SPINNER
+    ───────────────────────────────────────── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-spinner {
+      width: 15px;
+      height: 15px;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER ENHANCED
+    ───────────────────────────────────────── */
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.5rem;
+      margin-bottom: 1.1rem;
+    }
+    .footer-nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-nav a:hover { color: var(--gold); }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 100px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .footer-social a:hover { color: var(--gold); border-color: var(--border-mid); }
+    .footer-social svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -1725,12 +1829,33 @@
 <footer role="contentinfo">
   <div class="footer-inner">
     <p class="footer-brand">Profit District</p>
+    <nav class="footer-nav" aria-label="Link-uri rapide">
+      <a href="#hero">Acasă</a>
+      <a href="#community">Despre Noi</a>
+      <a href="#systems">Copytrading</a>
+      <a href="#apply-form" onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">Aplică Acum</a>
+    </nav>
+    <div class="footer-social">
+      <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.281c-.144.658-.537.818-1.083.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.033 13.39l-2.969-.924c-.643-.204-.656-.643.135-.953l11.572-4.461c.535-.194 1.004.131.835.953l-.044-.757z"/></svg>
+        Telegram
+      </a>
+      <a href="https://discord.gg/cWjgpvSqvT" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        Discord
+      </a>
+    </div>
     <p class="footer-copy">© <span id="footer-year">2026</span> Profit District · Toate Drepturile Rezervate</p>
     <p class="footer-disclaimer">
       Tranzacționarea instrumentelor financiare implică un risc semnificativ de pierdere. Performanța trecută a oricărui sistem sau metodologii de trading nu este neapărat indicativă pentru rezultatele viitoare. Informațiile prezentate pe acest site au scop exclusiv educațional și nu constituie consiliere financiară. Tranzacționați responsabil, doar cu capital pe care vă permiteți să îl pierdeți.
     </p>
   </div>
 </footer>
+
+<!-- Scroll to top button -->
+<button id="scroll-top" aria-label="Înapoi sus" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <!-- ═══════════════════════════════════════
      FORM VALIDATION + SUBMIT
@@ -1774,7 +1899,7 @@
 
     var btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
-    btn.textContent = 'Se trimite...';
+    btn.innerHTML = '<svg class="btn-spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg> Se trimite...';
 
     var errorEl = document.getElementById('form-error');
 
@@ -1804,7 +1929,7 @@
     })
     .catch(function () {
       btn.disabled = false;
-      btn.textContent = 'Aplică Acum — Locuri Limitate';
+      btn.innerHTML = 'Aplică Acum — Locuri Limitate';
       if (errorEl) errorEl.style.display = 'block';
     });
   });
@@ -1839,6 +1964,7 @@
     hamburger.addEventListener('click', function () {
       var open = navLinks.classList.toggle('open');
       hamburger.setAttribute('aria-expanded', open);
+      hamburger.classList.toggle('open', open);
     });
   }
 
@@ -1847,7 +1973,10 @@
     navLinks.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         navLinks.classList.remove('open');
-        hamburger && hamburger.setAttribute('aria-expanded', 'false');
+        if (hamburger) {
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.classList.remove('open');
+        }
       });
     });
   }
@@ -1954,19 +2083,19 @@
 
   /* ── Loop de animație ── */
   var startTime = null;
+  var animPaused = false;
 
   function tick(time) {
+    if (animPaused) return;
     if (!startTime) startTime = time;
 
     pathData.forEach(function (p) {
       var elapsed  = (time - startTime + p.delay) % p.duration;
-      var progress = elapsed / p.duration;           /* 0 → 1 */
+      var progress = elapsed / p.duration;
 
-      /* pathOffset: segmentul se deplasează de-a lungul curbei */
       var offset = -(progress * p.len);
       p.el.setAttribute('stroke-dashoffset', offset.toFixed(1));
 
-      /* opacity: pulsează lin (0.3 → 0.6 → 0.3) */
       var pulse   = 0.5 + 0.5 * Math.sin(progress * Math.PI * 2);
       var opacity = p.baseOpacity * (0.3 + 0.7 * pulse);
       p.el.setAttribute('stroke-opacity', Math.min(opacity, 1).toFixed(3));
@@ -1975,8 +2104,57 @@
     requestAnimationFrame(tick);
   }
 
+  new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting && !animPaused) {
+      animPaused = true;
+    } else if (entries[0].isIntersecting && animPaused) {
+      animPaused = false;
+      startTime = null;
+      requestAnimationFrame(tick);
+    }
+  }, { threshold: 0 }).observe(hero);
+
   requestAnimationFrame(tick);
 }());
+</script>
+
+<!-- ═══════════════════════════════════════
+     SCROLL SPY + SCROLL TO TOP
+════════════════════════════════════════ -->
+<script>
+(function () {
+  /* ── Scroll spy ── */
+  var map = { 'hero': 'apply-form', 'systems': 'systems', 'community': 'community', 'final-cta': 'apply-form' };
+  var navAnchors = document.querySelectorAll('.nav-links a');
+
+  function setActive(sectionId) {
+    navAnchors.forEach(function (a) {
+      var href = a.getAttribute('href').replace('#', '');
+      var match = href === sectionId || (map[sectionId] && href === map[sectionId]);
+      a.classList.toggle('nav-active', !!match);
+    });
+  }
+
+  var sections = ['hero', 'social-proof', 'systems', 'community', 'final-cta'].map(function (id) {
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  var spyObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) setActive(e.target.id);
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(function (s) { spyObserver.observe(s); });
+
+  /* ── Scroll to top visibility ── */
+  var scrollBtn = document.getElementById('scroll-top');
+  if (scrollBtn) {
+    window.addEventListener('scroll', function () {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+  }
+})();
 </script>
 
 <!-- ═══════════════════════════════════════
