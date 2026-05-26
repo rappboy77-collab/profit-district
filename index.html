@@ -2013,10 +2013,12 @@
     btn.disabled = true;
     btn.textContent = 'Se trimite...';
 
-    fetch('https://formspree.io/f/haneloreandreea@yahoo.com', {
+    fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
+        access_key: '63f632b0-d0d3-4272-9069-1d7d03ec02b3',
+        subject: 'Aplicatie 30 Days Mentorship - Profit District',
         nume: name.value.trim(),
         username: handle.value.trim(),
         email: email.value.trim()
