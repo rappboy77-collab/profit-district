@@ -175,6 +175,7 @@
     [data-reveal].is-visible [data-stagger]:nth-child(3) { animation-delay: 0.20s; }
     [data-reveal].is-visible [data-stagger]:nth-child(4) { animation-delay: 0.28s; }
     [data-reveal].is-visible [data-stagger]:nth-child(5) { animation-delay: 0.36s; }
+    [data-reveal].is-visible [data-stagger]:nth-child(6) { animation-delay: 0.44s; }
 
 
     /* ─────────────────────────────────────────
@@ -365,165 +366,6 @@
       margin-left: auto;
       margin-right: auto;
       line-height: 1.7;
-    }
-
-    /* ─────────────────────────────────────────
-       INTRO PAGE
-    ───────────────────────────────────────── */
-    #intro-page {
-      position: relative;
-      height: 350vh;
-      overflow: hidden;
-      background: #000;
-      color: #fff;
-    }
-
-    /* ── Background image — full cover, subtle slow zoom ── */
-    .intro-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      animation: intro-bg-zoom 12s ease-in-out infinite;
-      will-change: transform;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-    .intro-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 40%;
-      display: block;
-      transform: translateZ(0);
-      image-rendering: auto;
-      filter: brightness(1.1) saturate(1.2) contrast(1.05);
-    }
-    @keyframes intro-bg-zoom {
-      0%   { transform: scale(1.00); }
-      50%  { transform: scale(1.08); }
-      100% { transform: scale(1.00); }
-    }
-
-    /* ── Overlay — minimal pe imagine deja întunecată ── */
-    .intro-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(0,0,0,0.55) 0%,
-          rgba(0,0,0,0.10) 30%,
-          rgba(0,0,0,0.10) 70%,
-          rgba(0,0,0,0.65) 100%
-        );
-    }
-
-    /* ── Gold radial glow at center — ties image warmth to text glow ── */
-    .intro-overlay-glow {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: radial-gradient(
-        ellipse 55% 45% at 50% 50%,
-        rgba(201,168,76,0.07) 0%,
-        transparent 70%
-      );
-      pointer-events: none;
-    }
-
-    /* ── Content ── */
-    .intro-content {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      text-align: center;
-      padding: 0 1.5rem;
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .intro-h1 {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(2.2rem, 5.8vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-      color: #ffffff;
-      /* Puternic — text clar deasupra imaginii */
-      text-shadow:
-        0 0 30px rgba(201,168,76,0.55),
-        0 0 70px rgba(201,168,76,0.25),
-        0 2px 20px rgba(0,0,0,0.95),
-        0 4px 40px rgba(0,0,0,0.80);
-      margin-bottom: 1.1rem;
-      animation: fade-up 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;
-    }
-
-    .intro-sub {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(1rem, 2.2vw, 1.2rem);
-      font-weight: 400;
-      color: rgba(255,255,255,0.88);
-      line-height: 1.65;
-      margin-bottom: 3.5rem;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.90), 0 1px 4px rgba(0,0,0,0.80);
-      animation: fade-up 1s cubic-bezier(0.16,1,0.3,1) 0.65s both;
-    }
-
-    /* ── Scroll indicator: vertical line + moving white bar ── */
-    .intro-scroll-indicator {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) 1.2s both;
-      cursor: pointer;
-    }
-    .intro-scroll-indicator:hover .intro-scroll-line { background: rgba(255,255,255,0.4); }
-
-    .intro-scroll-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 400;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.04em;
-    }
-
-    .intro-scroll-line {
-      width: 2px;
-      height: 40px;
-      background: rgba(255,255,255,0.28);
-      position: relative;
-      overflow: hidden;
-      border-radius: 1px;
-      transition: background 0.2s ease;
-    }
-    .intro-scroll-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 12px;
-      background: #fff;
-      border-radius: 1px;
-      animation: intro-scroll-move 1.5s ease-in-out infinite;
-    }
-    @keyframes intro-scroll-move {
-      0%   { transform: translateY(-12px); opacity: 0;   }
-      20%  { opacity: 1; }
-      80%  { opacity: 1; }
-      100% { transform: translateY(40px);  opacity: 0;   }
-    }
-
-    /* Fade out intro on scroll */
-    #intro-page.intro-fading {
-      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
     }
 
     /* ─────────────────────────────────────────
@@ -1149,90 +991,6 @@
     /* card-sys-gold uses default border-subtle like other cards */
 
     /* ─────────────────────────────────────────
-       ZOOM PARALLAX
-    ───────────────────────────────────────── */
-    .zoom-parallax-outer {
-      position: relative;
-      height: 220vh;           /* scroll travel distance */
-      margin-top: 4rem;
-    }
-    .zoom-parallax-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-base);
-    }
-
-    /* Vignette — soft edge fade, keeps focus on logo center */
-    .zoom-parallax-sticky::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        ellipse 70% 70% at 50% 50%,
-        transparent 25%,
-        rgba(10,10,11,0.55) 65%,
-        rgba(10,10,11,0.92) 100%
-      );
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* Bottom fade — blends into the next section */
-    .zoom-parallax-sticky::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 30%;
-      background: linear-gradient(to bottom, transparent, var(--bg-base));
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    /* Single logo image — contained, centered, with breathing room */
-    .zoom-parallax-img {
-      position: absolute;
-      /* Constrain logo to 62% of viewport's smaller dimension — breathing room all around */
-      width: min(62vh, 62vw);
-      height: min(62vh, 62vw);
-      top: 50%;
-      left: 50%;
-      /* Base translate for centering — JS will prepend scale() keeping this intact */
-      margin-top: calc(min(62vh, 62vw) / -2);
-      margin-left: calc(min(62vh, 62vw) / -2);
-      object-fit: contain;
-      will-change: transform;
-      transform-origin: center center;
-      z-index: 1;
-      /* Subtle gold glow around the logo */
-      filter: drop-shadow(0 0 40px rgba(201,168,76,0.22)) drop-shadow(0 0 120px rgba(201,168,76,0.08));
-    }
-
-    .zoom-parallax-label {
-      position: absolute;
-      bottom: 12%;
-      left: 0;
-      right: 0;
-      z-index: 4;
-      text-align: center;
-      pointer-events: none;
-    }
-    .zoom-parallax-label span {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(201,168,76,0.55);
-    }
-
-    /* ─────────────────────────────────────────
        COMMUNITY SECTION
     ───────────────────────────────────────── */
     #community {
@@ -1551,6 +1309,9 @@
         <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.4rem;">Aplicație trimisă!</p>
         <p style="font-family:'Outfit',sans-serif;font-size:0.875rem;color:var(--text-secondary);">Te contactăm în maxim 24 de ore. Verifică și folderul Spam.</p>
       </div>
+      <div id="form-error" style="display:none; text-align:center; padding:1rem 1.5rem; border:1px solid rgba(255,92,92,0.3); border-radius:8px; background:rgba(255,92,92,0.06);">
+        <p style="font-family:'Outfit',sans-serif;font-size:0.875rem;color:#ff5c5c;">Eroare la trimitere. Încearcă din nou sau scrie-ne direct pe Telegram.</p>
+      </div>
     </form>
 
   </div>
@@ -1611,9 +1372,6 @@
           <!-- Set 2 -->
           <div class="t-card">
             <img src="feedback/photo_6019276260690824080_y.jpg" alt="Feedback membru comunitate" loading="lazy">
-          </div>
-          <div class="t-card">
-            <img src="feedback/photo_6041925130776153266_y.jpg" alt="Feedback membru comunitate" loading="lazy">
           </div>
           <div class="t-card">
             <img src="feedback/photo_6041925130776153266_y.jpg" alt="Feedback membru comunitate" loading="lazy">
@@ -1837,7 +1595,8 @@
             <a href="#apply-form" class="btn-outline btn-full"
                onclick="event.preventDefault();document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
               Începe Copierea
-          </a>
+            </a>
+          </div>
         </div>
       </article>
 
@@ -2017,6 +1776,8 @@
     btn.disabled = true;
     btn.textContent = 'Se trimite...';
 
+    var errorEl = document.getElementById('form-error');
+
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -2028,66 +1789,25 @@
         email: email.value.trim()
       })
     })
-    .then(function (res) {
-      Array.from(form.children).forEach(function (el) {
-        if (el.id !== 'form-success') el.style.display = 'none';
-      });
-      success.style.display = 'block';
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (data.success) {
+        Array.from(form.children).forEach(function (el) {
+          if (el.id !== 'form-success') el.style.display = 'none';
+        });
+        success.style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Aplică Acum — Locuri Limitate';
+        if (errorEl) errorEl.style.display = 'block';
+      }
     })
     .catch(function () {
       btn.disabled = false;
       btn.textContent = 'Aplică Acum — Locuri Limitate';
-      alert('Eroare la trimitere. Încearcă din nou.');
+      if (errorEl) errorEl.style.display = 'block';
     });
   });
-})();
-</script>
-
-<!-- ═══════════════════════════════════════
-     STATS COUNTER ANIMATION
-════════════════════════════════════════ -->
-<script>
-(function () {
-  var stats = [
-    { el: null, target: 4200, prefix: '', suffix: '+', label: 'Membri Activi' },
-    { el: null, target: 2.1,  prefix: '$', suffix: 'M', label: 'Câștiguri Înregistrate', decimals: 1 },
-    { el: null, target: 87,   prefix: '', suffix: '%', label: 'Rată de Câștig Comunitate' }
-  ];
-
-  var statEls = document.querySelectorAll('.stat-number');
-  statEls.forEach(function (el, i) {
-    if (stats[i]) stats[i].el = el;
-  });
-
-  function animateCount(stat) {
-    var start     = 0;
-    var duration  = 1800;
-    var startTime = null;
-    var decimals  = stat.decimals || 0;
-
-    function step(ts) {
-      if (!startTime) startTime = ts;
-      var progress = Math.min((ts - startTime) / duration, 1);
-      var ease     = 1 - Math.pow(1 - progress, 3);
-      var current  = start + (stat.target - start) * ease;
-      stat.el.textContent = stat.prefix + current.toFixed(decimals) + stat.suffix;
-      if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  var statsRow = document.querySelector('.stats-row');
-  if (!statsRow) return;
-
-  var fired = false;
-  var io = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting && !fired) {
-      fired = true;
-      stats.forEach(function (s) { if (s.el) animateCount(s); });
-      io.disconnect();
-    }
-  }, { threshold: 0.4 });
-  io.observe(statsRow);
 })();
 </script>
 
@@ -2258,52 +1978,6 @@
   requestAnimationFrame(tick);
 }());
 </script>
-
-<!-- ═══════════════════════════════════════
-     INTRO PAGE — scroll button + fade on scroll
-════════════════════════════════════════ -->
-<script>
-(function () {
-  var intro  = document.getElementById('intro-page');
-  var hero   = document.getElementById('hero');
-  var btn    = document.getElementById('intro-scroll-btn');
-  if (!intro || !hero) return;
-
-  /* Click / Enter / Space on scroll indicator → smooth scroll to hero */
-  if (btn) {
-    btn.addEventListener('click', function () {
-      hero.scrollIntoView({ behavior: 'smooth' });
-    });
-    btn.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        hero.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  }
-
-  /* Fade + slide intro out as user scrolls away */
-  var ticking = false;
-  function updateIntro() {
-    var scrollY  = window.scrollY || window.pageYOffset;
-    var introH   = intro.offsetHeight;
-    var progress = Math.min(1, scrollY / introH);  /* 0 = top, 1 = fully scrolled past */
-
-    intro.style.opacity   = (1 - progress * 1.4).toFixed(3);
-    intro.style.transform = 'translateY(' + (-progress * 40).toFixed(1) + 'px)';
-    ticking = false;
-  }
-
-  intro.classList.add('intro-fading');
-  window.addEventListener('scroll', function () {
-    if (!ticking) { requestAnimationFrame(updateIntro); ticking = true; }
-  }, { passive: true });
-
-  updateIntro();
-}());
-</script>
-
-
 
 <!-- ═══════════════════════════════════════
      CONTAINER SCROLL — FEEDBACK 3D TILT
