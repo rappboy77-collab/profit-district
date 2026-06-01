@@ -1367,26 +1367,22 @@
       z-index: 2;
       pointer-events: none;
     }
-    /* Container iframe cu clip și mască */
     #webinar-clip {
       position: relative;
-      overflow: hidden;
-      /* înălțimea e ajustată de JS după ce Tally setează height-ul */
-    }
-    /* Mască solidă care acoperă imediat branding-ul Tally */
-    #webinar-clip::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 52px;
-      background: var(--bg-elevated);
-      z-index: 10;
-      pointer-events: none;
     }
     #webinar-clip iframe {
       display: block;
       width: 100%;
       border: none;
+    }
+    /* Overlay vizual — acoperă "Made with Tally" fără să atingă formularul */
+    .tally-mask {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50px;
+      background: var(--bg-elevated);
+      z-index: 10;
+      pointer-events: none; /* clicurile trec prin el — formularul rămâne 100% funcțional */
     }
 
     /* Mesaj confirmare */
@@ -1841,7 +1837,6 @@
     <div class="webinar-card-wrap" data-reveal>
       <div class="webinar-card">
 
-        <!-- Iframe Tally cu container de clipping -->
         <div id="webinar-clip">
           <iframe
             id="webinar-iframe"
@@ -1854,6 +1849,8 @@
             marginwidth="0"
             title="Înscrie-te la Webinar — Profit District"
           ></iframe>
+          <!-- Overlay care acoperă "Made with Tally" — nu blochează formularul -->
+          <div class="tally-mask" aria-hidden="true"></div>
         </div>
 
         <!-- Confirmare după submit -->
@@ -2382,9 +2379,7 @@
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
 (function () {
-  var CLIP_PX = 52; /* pixeli tăiați din josul iframe-ului — acoperă "Made with Tally" */
-
-  /* ── Confirmare după submit ── */
+  /* Confirmare nativă după submit */
   window.addEventListener('message', function (e) {
     var d;
     try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
@@ -2396,30 +2391,6 @@
       if (success) success.style.display = 'block';
     }
   });
-
-  /* ── Clipping precis al branding-ului ──
-     Tally embed.js setează atributul `height` pe iframe.
-     Detectăm acea valoare și setăm #webinar-clip la (height - CLIP_PX),
-     astfel overflow:hidden ascunde ultimii CLIP_PX = branding-ul.
-     Masca CSS ::after acoperă imediat branding-ul înainte ca JS-ul să ruleze. */
-  var clip   = document.getElementById('webinar-clip');
-  var iframe = document.getElementById('webinar-iframe');
-  if (!clip || !iframe) return;
-
-  function applyClip() {
-    var h = parseInt(iframe.getAttribute('height') || '0', 10);
-    if (h > 150) clip.style.height = (h - CLIP_PX) + 'px';
-  }
-
-  /* MutationObserver — detectează când Tally setează height-ul */
-  new MutationObserver(function (mutations) {
-    mutations.forEach(function (m) {
-      if (m.attributeName === 'height') applyClip();
-    });
-  }).observe(iframe, { attributes: true, attributeFilter: ['height'] });
-
-  /* Polling fallback — rulează la 0.5s, 1.5s, 3s, 6s după load */
-  [500, 1500, 3000, 6000].forEach(function (t) { setTimeout(applyClip, t); });
 }());
 </script>
 
