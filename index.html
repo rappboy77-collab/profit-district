@@ -1402,23 +1402,12 @@
     }
     .webinar-embed-wrap {
       padding: 0.25rem 0.75rem 0.75rem;
-      position: relative;
     }
     .webinar-embed-wrap iframe {
       display: block;
       width: 100%;
       min-height: 340px;
       border: none;
-    }
-    /* Overlay care acoperă "Made with Tally" — pointer-events:none păstrează formularul funcțional */
-    .webinar-embed-wrap::after {
-      content: '';
-      position: absolute;
-      bottom: 0.75rem; left: 0.75rem; right: 0.75rem;
-      height: 32px;
-      background: var(--bg-elevated);
-      z-index: 5;
-      pointer-events: none;
     }
 
     /* Success state */
