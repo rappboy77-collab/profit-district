@@ -1338,47 +1338,58 @@
     /* ─────────────────────────────────────────
        WEBINAR SECTION
     ───────────────────────────────────────── */
+    /* ─── WEBINAR SECTION ─── */
     #webinar {
       background: var(--bg-surface);
       padding: 6.5rem 1.5rem;
       position: relative;
       overflow: hidden;
     }
-
     .webinar-card-wrap {
       max-width: 680px;
       margin: 0 auto;
     }
-
     .webinar-card {
       position: relative;
       background: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-mid);
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: var(--shadow-card);
+      box-shadow: var(--shadow-card), 0 0 40px rgba(201,168,76,0.06);
     }
+    /* Linie gold animată în top */
     .webinar-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      z-index: 1;
+      z-index: 2;
+      pointer-events: none;
     }
-    .webinar-embed-wrap {
-      padding: 0.5rem 1.25rem 0;
+    /* Container iframe cu clip și mască */
+    #webinar-clip {
       position: relative;
       overflow: hidden;
+      /* înălțimea e ajustată de JS după ce Tally setează height-ul */
     }
-    .webinar-embed-wrap iframe {
+    /* Mască solidă care acoperă imediat branding-ul Tally */
+    #webinar-clip::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 52px;
+      background: var(--bg-elevated);
+      z-index: 10;
+      pointer-events: none;
+    }
+    #webinar-clip iframe {
       display: block;
       width: 100%;
-      min-height: 340px;
       border: none;
     }
 
-    /* Success state */
+    /* Mesaj confirmare */
     #webinar-success {
       padding: 3.5rem 2rem;
       text-align: center;
@@ -1828,16 +1839,16 @@
     </div>
 
     <div class="webinar-card-wrap" data-reveal>
-
       <div class="webinar-card">
 
-        <!-- Embed iframe (vizibil înainte de submit) -->
-        <div id="webinar-embed" class="webinar-embed-wrap">
+        <!-- Iframe Tally cu container de clipping -->
+        <div id="webinar-clip">
           <iframe
+            id="webinar-iframe"
             data-tally-src="https://tally.so/embed/81MEgY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
             loading="lazy"
             width="100%"
-            height="400"
+            height="500"
             frameborder="0"
             marginheight="0"
             marginwidth="0"
@@ -1845,7 +1856,7 @@
           ></iframe>
         </div>
 
-        <!-- Mesaj confirmare (ascuns, afișat după submit) -->
+        <!-- Confirmare după submit -->
         <div id="webinar-success" style="display:none;" role="status" aria-live="polite">
           <div class="webinar-check" aria-hidden="true">
             <svg width="26" height="26" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
@@ -1859,7 +1870,6 @@
         </div>
 
       </div>
-
     </div>
   </div>
 </section>
@@ -2372,46 +2382,44 @@
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
 (function () {
-  /* ── 1. Confirmare după submit ── */
+  var CLIP_PX = 52; /* pixeli tăiați din josul iframe-ului — acoperă "Made with Tally" */
+
+  /* ── Confirmare după submit ── */
   window.addEventListener('message', function (e) {
-    var data;
-    try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
-    if (!data) return;
-    if (data.type === 'tally-form-submitted' || data.type === 'TallyFormSubmitted') {
-      var embed   = document.getElementById('webinar-embed');
+    var d;
+    try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
+    if (!d) return;
+    if (d.type === 'tally-form-submitted' || d.type === 'TallyFormSubmitted') {
+      var clip    = document.getElementById('webinar-clip');
       var success = document.getElementById('webinar-success');
-      if (embed)   embed.style.display   = 'none';
+      if (clip)    clip.style.display    = 'none';
       if (success) success.style.display = 'block';
     }
   });
 
-  /* ── 2. Ascunde branding "Made with Tally" prin clipping precis ──
-     Tally embed.js setează atributul height pe iframe după ce se încarcă.
-     Observăm acea modificare și reducem înălțimea containerului cu 44px,
-     astfel butonul submit rămâne complet vizibil. */
-  var wrap   = document.getElementById('webinar-embed');
-  var iframe = wrap ? wrap.querySelector('iframe') : null;
+  /* ── Clipping precis al branding-ului ──
+     Tally embed.js setează atributul `height` pe iframe.
+     Detectăm acea valoare și setăm #webinar-clip la (height - CLIP_PX),
+     astfel overflow:hidden ascunde ultimii CLIP_PX = branding-ul.
+     Masca CSS ::after acoperă imediat branding-ul înainte ca JS-ul să ruleze. */
+  var clip   = document.getElementById('webinar-clip');
+  var iframe = document.getElementById('webinar-iframe');
+  if (!clip || !iframe) return;
 
-  function clipBranding() {
-    var h = parseInt(iframe.getAttribute('height') || iframe.offsetHeight, 10);
-    if (h > 100) {
-      wrap.style.height = (h - 44) + 'px';
-    }
+  function applyClip() {
+    var h = parseInt(iframe.getAttribute('height') || '0', 10);
+    if (h > 150) clip.style.height = (h - CLIP_PX) + 'px';
   }
 
-  if (iframe) {
-    /* Dacă înălțimea e deja setată */
-    if (parseInt(iframe.getAttribute('height'), 10) > 100) {
-      clipBranding();
-    }
-    /* Observăm orice modificare ulterioară a atributului height */
-    var mo = new MutationObserver(function (mutations) {
-      mutations.forEach(function (m) {
-        if (m.attributeName === 'height') clipBranding();
-      });
+  /* MutationObserver — detectează când Tally setează height-ul */
+  new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.attributeName === 'height') applyClip();
     });
-    mo.observe(iframe, { attributes: true, attributeFilter: ['height'] });
-  }
+  }).observe(iframe, { attributes: true, attributeFilter: ['height'] });
+
+  /* Polling fallback — rulează la 0.5s, 1.5s, 3s, 6s după load */
+  [500, 1500, 3000, 6000].forEach(function (t) { setTimeout(applyClip, t); });
 }());
 </script>
 
