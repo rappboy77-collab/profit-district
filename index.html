@@ -1346,7 +1346,7 @@
     }
 
     .webinar-card-wrap {
-      max-width: 740px;
+      max-width: 680px;
       margin: 0 auto;
     }
 
@@ -1354,7 +1354,7 @@
       position: relative;
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       box-shadow: var(--shadow-card);
     }
@@ -1366,21 +1366,10 @@
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       z-index: 1;
     }
-    /* Banner imagine webinar */
-    .webinar-banner {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      object-position: center 40%;
-      display: block;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
     .webinar-embed-wrap {
-      padding: 0.25rem 0.75rem 0;
+      padding: 0.5rem 1.25rem 0;
       position: relative;
       overflow: hidden;
-      /* înălțimea e setată dinamic de JS după ce Tally încarcă */
     }
     .webinar-embed-wrap iframe {
       display: block;
@@ -1841,15 +1830,6 @@
     <div class="webinar-card-wrap" data-reveal>
 
       <div class="webinar-card">
-
-        <!-- Banner imagine -->
-        <img
-          src="webinar-banner.jpg"
-          alt="Webinar Live — Profit District"
-          class="webinar-banner"
-          loading="lazy"
-          onerror="this.style.display='none'"
-        >
 
         <!-- Embed iframe (vizibil înainte de submit) -->
         <div id="webinar-embed" class="webinar-embed-wrap">
