@@ -1338,54 +1338,90 @@
     /* ─────────────────────────────────────────
        WEBINAR SECTION
     ───────────────────────────────────────── */
-    /* ─── WEBINAR SECTION ─── */
     #webinar {
       background: var(--bg-surface);
       padding: 6.5rem 1.5rem;
       position: relative;
       overflow: hidden;
     }
-    .webinar-card-wrap {
-      max-width: 680px;
-      margin: 0 auto;
+
+    .webinar-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
     }
+    @media (min-width: 900px) {
+      .webinar-layout {
+        grid-template-columns: 1fr 1.15fr;
+        gap: 5rem;
+        align-items: start;
+      }
+    }
+
+    .webinar-features {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .webinar-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+    .webinar-feature h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .webinar-feature p {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
     .webinar-card {
       position: relative;
       background: var(--bg-elevated);
-      border: 1px solid var(--border-mid);
-      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: var(--shadow-card), 0 0 40px rgba(201,168,76,0.06);
+      box-shadow: var(--shadow-card);
     }
-    /* Linie gold animată în top */
     .webinar-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      z-index: 2;
-      pointer-events: none;
+      z-index: 1;
     }
-    #webinar-clip {
+    .webinar-embed-wrap {
+      padding: 0.25rem 0.75rem 0.75rem;
       position: relative;
     }
-    #webinar-clip iframe {
+    .webinar-embed-wrap iframe {
       display: block;
       width: 100%;
+      min-height: 340px;
       border: none;
     }
-    /* Overlay vizual — acoperă "Made with Tally" fără să atingă formularul */
-    .tally-mask {
+    /* Overlay care acoperă "Made with Tally" — pointer-events:none păstrează formularul funcțional */
+    .webinar-embed-wrap::after {
+      content: '';
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 50px;
+      bottom: 0.75rem; left: 0.75rem; right: 0.75rem;
+      height: 48px;
       background: var(--bg-elevated);
-      z-index: 10;
-      pointer-events: none; /* clicurile trec prin el — formularul rămâne 100% funcțional */
+      z-index: 5;
+      pointer-events: none;
     }
 
-    /* Mesaj confirmare */
+    /* Success state */
     #webinar-success {
       padding: 3.5rem 2rem;
       text-align: center;
@@ -1834,26 +1870,69 @@
       <p class="sub">Sesiuni live cu traderi cu experiență. Analize reale, strategii aplicabile și Q&A direct — o dată la 2 săptămâni.</p>
     </div>
 
-    <div class="webinar-card-wrap" data-reveal>
+    <div class="webinar-layout" data-reveal>
+
+      <!-- Stânga: beneficii -->
+      <div class="webinar-features">
+
+        <div class="webinar-feature" data-stagger>
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          </div>
+          <div>
+            <h3>Sesiune Live</h3>
+            <p>Analiză live a pieței cu traderi cu istoric verificat. Intrări, ieșiri și raționament explicat în timp real.</p>
+          </div>
+        </div>
+
+        <div class="webinar-feature" data-stagger>
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h3>Q&amp;A Direct</h3>
+            <p>Pui orice întrebare, live. Primești răspuns direct de la mentori — nu de la un bot, nu dintr-un FAQ.</p>
+          </div>
+        </div>
+
+        <div class="webinar-feature" data-stagger>
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div>
+            <h3>Înregistrare Disponibilă</h3>
+            <p>Nu poți participa live? Vei primi înregistrarea completă după sesiune, la adresa de email înregistrată.</p>
+          </div>
+        </div>
+
+        <div class="webinar-feature" data-stagger>
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h3>100% Gratuit</h3>
+            <p>Fără abonament, fără card. Te înscrii, primești confirmarea și intri direct la sesiune cu linkul din email.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dreapta: formular Tally embed -->
       <div class="webinar-card">
 
-        <div id="webinar-clip">
+        <div id="webinar-embed" class="webinar-embed-wrap">
           <iframe
-            id="webinar-iframe"
             data-tally-src="https://tally.so/embed/81MEgY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
             loading="lazy"
             width="100%"
-            height="500"
+            height="400"
             frameborder="0"
             marginheight="0"
             marginwidth="0"
             title="Înscrie-te la Webinar — Profit District"
           ></iframe>
-          <!-- Overlay care acoperă "Made with Tally" — nu blochează formularul -->
-          <div class="tally-mask" aria-hidden="true"></div>
         </div>
 
-        <!-- Confirmare după submit -->
         <div id="webinar-success" style="display:none;" role="status" aria-live="polite">
           <div class="webinar-check" aria-hidden="true">
             <svg width="26" height="26" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
@@ -1867,6 +1946,7 @@
         </div>
 
       </div>
+
     </div>
   </div>
 </section>
@@ -2379,15 +2459,14 @@
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
 (function () {
-  /* Confirmare nativă după submit */
   window.addEventListener('message', function (e) {
-    var d;
-    try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
-    if (!d) return;
-    if (d.type === 'tally-form-submitted' || d.type === 'TallyFormSubmitted') {
-      var clip    = document.getElementById('webinar-clip');
+    var data;
+    try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
+    if (!data) return;
+    if (data.type === 'tally-form-submitted' || data.type === 'TallyFormSubmitted') {
+      var embed   = document.getElementById('webinar-embed');
       var success = document.getElementById('webinar-success');
-      if (clip)    clip.style.display    = 'none';
+      if (embed)   embed.style.display   = 'none';
       if (success) success.style.display = 'block';
     }
   });
