@@ -1345,43 +1345,9 @@
       overflow: hidden;
     }
 
-    .webinar-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3.5rem;
-    }
-    @media (min-width: 900px) {
-      .webinar-layout {
-        grid-template-columns: 1fr 1.15fr;
-        gap: 5rem;
-        align-items: start;
-      }
-    }
-
-    .webinar-features {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .webinar-feature {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.25rem;
-    }
-    .webinar-feature h3 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-      margin-bottom: 0.3rem;
-    }
-    .webinar-feature p {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 300;
-      font-size: 0.85rem;
-      line-height: 1.65;
-      color: var(--text-secondary);
+    .webinar-card-wrap {
+      max-width: 740px;
+      margin: 0 auto;
     }
 
     .webinar-card {
@@ -1413,20 +1379,14 @@
     .webinar-embed-wrap {
       padding: 0.25rem 0.75rem 0;
       position: relative;
+      overflow: hidden;
+      /* înălțimea e setată dinamic de JS după ce Tally încarcă */
     }
     .webinar-embed-wrap iframe {
       display: block;
       width: 100%;
       min-height: 340px;
       border: none;
-    }
-    /* Acoperă branding-ul "Made with Tally" fără a afecta butonul de submit */
-    .webinar-tally-mask {
-      height: 44px;
-      background: var(--bg-elevated);
-      margin-top: -44px;
-      position: relative;
-      z-index: 10;
     }
 
     /* Success state */
@@ -1878,54 +1838,8 @@
       <p class="sub">Sesiuni live cu traderi cu experiență. Analize reale, strategii aplicabile și Q&A direct — o dată la 2 săptămâni.</p>
     </div>
 
-    <div class="webinar-layout" data-reveal>
+    <div class="webinar-card-wrap" data-reveal>
 
-      <!-- Stânga: beneficii -->
-      <div class="webinar-features">
-
-        <div class="webinar-feature" data-stagger>
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-          </div>
-          <div>
-            <h3>Sesiune Live</h3>
-            <p>Analiză live a pieței cu traderi cu istoric verificat. Intrări, ieșiri și raționament explicat în timp real.</p>
-          </div>
-        </div>
-
-        <div class="webinar-feature" data-stagger>
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div>
-            <h3>Q&amp;A Direct</h3>
-            <p>Pui orice întrebare, live. Primești răspuns direct de la mentori — nu de la un bot, nu dintr-un FAQ.</p>
-          </div>
-        </div>
-
-        <div class="webinar-feature" data-stagger>
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <div>
-            <h3>Înregistrare Disponibilă</h3>
-            <p>Nu poți participa live? Vei primi înregistrarea completă după sesiune, la adresa de email înregistrată.</p>
-          </div>
-        </div>
-
-        <div class="webinar-feature" data-stagger>
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <div>
-            <h3>100% Gratuit</h3>
-            <p>Fără abonament, fără card. Te înscrii, primești confirmarea și intri direct la sesiune cu linkul din email.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Dreapta: formular Tally embed -->
       <div class="webinar-card">
 
         <!-- Banner imagine -->
@@ -1949,8 +1863,6 @@
             marginwidth="0"
             title="Înscrie-te la Webinar — Profit District"
           ></iframe>
-          <!-- Maschează branding-ul Tally fără a acoperi butonul de submit -->
-          <div class="webinar-tally-mask" aria-hidden="true"></div>
         </div>
 
         <!-- Mesaj confirmare (ascuns, afișat după submit) -->
@@ -2480,6 +2392,7 @@
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
 (function () {
+  /* ── 1. Confirmare după submit ── */
   window.addEventListener('message', function (e) {
     var data;
     try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
@@ -2491,6 +2404,34 @@
       if (success) success.style.display = 'block';
     }
   });
+
+  /* ── 2. Ascunde branding "Made with Tally" prin clipping precis ──
+     Tally embed.js setează atributul height pe iframe după ce se încarcă.
+     Observăm acea modificare și reducem înălțimea containerului cu 44px,
+     astfel butonul submit rămâne complet vizibil. */
+  var wrap   = document.getElementById('webinar-embed');
+  var iframe = wrap ? wrap.querySelector('iframe') : null;
+
+  function clipBranding() {
+    var h = parseInt(iframe.getAttribute('height') || iframe.offsetHeight, 10);
+    if (h > 100) {
+      wrap.style.height = (h - 44) + 'px';
+    }
+  }
+
+  if (iframe) {
+    /* Dacă înălțimea e deja setată */
+    if (parseInt(iframe.getAttribute('height'), 10) > 100) {
+      clipBranding();
+    }
+    /* Observăm orice modificare ulterioară a atributului height */
+    var mo = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        if (m.attributeName === 'height') clipBranding();
+      });
+    });
+    mo.observe(iframe, { attributes: true, attributeFilter: ['height'] });
+  }
 }());
 </script>
 
