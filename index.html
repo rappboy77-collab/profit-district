@@ -1427,8 +1427,7 @@
       color: var(--gold-dim);
       margin-bottom: 0.2rem;
     }
-    #webinar-embed-wrap { transition: opacity 0.3s ease; }
-    #webinar-embed-wrap.gated { opacity: 0.25; pointer-events: none; filter: blur(2px); }
+    .webinar-gdpr-gate { border-top: 1px solid var(--border-subtle); margin-top: 0.25rem; }
 
     /* ─────────────────────────────────────────
        COOKIE BANNER
@@ -1997,11 +1996,6 @@
         <span>6 Sisteme Active &nbsp;·&nbsp; Toate Verificate Public</span>
       </div>
 
-      <div class="ct-risk-warning" role="note">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dim)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <p>Copytrading-ul implică riscuri financiare. Performanțele istorice ale traderilor nu reprezintă o garanție a rezultatelor viitoare. Investiți doar capital pe care vă permiteți să îl pierdeți.</p>
-      </div>
-
     <div class="systems-grid">
 
       <!-- 1. HANE — RECOMANDAT -->
@@ -2172,6 +2166,11 @@
       </article>
 
     </div>
+
+      <div class="ct-risk-warning" role="note" style="margin-top:1.5rem;margin-bottom:0;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dim)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p>Copytrading-ul implică riscuri financiare. Performanțele istorice ale traderilor nu reprezintă o garanție a rezultatelor viitoare. Investiți doar capital pe care vă permiteți să îl pierdeți.</p>
+      </div>
     </div><!-- /.copytrading-group -->
   </div>
 </section>
@@ -2238,7 +2237,20 @@
       <!-- Dreapta: formular Tally embed -->
       <div class="webinar-card">
 
-        <!-- GDPR gate — trebuie bifat înainte de a accesa formularul -->
+        <div id="webinar-embed-wrap" class="webinar-embed-wrap">
+          <iframe
+            data-tally-src="https://tally.so/embed/81MEgY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+            loading="lazy"
+            width="100%"
+            height="400"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            title="Înscrie-te la Webinar — Profit District"
+          ></iframe>
+        </div>
+
+        <!-- GDPR — după formular -->
         <div class="webinar-gdpr-gate" id="webinar-gdpr-gate">
           <p class="webinar-gdpr-title">Consimțământ GDPR</p>
 
@@ -2256,19 +2268,6 @@
               Doresc să primesc notificări despre webinarii viitoare, materiale educaționale și actualizări prin email. <span style="color:var(--text-tertiary);font-size:0.72rem;">(Opțional)</span>
             </label>
           </div>
-        </div>
-
-        <div id="webinar-embed-wrap" class="webinar-embed-wrap gated">
-          <iframe
-            data-tally-src="https://tally.so/embed/81MEgY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-            loading="lazy"
-            width="100%"
-            height="400"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            title="Înscrie-te la Webinar — Profit District"
-          ></iframe>
         </div>
 
         <div id="webinar-success" style="display:none;" role="status" aria-live="polite">
@@ -2866,29 +2865,6 @@
 })();
 </script>
 
-<!-- ═══════════════════════════════════════
-     WEBINAR GDPR GATE JS
-════════════════════════════════════════ -->
-<script>
-(function () {
-  var gdpr     = document.getElementById('gdpr-webinar');
-  var mkt      = document.getElementById('gdpr-webinar-marketing');
-  var wrap     = document.getElementById('gdpr-webinar-wrap');
-  var embedWrap = document.getElementById('webinar-embed-wrap');
-  if (!gdpr || !embedWrap) return;
-
-  gdpr.addEventListener('change', function () {
-    if (gdpr.checked) {
-      wrap && wrap.classList.remove('gdpr-error');
-      embedWrap.classList.remove('gated');
-      /* Încarcă Tally după consimțământ */
-      if (window.Tally) window.Tally.loadEmbeds();
-    } else {
-      embedWrap.classList.add('gated');
-    }
-  });
-})();
-</script>
 
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
