@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Politica Cookies — Profit District</title>
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Outfit:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-base: #0a0a0b; --bg-surface: #111113; --bg-elevated: #18181b;
+      --gold: #c9a84c; --gold-dim: #8a6e2f;
+      --green: #00ff88; --green-dim: rgba(0,255,136,0.12);
+      --text-primary: #f0ece0; --text-secondary: #a09880; --text-tertiary: #5c5848;
+      --border-subtle: rgba(201,168,76,0.10); --border-mid: rgba(201,168,76,0.22);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-base); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.7; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,11,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { width: 28px; height: 28px; object-fit: contain; }
+    .nav-logo span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--gold); letter-spacing: 0.04em; }
+    .nav-back { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s ease; }
+    .nav-back:hover { color: var(--gold); }
+    .page-wrap { max-width: 760px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+    .page-label { font-family: 'DM Mono', monospace; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); display: block; margin-bottom: 0.6rem; }
+    h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 0.5rem; line-height: 1.15; }
+    .page-meta { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-subtle); }
+    h2 { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--text-primary); margin: 2.5rem 0 0.75rem; letter-spacing: -0.01em; }
+    p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.875rem; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { font-weight: 500; color: var(--text-primary); }
+
+    /* Cookie table */
+    .cookie-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0 1.5rem; font-size: 0.82rem; }
+    .cookie-table th { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-dim); text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-mid); }
+    .cookie-table td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); vertical-align: top; }
+    .cookie-table tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px; }
+    .badge-essential { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .badge-analytics { background: var(--green-dim); color: var(--green); }
+
+    /* Manage btn */
+    .manage-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-elevated); border: 1px solid var(--border-mid); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 500; padding: 0.6rem 1.25rem; border-radius: 5px; cursor: pointer; text-decoration: none; margin-top: 0.5rem; transition: background 0.2s ease, border-color 0.2s ease; }
+    .manage-btn:hover { background: var(--bg-floating); border-color: var(--border-strong); text-decoration: none; }
+
+    footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 2rem 1.5rem; text-align: center; }
+    footer p { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-tertiary); letter-spacing: 0.05em; }
+    footer a { color: var(--text-tertiary); }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo/logo.png" alt="Profit District">
+    <span>Profit District</span>
+  </a>
+  <a href="index.html" class="nav-back">← Înapoi la site</a>
+</nav>
+
+<div class="page-wrap">
+  <span class="page-label">Legal</span>
+  <h1>Politica Cookies</h1>
+  <p class="page-meta">Ultima actualizare: 27 mai 2026 &nbsp;·&nbsp; Versiunea 1.0</p>
+
+  <h2>Ce sunt cookies?</h2>
+  <p>Cookies sunt fișiere text mici stocate în browserul tău când vizitezi un site. Ele permit site-ului să îți memoreze preferințele și să funcționeze corect între vizite.</p>
+
+  <h2>Ce cookies folosim</h2>
+
+  <table class="cookie-table">
+    <thead>
+      <tr>
+        <th>Nume</th>
+        <th>Tip</th>
+        <th>Scop</th>
+        <th>Durată</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>pd_cookie_consent</strong></td>
+        <td><span class="badge badge-essential">Esențial</span></td>
+        <td>Salvează preferințele tale de cookies pentru a nu afișa bannerul la fiecare vizită</td>
+        <td>1 an (localStorage)</td>
+      </tr>
+      <tr>
+        <td><strong>Cookies Tally</strong></td>
+        <td><span class="badge badge-essential">Esențial</span></td>
+        <td>Necesare pentru funcționarea formularului de webinar (prevenire spam, sesiune)</td>
+        <td>Sesiune</td>
+      </tr>
+      <tr>
+        <td><strong>_ga, _ga_*</strong></td>
+        <td><span class="badge badge-analytics">Analitic</span></td>
+        <td>Google Analytics — urmărește comportamentul vizitatorilor (pagini, timp petrecut)</td>
+        <td>2 ani</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Notă:</strong> Cookies analitice sunt activate <strong>doar dacă ai acceptat</strong> prin bannerul de consimțământ. Cookies esențiale funcționează fără consimțământ deoarece sunt strict necesare.</p>
+
+  <h2>Gestionează preferințele</h2>
+  <p>Poți modifica preferințele oricând apăsând butonul de mai jos, care va șterge consimțământul salvat și va redeschide opțiunile:</p>
+  <a href="index.html#" class="manage-btn" onclick="localStorage.removeItem('pd_cookie_consent'); window.location='index.html'; return false;">
+    Resetează preferințele cookies
+  </a>
+
+  <h2>Cookies terți</h2>
+  <p>Serviciile integrate pot seta propriile cookies:</p>
+  <ul style="list-style:none;padding:0;">
+    <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Tally.so</strong> — formularul de webinar. <a href="https://tally.so/help/privacy-policy" target="_blank" rel="noopener">Politica Tally</a></li>
+    <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Google Analytics</strong> — analiza traficului (dacă este activat). <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politica Google</a></li>
+    <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Google Fonts</strong> — fonturile site-ului (poate înregistra IP-ul, fără cookies persistente)</li>
+  </ul>
+
+  <h2>Cum dezactivezi cookies din browser</h2>
+  <p>Poți dezactiva cookies direct din setările browserului. Reține că dezactivarea cookies esențiale poate afecta funcționarea site-ului:</p>
+  <ul>
+    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+    <li><a href="https://support.mozilla.org/ro/kb/activarea-si-dezactivarea-cookie-urilor" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+    <li><a href="https://support.apple.com/ro-ro/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+    <li><a href="https://support.microsoft.com/ro-ro/microsoft-edge/ștergerea-cookie-urilor-în-microsoft-edge" target="_blank" rel="noopener">Microsoft Edge</a></li>
+  </ul>
+
+  <h2>Contact</h2>
+  <p>Întrebări despre utilizarea cookies: <a href="mailto:haneloreandreea@yahoo.com">haneloreandreea@yahoo.com</a></p>
+</div>
+
+<footer>
+  <p>© <script>document.write(new Date().getFullYear())</script> Profit District &nbsp;·&nbsp; <a href="index.html">Acasă</a> &nbsp;·&nbsp; <a href="politica-confidentialitate.html">Confidențialitate</a> &nbsp;·&nbsp; <a href="termeni-si-conditii.html">Termeni</a></p>
+</footer>
+
+</body>
+</html>

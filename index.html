@@ -1336,6 +1336,275 @@
     .footer-social svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
 
     /* ─────────────────────────────────────────
+       GDPR CHECKBOX
+    ───────────────────────────────────────── */
+    .gdpr-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: rgba(201,168,76,0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+    .gdpr-field:hover { border-color: var(--border-mid); }
+    .gdpr-field.gdpr-error { border-color: rgba(255,92,92,0.55) !important; background: rgba(255,92,92,0.04); }
+    .gdpr-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px; height: 18px; min-width: 18px;
+      border: 1.5px solid var(--border-mid);
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      cursor: pointer;
+      position: relative;
+      margin-top: 2px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      flex-shrink: 0;
+    }
+    .gdpr-checkbox:checked { background: var(--gold); border-color: var(--gold); }
+    .gdpr-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 5px;
+      width: 5px; height: 9px;
+      border: 2px solid var(--bg-base);
+      border-top: none; border-left: none;
+      transform: rotate(45deg);
+    }
+    .gdpr-checkbox:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .gdpr-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.775rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .gdpr-label a { color: var(--gold); text-decoration: none; }
+    .gdpr-label a:hover { text-decoration: underline; }
+
+    /* ─────────────────────────────────────────
+       COPYTRADING RISK WARNING
+    ───────────────────────────────────────── */
+    .ct-risk-warning {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-left: 3px solid var(--gold-dim);
+      border-radius: 6px;
+      padding: 0.875rem 1rem;
+      margin-bottom: 2rem;
+    }
+    .ct-risk-warning svg { flex-shrink: 0; margin-top: 1px; }
+    .ct-risk-warning p {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.775rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* ─────────────────────────────────────────
+       WEBINAR GDPR GATE
+    ───────────────────────────────────────── */
+    .webinar-gdpr-gate {
+      padding: 1.25rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .webinar-gdpr-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.2rem;
+    }
+    #webinar-embed-wrap { transition: opacity 0.3s ease; }
+    #webinar-embed-wrap.gated { opacity: 0.25; pointer-events: none; filter: blur(2px); }
+
+    /* ─────────────────────────────────────────
+       COOKIE BANNER
+    ───────────────────────────────────────── */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 9000;
+      background: rgba(17,17,19,0.97);
+      border-top: 1px solid var(--border-mid);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      transform: translateY(110%);
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    #cookie-banner.visible { transform: translateY(0); }
+    .cookie-text {
+      flex: 1;
+      min-width: 200px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .cookie-text a { color: var(--gold); text-decoration: none; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; flex-shrink: 0; }
+    .cookie-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.48rem 0.95rem;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--gold); color: var(--bg-base); }
+    .cookie-btn-accept:hover { background: var(--gold-bright); }
+    .cookie-btn-refuse { background: transparent; color: var(--text-secondary); border-color: var(--border-mid); }
+    .cookie-btn-refuse:hover { color: var(--text-primary); border-color: var(--border-strong); }
+    .cookie-btn-customize { background: transparent; color: var(--text-tertiary); border-color: transparent; text-decoration: underline; font-weight: 300; }
+    .cookie-btn-customize:hover { color: var(--text-secondary); }
+
+    /* Cookie Modal */
+    #cookie-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9100;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    #cookie-modal.open { display: flex; }
+    .cookie-modal-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.65);
+    }
+    .cookie-modal-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .cookie-modal-sub {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+    .cookie-toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.875rem 0;
+      border-top: 1px solid var(--border-subtle);
+      gap: 1rem;
+    }
+    .cookie-toggle-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
+    }
+    .cookie-toggle-info p {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.73rem;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+    .cookie-toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .cookie-toggle input { display: none; }
+    .cookie-toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-floating);
+      border: 1px solid var(--border-mid);
+      border-radius: 11px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .cookie-toggle-slider::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 14px; height: 14px;
+      background: var(--text-tertiary);
+      border-radius: 50%;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .cookie-toggle input:checked + .cookie-toggle-slider { background: var(--gold); border-color: var(--gold); }
+    .cookie-toggle input:checked + .cookie-toggle-slider::after { transform: translateX(18px); background: var(--bg-base); }
+    .cookie-toggle input:disabled + .cookie-toggle-slider { opacity: 0.55; cursor: not-allowed; }
+    .cookie-modal-actions {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER LEGAL GRID
+    ───────────────────────────────────────── */
+    .footer-legal-grid {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .footer-legal-col h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.55rem;
+    }
+    .footer-legal-col a,
+    .footer-legal-col p {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      line-height: 2.1;
+      transition: color 0.2s ease;
+    }
+    .footer-legal-col a:hover { color: var(--gold); }
+
+    /* ─────────────────────────────────────────
        WEBINAR SECTION
     ───────────────────────────────────────── */
     #webinar {
@@ -1461,6 +1730,53 @@
 <div id="grain" aria-hidden="true"></div>
 
 <!-- ═══════════════════════════════════════
+     COOKIE BANNER
+════════════════════════════════════════ -->
+<div id="cookie-banner" role="region" aria-label="Consimțământ cookies">
+  <p class="cookie-text">
+    Folosim cookies esențiale pentru funcționarea site-ului. Cu acordul tău, putem activa și cookies analitice.
+    <a href="politica-cookies.html">Politica Cookies</a> &nbsp;·&nbsp; <a href="politica-confidentialitate.html">Confidențialitate</a>
+  </p>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Accept toate</button>
+    <button class="cookie-btn cookie-btn-refuse" id="cookie-refuse">Refuz</button>
+    <button class="cookie-btn cookie-btn-customize" id="cookie-customize">Personalizează</button>
+  </div>
+</div>
+
+<!-- Cookie Modal -->
+<div id="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title">
+  <div class="cookie-modal-box">
+    <p class="cookie-modal-title" id="cookie-modal-title">Setări Cookies</p>
+    <p class="cookie-modal-sub">Alege ce categorii de cookies accepți. Cookies esențiale nu pot fi dezactivate — sunt necesare pentru funcționarea site-ului.</p>
+    <div class="cookie-toggle-row">
+      <div class="cookie-toggle-info">
+        <h4>Esențiale</h4>
+        <p>Necesare pentru funcționarea site-ului. Nu pot fi dezactivate.</p>
+      </div>
+      <label class="cookie-toggle">
+        <input type="checkbox" checked disabled>
+        <span class="cookie-toggle-slider"></span>
+      </label>
+    </div>
+    <div class="cookie-toggle-row">
+      <div class="cookie-toggle-info">
+        <h4>Analitice</h4>
+        <p>Ne ajută să înțelegem cum este utilizat site-ul (ex: Google Analytics).</p>
+      </div>
+      <label class="cookie-toggle">
+        <input type="checkbox" id="cookie-analytics">
+        <span class="cookie-toggle-slider"></span>
+      </label>
+    </div>
+    <div class="cookie-modal-actions">
+      <button class="cookie-btn cookie-btn-accept" id="cookie-save-pref">Salvează preferințele</button>
+      <button class="cookie-btn cookie-btn-refuse" id="cookie-modal-close">Închide</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
      NAVBAR
 ════════════════════════════════════════ -->
 <nav id="navbar" aria-label="Navigare principală">
@@ -1538,6 +1854,14 @@
       <div class="field-group">
         <label for="email">Adresă de Email</label>
         <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+      </div>
+
+      <div class="gdpr-field" id="gdpr-mentorship-wrap">
+        <input type="checkbox" class="gdpr-checkbox" id="gdpr-mentorship" name="gdpr_consent">
+        <label for="gdpr-mentorship" class="gdpr-label">
+          Sunt de acord cu prelucrarea datelor mele personale pentru analizarea aplicației și pentru a fi contactat de echipa Profit District, conform
+          <a href="politica-confidentialitate.html" target="_blank">Politicii de Confidențialitate</a>.
+        </label>
       </div>
 
       <button type="submit" class="btn-primary btn-full" style="font-size:0.95rem; padding:1rem 1.75rem;">
@@ -1671,6 +1995,11 @@
       <div class="copytrading-group-header">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         <span>6 Sisteme Active &nbsp;·&nbsp; Toate Verificate Public</span>
+      </div>
+
+      <div class="ct-risk-warning" role="note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dim)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p>Copytrading-ul implică riscuri financiare. Performanțele istorice ale traderilor nu reprezintă o garanție a rezultatelor viitoare. Investiți doar capital pe care vă permiteți să îl pierdeți.</p>
       </div>
 
     <div class="systems-grid">
@@ -1909,7 +2238,27 @@
       <!-- Dreapta: formular Tally embed -->
       <div class="webinar-card">
 
-        <div id="webinar-embed" class="webinar-embed-wrap">
+        <!-- GDPR gate — trebuie bifat înainte de a accesa formularul -->
+        <div class="webinar-gdpr-gate" id="webinar-gdpr-gate">
+          <p class="webinar-gdpr-title">Consimțământ GDPR</p>
+
+          <div class="gdpr-field" id="gdpr-webinar-wrap">
+            <input type="checkbox" class="gdpr-checkbox" id="gdpr-webinar">
+            <label for="gdpr-webinar" class="gdpr-label">
+              Sunt de acord cu prelucrarea datelor mele personale pentru gestionarea înscrierii și participării la webinar, conform
+              <a href="politica-confidentialitate.html" target="_blank">Politicii de Confidențialitate</a>. <strong style="color:var(--gold-dim);font-weight:500;">*Obligatoriu</strong>
+            </label>
+          </div>
+
+          <div class="gdpr-field" id="gdpr-webinar-marketing-wrap" style="background:transparent;">
+            <input type="checkbox" class="gdpr-checkbox" id="gdpr-webinar-marketing">
+            <label for="gdpr-webinar-marketing" class="gdpr-label">
+              Doresc să primesc notificări despre webinarii viitoare, materiale educaționale și actualizări prin email. <span style="color:var(--text-tertiary);font-size:0.72rem;">(Opțional)</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="webinar-embed-wrap" class="webinar-embed-wrap gated">
           <iframe
             data-tally-src="https://tally.so/embed/81MEgY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
             loading="lazy"
@@ -2077,9 +2426,25 @@
         Discord
       </a>
     </div>
+
+    <div class="footer-legal-grid">
+      <div class="footer-legal-col">
+        <h4>Legal</h4>
+        <a href="politica-confidentialitate.html">Politica de Confidențialitate</a>
+        <a href="termeni-si-conditii.html">Termeni și Condiții</a>
+        <a href="politica-cookies.html">Politica Cookies</a>
+      </div>
+      <div class="footer-legal-col">
+        <h4>Contact</h4>
+        <a href="mailto:haneloreandreea@yahoo.com">haneloreandreea@yahoo.com</a>
+        <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://discord.gg/cWjgpvSqvT" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+
     <p class="footer-copy">© <span id="footer-year">2026</span> Profit District · Toate Drepturile Rezervate</p>
     <p class="footer-disclaimer">
-      Tranzacționarea instrumentelor financiare implică un risc semnificativ de pierdere. Performanța trecută a oricărui sistem sau metodologii de trading nu este neapărat indicativă pentru rezultatele viitoare. Informațiile prezentate pe acest site au scop exclusiv educațional și nu constituie consiliere financiară. Tranzacționați responsabil, doar cu capital pe care vă permiteți să îl pierdeți.
+      Profit District oferă exclusiv conținut educațional și informațional. Informațiile prezentate pe site, în comunitate, în webinarii sau în materialele distribuite nu reprezintă recomandări de investiții, consultanță financiară, juridică sau fiscală. Tranzacționarea instrumentelor financiare implică riscuri semnificative, inclusiv riscul pierderii integrale a capitalului investit. Performanțele anterioare nu garantează rezultate viitoare. Fiecare participant este responsabil pentru propriile decizii financiare și trebuie să efectueze propria analiză înainte de orice investiție.
     </p>
   </div>
 </footer>
@@ -2101,14 +2466,15 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    var name   = form.querySelector('#name');
-    var handle = form.querySelector('#handle');
-    var email  = form.querySelector('#email');
-    var valid  = true;
+    var name    = form.querySelector('#name');
+    var handle  = form.querySelector('#handle');
+    var email   = form.querySelector('#email');
+    var gdpr    = form.querySelector('#gdpr-mentorship');
+    var gdprWrap = document.getElementById('gdpr-mentorship-wrap');
+    var valid   = true;
 
-    [name, handle, email].forEach(function (el) {
-      el.style.boxShadow = '';
-    });
+    [name, handle, email].forEach(function (el) { el.style.boxShadow = ''; });
+    if (gdprWrap) gdprWrap.classList.remove('gdpr-error');
 
     if (!name.value.trim()) {
       name.style.boxShadow = '0 0 0 2px rgba(255,92,92,0.55)';
@@ -2124,6 +2490,11 @@
     if (!emailRe.test(email.value.trim())) {
       email.style.boxShadow = '0 0 0 2px rgba(255,92,92,0.55)';
       if (valid) email.focus();
+      valid = false;
+    }
+    if (gdpr && !gdpr.checked) {
+      if (gdprWrap) gdprWrap.classList.add('gdpr-error');
+      if (valid) gdprWrap && gdprWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
       valid = false;
     }
 
@@ -2143,7 +2514,10 @@
         subject: 'Aplicatie 30 Days Mentorship - Profit District',
         nume: name.value.trim(),
         username: handle.value.trim(),
-        email: email.value.trim()
+        email: email.value.trim(),
+        gdpr_consimtamant: 'DA',
+        gdpr_versiune: 'v1.0-2026-05-27',
+        gdpr_timestamp: new Date().toISOString()
       })
     })
     .then(function (res) { return res.json(); })
@@ -2445,6 +2819,77 @@
 <!-- ═══════════════════════════════════════
      TALLY EMBED — inițializare + confirmare nativă
 ════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════
+     COOKIE BANNER JS
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var CONSENT_KEY = 'pd_cookie_consent';
+  var banner  = document.getElementById('cookie-banner');
+  var modal   = document.getElementById('cookie-modal');
+
+  function saveConsent(analytics) {
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      analytics: !!analytics,
+      ts: new Date().toISOString()
+    }));
+    hideBanner();
+  }
+
+  function hideBanner() {
+    if (banner) { banner.classList.remove('visible'); }
+  }
+
+  /* Show banner if no consent stored */
+  if (!localStorage.getItem(CONSENT_KEY)) {
+    setTimeout(function () {
+      if (banner) banner.classList.add('visible');
+    }, 900);
+  }
+
+  document.getElementById('cookie-accept') && document.getElementById('cookie-accept').addEventListener('click', function () { saveConsent(true); });
+  document.getElementById('cookie-refuse') && document.getElementById('cookie-refuse').addEventListener('click', function () { saveConsent(false); });
+  document.getElementById('cookie-customize') && document.getElementById('cookie-customize').addEventListener('click', function () {
+    if (modal) modal.classList.add('open');
+  });
+  document.getElementById('cookie-save-pref') && document.getElementById('cookie-save-pref').addEventListener('click', function () {
+    var analytics = document.getElementById('cookie-analytics');
+    saveConsent(analytics && analytics.checked);
+    if (modal) modal.classList.remove('open');
+  });
+  document.getElementById('cookie-modal-close') && document.getElementById('cookie-modal-close').addEventListener('click', function () {
+    if (modal) modal.classList.remove('open');
+  });
+  modal && modal.addEventListener('click', function (e) {
+    if (e.target === modal) modal.classList.remove('open');
+  });
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     WEBINAR GDPR GATE JS
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var gdpr     = document.getElementById('gdpr-webinar');
+  var mkt      = document.getElementById('gdpr-webinar-marketing');
+  var wrap     = document.getElementById('gdpr-webinar-wrap');
+  var embedWrap = document.getElementById('webinar-embed-wrap');
+  if (!gdpr || !embedWrap) return;
+
+  gdpr.addEventListener('change', function () {
+    if (gdpr.checked) {
+      wrap && wrap.classList.remove('gdpr-error');
+      embedWrap.classList.remove('gated');
+      /* Încarcă Tally după consimțământ */
+      if (window.Tally) window.Tally.loadEmbeds();
+    } else {
+      embedWrap.classList.add('gated');
+    }
+  });
+})();
+</script>
+
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
 (function () {
@@ -2453,9 +2898,11 @@
     try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
     if (!data) return;
     if (data.type === 'tally-form-submitted' || data.type === 'TallyFormSubmitted') {
-      var embed   = document.getElementById('webinar-embed');
+      var embed   = document.getElementById('webinar-embed-wrap');
+      var gate    = document.getElementById('webinar-gdpr-gate');
       var success = document.getElementById('webinar-success');
       if (embed)   embed.style.display   = 'none';
+      if (gate)    gate.style.display    = 'none';
       if (success) success.style.display = 'block';
     }
   });
