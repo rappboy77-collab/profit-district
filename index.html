@@ -2499,19 +2499,19 @@
 
     var errorEl = document.getElementById('form-error');
 
+    var fd = new FormData();
+    fd.append('access_key', '63f632b0-d0d3-4272-9069-1d7d03ec02b3');
+    fd.append('subject', 'Aplicatie 30 Days Mentorship - Profit District');
+    fd.append('nume', name.value.trim());
+    fd.append('username', handle.value.trim());
+    fd.append('email', email.value.trim());
+    fd.append('gdpr_consimtamant', 'DA');
+    fd.append('gdpr_versiune', 'v1.0-2026-05-27');
+    fd.append('gdpr_timestamp', new Date().toISOString());
+
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        access_key: '63f632b0-d0d3-4272-9069-1d7d03ec02b3',
-        subject: 'Aplicatie 30 Days Mentorship - Profit District',
-        nume: name.value.trim(),
-        username: handle.value.trim(),
-        email: email.value.trim(),
-        gdpr_consimtamant: 'DA',
-        gdpr_versiune: 'v1.0-2026-05-27',
-        gdpr_timestamp: new Date().toISOString()
-      })
+      body: fd
     })
     .then(function (res) { return res.json(); })
     .then(function (data) {
