@@ -1,6 +1,13 @@
 # Claude Code settings (personal/local)
 .claude/
 
+# Node
+node_modules/
+package-lock.json
+
+# Screenshots
+temporary screenshots/
+
 # Screenshots folder
 ss/
 

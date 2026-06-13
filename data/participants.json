@@ -1,0 +1,19 @@
+[
+  {
+    "id": "p001",
+    "name": "Exemplu Trader",
+    "accountBalanceStart": 1000,
+    "currentBalance": 1240,
+    "totalProfit": 240,
+    "profitPercent": 24.0,
+    "maxDrawdown": 5.2,
+    "riskScore": 82,
+    "totalTrades": 38,
+    "activeDays": 21,
+    "weeklyReportsCompleted": 3,
+    "journalCompletionPercent": 90,
+    "disciplineScore": 85,
+    "improvementScore": 78,
+    "registeredAt": "2025-06-12T00:00:00.000Z"
+  }
+]

@@ -207,13 +207,13 @@
     /* ==============================
        CATEGORIES
     ============================== */
-    .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .cat-card { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; transition: border-color 0.2s, transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s; }
+    .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .cat-card { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem 2rem 1.75rem; transition: border-color 0.2s, transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s; }
     .cat-card:hover { border-color: var(--border-mid); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.4); }
-    .cat-icon { font-size: 1.8rem; margin-bottom: 0.7rem; display: block; }
-    .cat-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.35rem; }
-    .cat-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.59rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid var(--border-subtle); border-radius: 100px; padding: 0.18rem 0.58rem; margin-bottom: 0.6rem; }
-    .cat-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.65; }
+    .cat-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .cat-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .cat-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.59rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid var(--border-subtle); border-radius: 100px; padding: 0.22rem 0.65rem; margin-bottom: 1rem; }
+    .cat-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; }
 
     /* ==============================
        STEPS
@@ -329,7 +329,7 @@
   <div class="hero-inner">
     <div class="hero-season-badge">
       <span class="live-dot"></span>
-      Season 0 · Clasament Live
+      Season 0 · Înscrieri în Curând
     </div>
     <p class="hero-eyebrow">Profit District</p>
     <h1 class="hero-title">Summer<br>League</h1>
@@ -374,113 +374,65 @@
 ========================= -->
 <section class="lb-wrap" id="clasament">
   <div class="lb-inner">
-    <span class="section-label">Actualizat Săptămânal</span>
-    <h2 class="lb-heading">Clasament</h2>
-    <p class="lb-desc">Performance Award &nbsp;·&nbsp; Scor = ROI% ÷ Max Drawdown%</p>
 
-    <!-- TOP 3 PODIUM -->
-    <div class="podium-grid">
-      <!-- Locul 2 -->
-      <div class="podium-card p2">
-        <span class="podium-rank">2</span>
-        <p class="podium-name">MariaT_Elite</p>
-        <p class="podium-roi">+15.7%</p>
-        <div class="podium-meta">
-          <div class="podium-meta-item"><span class="podium-meta-val">4.62</span><span class="podium-meta-lbl">Score</span></div>
-          <div class="podium-meta-item"><span class="podium-meta-val">3.4%</span><span class="podium-meta-lbl">Max DD</span></div>
-          <div class="podium-meta-item"><span class="podium-meta-val">27</span><span class="podium-meta-lbl">Trades</span></div>
-        </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.35rem;">
+      <div>
+        <span class="section-label">Actualizat Zilnic · 23:59</span>
+        <h2 class="lb-heading">Clasament</h2>
       </div>
-      <!-- Locul 1 -->
-      <div class="podium-card p1">
-        <span class="podium-rank">1</span>
-        <p class="podium-name">AlexTrader_RO</p>
-        <p class="podium-roi">+24.1%</p>
-        <div class="podium-meta">
-          <div class="podium-meta-item"><span class="podium-meta-val">5.02</span><span class="podium-meta-lbl">Score</span></div>
-          <div class="podium-meta-item"><span class="podium-meta-val">4.8%</span><span class="podium-meta-lbl">Max DD</span></div>
-          <div class="podium-meta-item"><span class="podium-meta-val">38</span><span class="podium-meta-lbl">Trades</span></div>
-        </div>
-      </div>
-      <!-- Locul 3 -->
-      <div class="podium-card p3">
-        <span class="podium-rank">3</span>
-        <p class="podium-name">CristinaPDRO</p>
-        <p class="podium-roi">+19.3%</p>
-        <div class="podium-meta">
-          <div class="podium-meta-item"><span class="podium-meta-val">3.78</span><span class="podium-meta-lbl">Score</span></div>
-          <div class="podium-meta-item"><span class="podium-meta-val">5.1%</span><span class="podium-meta-lbl">Max DD</span></div>
-          <div class="podium-meta-item"><span class="podium-meta-val">33</span><span class="podium-meta-lbl">Trades</span></div>
-        </div>
-      </div>
+      <p id="last-updated" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);padding-bottom:0.5rem;">Se încarcă...</p>
     </div>
+    <p class="lb-desc">Scor general = 50% Performance + 25% Activitate + 25% Transformare</p>
 
     <!-- TABS -->
     <div class="lb-tabs" role="tablist">
-      <button class="lb-tab active" role="tab" aria-selected="true" onclick="showTab('perf', this)">Performance</button>
+      <button class="lb-tab active" role="tab" aria-selected="true"  onclick="showTab('overall', this)">General</button>
+      <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('perf', this)">Performance</button>
       <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('activ', this)">Most Active</button>
-    </div>
-    <div class="lb-meta">
-      <p class="lb-meta-note">Scor = ROI% ÷ Max Drawdown% &nbsp;·&nbsp; Date actualizate săptămânal</p>
-      <span class="mock-pill">Date demonstrative</span>
+      <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('transform', this)">Transformare</button>
     </div>
 
-    <!-- Performance Table -->
-    <div class="lb-table-scroll" id="tab-perf">
-      <table class="lb-table" aria-label="Clasament Performance">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Trader</th>
-            <th>ROI %</th>
-            <th>Max DD</th>
-            <th>Score</th>
-            <th>Trades</th>
-            <th>Zile Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="r1"><td><span class="rk">1</span></td><td class="td-name">AlexTrader_RO</td><td class="td-roi">+24.1%</td><td>4.8%</td><td class="td-score">5.02</td><td>38</td><td>21</td></tr>
-          <tr class="r2"><td><span class="rk">2</span></td><td class="td-name">MariaT_Elite</td><td class="td-roi">+15.7%</td><td>3.4%</td><td class="td-score">4.62</td><td>27</td><td>18</td></tr>
-          <tr class="r3"><td><span class="rk">3</span></td><td class="td-name">CristinaPDRO</td><td class="td-roi">+19.3%</td><td>5.1%</td><td class="td-score">3.78</td><td>33</td><td>20</td></tr>
-          <tr><td><span class="rk">4</span></td><td class="td-name">BogdanFX</td><td class="td-roi">+13.2%</td><td>3.9%</td><td class="td-score">3.38</td><td>62</td><td>24</td></tr>
-          <tr><td><span class="rk">5</span></td><td class="td-name">AndreiCapital</td><td class="td-roi">+12.8%</td><td>4.2%</td><td class="td-score">3.05</td><td>45</td><td>21</td></tr>
-          <tr><td><span class="rk">6</span></td><td class="td-name">IoanTrade</td><td class="td-roi">+9.5%</td><td>3.8%</td><td class="td-score">2.50</td><td>41</td><td>19</td></tr>
-          <tr><td><span class="rk">7</span></td><td class="td-name">MirceaFX</td><td class="td-roi">+8.1%</td><td>3.3%</td><td class="td-score">2.45</td><td>31</td><td>17</td></tr>
-          <tr><td><span class="rk">8</span></td><td class="td-name">ElenaProfit</td><td class="td-roi">+11.3%</td><td>5.8%</td><td class="td-score">1.95</td><td>53</td><td>22</td></tr>
-          <tr><td><span class="rk">9</span></td><td class="td-name">RobertPD</td><td class="td-roi">+5.6%</td><td>2.9%</td><td class="td-score">1.93</td><td>23</td><td>15</td></tr>
-          <tr><td><span class="rk">10</span></td><td class="td-name">StefanT</td><td class="td-roi">+4.2%</td><td>2.3%</td><td class="td-score">1.83</td><td>21</td><td>13</td></tr>
-        </tbody>
+    <!-- General -->
+    <div class="lb-table-scroll" id="tab-overall">
+      <table class="lb-table">
+        <thead><tr><th>#</th><th>Trader</th><th>Scor General</th><th>ROI %</th><th>Max DD</th><th>Trades</th><th>Zile Active</th></tr></thead>
+        <tbody id="tbody-overall"></tbody>
       </table>
     </div>
 
-    <!-- Most Active Table -->
+    <!-- Performance -->
+    <div class="lb-table-scroll" id="tab-perf" style="display:none;">
+      <table class="lb-table">
+        <thead><tr><th>#</th><th>Trader</th><th>Scor Perf.</th><th>ROI %</th><th>Max DD</th><th>Risk Score</th><th>Trades</th></tr></thead>
+        <tbody id="tbody-perf"></tbody>
+      </table>
+    </div>
+
+    <!-- Most Active -->
     <div class="lb-table-scroll" id="tab-activ" style="display:none;">
-      <table class="lb-table" aria-label="Clasament Most Active">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Trader</th>
-            <th>Trades</th>
-            <th>Zile Active</th>
-            <th>ROI %</th>
-            <th>Max DD</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="r1"><td><span class="rk">1</span></td><td class="td-name">BogdanFX</td><td class="td-activity">62</td><td>24</td><td class="td-roi">+13.2%</td><td>3.9%</td></tr>
-          <tr class="r2"><td><span class="rk">2</span></td><td class="td-name">ElenaProfit</td><td class="td-activity">53</td><td>22</td><td class="td-roi">+11.3%</td><td>5.8%</td></tr>
-          <tr class="r3"><td><span class="rk">3</span></td><td class="td-name">AndreiCapital</td><td class="td-activity">45</td><td>21</td><td class="td-roi">+12.8%</td><td>4.2%</td></tr>
-          <tr><td><span class="rk">4</span></td><td class="td-name">IoanTrade</td><td class="td-activity">41</td><td>19</td><td class="td-roi">+9.5%</td><td>3.8%</td></tr>
-          <tr><td><span class="rk">5</span></td><td class="td-name">AlexTrader_RO</td><td class="td-activity">38</td><td>21</td><td class="td-roi">+24.1%</td><td>4.8%</td></tr>
-          <tr><td><span class="rk">6</span></td><td class="td-name">CristinaPDRO</td><td class="td-activity">33</td><td>20</td><td class="td-roi">+19.3%</td><td>5.1%</td></tr>
-          <tr><td><span class="rk">7</span></td><td class="td-name">MirceaFX</td><td class="td-activity">31</td><td>17</td><td class="td-roi">+8.1%</td><td>3.3%</td></tr>
-          <tr><td><span class="rk">8</span></td><td class="td-name">MariaT_Elite</td><td class="td-activity">27</td><td>18</td><td class="td-roi">+15.7%</td><td>3.4%</td></tr>
-          <tr><td><span class="rk">9</span></td><td class="td-name">RobertPD</td><td class="td-activity">23</td><td>15</td><td class="td-roi">+5.6%</td><td>2.9%</td></tr>
-          <tr><td><span class="rk">10</span></td><td class="td-name">StefanT</td><td class="td-activity">21</td><td>13</td><td class="td-roi">+4.2%</td><td>2.3%</td></tr>
-        </tbody>
+      <table class="lb-table">
+        <thead><tr><th>#</th><th>Trader</th><th>Scor Act.</th><th>Trades</th><th>Zile Active</th><th>ROI %</th><th>Rapoarte</th></tr></thead>
+        <tbody id="tbody-activ"></tbody>
       </table>
     </div>
+
+    <!-- Transformare -->
+    <div class="lb-table-scroll" id="tab-transform" style="display:none;">
+      <table class="lb-table">
+        <thead><tr><th>#</th><th>Trader</th><th>Scor Trans.</th><th>Disciplină</th><th>Jurnal %</th><th>Trades</th><th>Zile Active</th></tr></thead>
+        <tbody id="tbody-transform"></tbody>
+      </table>
+    </div>
+
+    <!-- Lucky Draw -->
+    <div id="lucky-draw-box" style="display:none;margin-top:1.5rem;background:rgba(201,168,76,0.06);border:1px solid var(--border-mid);border-radius:10px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.75rem;">🎲</span>
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;">Lucky Draw — Câștigătorul Zilei</p>
+        <p id="lucky-draw-name" style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text-primary);"></p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -581,25 +533,25 @@
       <span class="cat-icon">🏆</span>
       <p class="cat-name">Performance Award</p>
       <span class="cat-tag">ROI ÷ Max Drawdown</span>
-      <p class="cat-desc">Profitabilitate combinată cu managementul riscului. Scorul = ROI% ÷ Max Drawdown%. Câștigă traderul cu cel mai bun raport profit/risc, nu neapărat cel mai mare profit brut.</p>
+      <p class="cat-desc">Câștigă traderul cu cel mai bun raport profit/risc — nu cel cu cel mai mare profit brut.<br><br>Scorul se calculează astfel: <strong style="color:var(--text-primary)">ROI% ÷ Max Drawdown%</strong></p>
     </div>
     <div class="cat-card">
       <span class="cat-icon">⚡</span>
       <p class="cat-name">Most Active Trader</p>
       <span class="cat-tag">Trades + Zile Active</span>
-      <p class="cat-desc">Activitate constantă pe întreg parcursul sezonului. Criteriu principal: numărul total de tranzacții. Departajare: numărul de zile active de trading.</p>
+      <p class="cat-desc">Recompensează prezența constantă pe piață pe tot parcursul sezonului.<br><br><strong style="color:var(--text-primary)">Principal:</strong> consistența + numărul total de tranzacții<br><strong style="color:var(--text-primary)">Departajare:</strong> numărul de zile active</p>
     </div>
     <div class="cat-card">
       <span class="cat-icon">🦋</span>
       <p class="cat-name">Biggest Transformation</p>
       <span class="cat-tag">Decizie Juriu</span>
-      <p class="cat-desc">Evoluție personală, disciplină, jurnal de trading complet și mentalitate dovedită. Decizie finală a mentorilor Profit District bazată pe feedback și progres observabil.</p>
+      <p class="cat-desc">Premiază progresul real, nu doar performanța numerică.<br><br>Mentorii evaluează: evoluție personală, disciplină, jurnal completat și mentalitate de trader. Decizia aparține juriului Profit District.</p>
     </div>
     <div class="cat-card">
       <span class="cat-icon">🎲</span>
       <p class="cat-name">Lucky Draw</p>
       <span class="cat-tag">Toți Participanții Eligibili</span>
-      <p class="cat-desc">Participă automat toți traderii care respectă regulile competiției. Nu necesită performanță specială — oricine rămâne eligibil are șansa la extragere.</p>
+      <p class="cat-desc">Participă automat toți traderii care respectă regulile competiției.<br><br>Nu trebuie să fii pe primul loc — orice participant eligibil are șanse egale la extragere.</p>
     </div>
   </div>
 </section>
@@ -724,7 +676,7 @@
 
 <script>
 (function () {
-  /* NAV */
+  /* ── NAV ─────────────────────────────────────────────────── */
   var navbar    = document.getElementById('navbar');
   var hamburger = document.getElementById('nav-hamburger');
   var navLinks  = document.getElementById('nav-links');
@@ -751,14 +703,15 @@
     });
   }
 
-  /* COUNTDOWN — Marea Finală: 20 Septembrie 2025
-     Schimbă data de mai jos când organizezi un nou sezon. */
+  /* ── COUNTDOWN ────────────────────────────────────────────── */
   var TARGET = new Date('2025-09-20T23:59:59');
   function pad(n) { return String(n).padStart(2, '0'); }
   function tick() {
     var diff = TARGET - Date.now();
     if (diff <= 0) {
-      ['cd-days','cd-hours','cd-minutes','cd-seconds'].forEach(function(id){ document.getElementById(id).textContent = '00'; });
+      ['cd-days','cd-hours','cd-minutes','cd-seconds'].forEach(function(id){
+        document.getElementById(id).textContent = '00';
+      });
       return;
     }
     document.getElementById('cd-days').textContent    = pad(Math.floor(diff / 86400000));
@@ -769,10 +722,13 @@
   tick();
   setInterval(tick, 1000);
 
-  /* LEADERBOARD TABS */
+  /* ── TABS ─────────────────────────────────────────────────── */
+  var TAB_IDS = ['overall', 'perf', 'activ', 'transform'];
   window.showTab = function (tab, btn) {
-    document.getElementById('tab-perf').style.display  = tab === 'perf'  ? 'block' : 'none';
-    document.getElementById('tab-activ').style.display = tab === 'activ' ? 'block' : 'none';
+    TAB_IDS.forEach(function (id) {
+      var el = document.getElementById('tab-' + id);
+      if (el) el.style.display = id === tab ? 'block' : 'none';
+    });
     document.querySelectorAll('.lb-tab').forEach(function (b) {
       b.classList.remove('active');
       b.setAttribute('aria-selected', 'false');
@@ -780,6 +736,119 @@
     btn.classList.add('active');
     btn.setAttribute('aria-selected', 'true');
   };
+
+  /* ── LEADERBOARD API ──────────────────────────────────────── */
+  var API_URL = 'data/leaderboard.json';
+
+  function rankClass(rank) {
+    if (rank === 1) return 'r1';
+    if (rank === 2) return 'r2';
+    if (rank === 3) return 'r3';
+    return '';
+  }
+
+  function rkBadge(rank) {
+    return '<span class="rk">' + rank + '</span>';
+  }
+
+  function emptyRow(cols, msg) {
+    return '<tr><td colspan="' + cols + '" style="text-align:center;padding:2.5rem;font-family:\'DM Mono\',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-tertiary);">' + msg + '</td></tr>';
+  }
+
+  function renderTable(tbodyId, rows, cols, rowFn) {
+    var tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    if (!rows || rows.length === 0) {
+      tbody.innerHTML = emptyRow(cols, 'Înscrierile nu au început încă');
+      return;
+    }
+    tbody.innerHTML = rows.map(function (p) {
+      var cls = rankClass(p.rank);
+      return '<tr class="' + cls + '">' + rowFn(p) + '</tr>';
+    }).join('');
+  }
+
+  function renderAll(data) {
+    /* Ultima actualizare */
+    var lu = document.getElementById('last-updated');
+    if (lu) {
+      if (data.lastUpdated) {
+        var d = new Date(data.lastUpdated);
+        lu.textContent = 'Actualizat: ' + d.toLocaleDateString('ro-RO') + ' ' + d.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' });
+      } else {
+        lu.textContent = 'Nicio actualizare încă';
+      }
+    }
+
+    /* Overall */
+    renderTable('tbody-overall', data.overall, 7, function (p) {
+      return '<td>' + rkBadge(p.rank) + '</td>'
+        + '<td class="td-name">' + p.name + '</td>'
+        + '<td class="td-score">' + p.score + '</td>'
+        + '<td class="td-roi">+' + p.profitPercent + '%</td>'
+        + '<td>' + p.maxDrawdown + '%</td>'
+        + '<td>' + p.totalTrades + '</td>'
+        + '<td>' + p.activeDays + '</td>';
+    });
+
+    /* Performance */
+    renderTable('tbody-perf', data.performance, 7, function (p) {
+      return '<td>' + rkBadge(p.rank) + '</td>'
+        + '<td class="td-name">' + p.name + '</td>'
+        + '<td class="td-score">' + p.score + '</td>'
+        + '<td class="td-roi">+' + p.profitPercent + '%</td>'
+        + '<td>' + p.maxDrawdown + '%</td>'
+        + '<td>' + (p.riskScore || '—') + '</td>'
+        + '<td>' + p.totalTrades + '</td>';
+    });
+
+    /* Activity */
+    renderTable('tbody-activ', data.activity, 7, function (p) {
+      return '<td>' + rkBadge(p.rank) + '</td>'
+        + '<td class="td-name">' + p.name + '</td>'
+        + '<td class="td-activity">' + p.score + '</td>'
+        + '<td class="td-activity">' + p.totalTrades + '</td>'
+        + '<td>' + p.activeDays + '</td>'
+        + '<td class="td-roi">+' + p.profitPercent + '%</td>'
+        + '<td>' + (p.weeklyReports || 0) + '</td>';
+    });
+
+    /* Transformation */
+    renderTable('tbody-transform', data.transformation, 7, function (p) {
+      return '<td>' + rkBadge(p.rank) + '</td>'
+        + '<td class="td-name">' + p.name + '</td>'
+        + '<td class="td-score">' + p.score + '</td>'
+        + '<td>' + (p.disciplineScore || '—') + '</td>'
+        + '<td>' + (p.journalPercent || '—') + '%</td>'
+        + '<td>' + p.totalTrades + '</td>'
+        + '<td>' + p.activeDays + '</td>';
+    });
+
+    /* Lucky Draw */
+    var ldb = document.getElementById('lucky-draw-box');
+    var ldn = document.getElementById('lucky-draw-name');
+    if (data.luckyDraw && ldb && ldn) {
+      ldb.style.display = 'flex';
+      ldn.textContent = data.luckyDraw.name + ' · ' + data.luckyDraw.drawnFor;
+    }
+  }
+
+  function loadLeaderboard() {
+    fetch(API_URL)
+      .then(function (r) { return r.json(); })
+      .then(function (data) { renderAll(data); })
+      .catch(function () {
+        /* API indisponibil — arată mesaj neutru */
+        var lu = document.getElementById('last-updated');
+        if (lu) lu.textContent = 'Server offline';
+        ['tbody-overall','tbody-perf','tbody-activ','tbody-transform'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.innerHTML = emptyRow(7, 'Înscrierile nu au început încă');
+        });
+      });
+  }
+
+  loadLeaderboard();
 })();
 </script>
 </body>
