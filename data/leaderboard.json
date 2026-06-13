@@ -1,8 +1,100 @@
 {
-  "lastUpdated": null,
-  "overall": [],
-  "performance": [],
-  "activity": [],
-  "transformation": [],
+  "lastUpdated": "2026-06-13T22:57:23.573Z",
+  "overall": [
+    {
+      "rank": 1,
+      "id": "p001",
+      "name": "Hane Andree",
+      "score": 12.5,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Ioana Cioban",
+      "score": 12.5,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0
+    }
+  ],
+  "performance": [
+    {
+      "rank": 1,
+      "id": "p001",
+      "name": "Hane Andree",
+      "score": 25,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0,
+      "riskScore": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Ioana Cioban",
+      "score": 25,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0,
+      "riskScore": 0
+    }
+  ],
+  "activity": [
+    {
+      "rank": 1,
+      "id": "p001",
+      "name": "Hane Andree",
+      "score": 0,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0,
+      "weeklyReports": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Ioana Cioban",
+      "score": 0,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0,
+      "weeklyReports": 0
+    }
+  ],
+  "transformation": [
+    {
+      "rank": 1,
+      "id": "p001",
+      "name": "Hane Andree",
+      "score": 0,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0,
+      "journalPercent": 0,
+      "disciplineScore": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Ioana Cioban",
+      "score": 0,
+      "profitPercent": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0,
+      "activeDays": 0,
+      "journalPercent": 0,
+      "disciplineScore": 0
+    }
+  ],
   "luckyDraw": null
 }
