@@ -1,0 +1,41 @@
+name: Update Leaderboard
+
+on:
+  schedule:
+    # Rulează zilnic la 22:00 UTC = 00:00 ora României (EEST)
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+    # Permite și declanșare manuală din GitHub → Actions → Run workflow
+
+jobs:
+  update-leaderboard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Myfxbook data & calculate scores
+        run: node scripts/fetch-leaderboard.js
+        env:
+          MYFXBOOK_EMAIL: ${{ secrets.MYFXBOOK_EMAIL }}
+          MYFXBOOK_PASSWORD: ${{ secrets.MYFXBOOK_PASSWORD }}
+
+      - name: Commit updated leaderboard
+        run: |
+          git config user.name "Leaderboard Bot"
+          git config user.email "bot@profitdistrictromania.com"
+          git add data/leaderboard.json data/participants.json
+          if git diff --cached --quiet; then
+            echo "Nicio schimbare — clasamentul e deja la zi."
+          else
+            git commit -m "Update clasament $(date +%Y-%m-%d)"
+            git push
+          fi

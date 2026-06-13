@@ -1,15 +1,12 @@
 {
   "name": "profit-district-summer-league",
   "version": "1.0.0",
-  "description": "Profit District Summer League - Backend API",
+  "description": "Profit District Summer League — Leaderboard fetcher",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "update": "node scripts/fetch-leaderboard.js"
   },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "node-cron": "^3.0.3"
+  "engines": {
+    "node": ">=18"
   }
 }

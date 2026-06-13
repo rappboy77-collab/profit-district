@@ -2,18 +2,17 @@
   {
     "id": "p001",
     "name": "Exemplu Trader",
+    "myfxbookId": null,
     "accountBalanceStart": 1000,
-    "currentBalance": 1240,
-    "totalProfit": 240,
-    "profitPercent": 24.0,
-    "maxDrawdown": 5.2,
-    "riskScore": 82,
-    "totalTrades": 38,
-    "activeDays": 21,
-    "weeklyReportsCompleted": 3,
-    "journalCompletionPercent": 90,
-    "disciplineScore": 85,
-    "improvementScore": 78,
+    "profitPercent": 0,
+    "maxDrawdown": 0,
+    "totalTrades": 0,
+    "activeDays": 0,
+    "riskScore": 0,
+    "weeklyReportsCompleted": 0,
+    "journalCompletionPercent": 0,
+    "disciplineScore": 0,
+    "improvementScore": 0,
     "registeredAt": "2025-06-12T00:00:00.000Z"
   }
 ]
