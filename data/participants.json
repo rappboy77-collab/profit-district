@@ -2,7 +2,7 @@
   {
     "id": "p001",
     "name": "Exemplu Trader",
-    "myfxbookId": null,
+    "myfxbookUrl": "https://www.myfxbook.com/members/username/account-name/12345678",
     "accountBalanceStart": 1000,
     "profitPercent": 0,
     "maxDrawdown": 0,

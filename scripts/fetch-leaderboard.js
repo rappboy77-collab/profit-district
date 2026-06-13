@@ -43,6 +43,17 @@ function round2(n) { return Math.round(n * 100) / 100; }
 
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 
+// Acceptă URL complet sau ID numeric direct
+// "https://www.myfxbook.com/members/user/cont/12345678" → "12345678"
+// "12345678" → "12345678"
+function extractMyfxbookId(urlOrId) {
+  if (!urlOrId) return null;
+  const s = String(urlOrId).trim();
+  if (/^\d+$/.test(s)) return s;                    // deja numeric
+  const match = s.match(/\/(\d+)\/?(?:\?.*)?$/);    // ultimul segment numeric
+  return match ? match[1] : null;
+}
+
 async function myfxGet(endpoint, params) {
   const url = new URL(`${MYFXBOOK_API}/${endpoint}.json`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
@@ -88,7 +99,7 @@ function calcFromDailyGain(dailyGain, startBalance) {
 // ─── Fetch date Myfxbook pentru un participant ─────────────────────────────────
 
 async function fetchParticipantData(session, participant) {
-  const id    = String(participant.myfxbookId);
+  const id    = extractMyfxbookId(participant.myfxbookUrl || participant.myfxbookId);
   const start = COMPETITION_START;
   const end   = COMPETITION_END;
 
@@ -213,14 +224,16 @@ async function main() {
   const enriched = [];
 
   for (const p of participants) {
-    if (!p.myfxbookId) {
-      console.log(`⚠  ${p.name}: lipsește myfxbookId — date din JSON`);
+    const mxId = extractMyfxbookId(p.myfxbookUrl || p.myfxbookId);
+
+    if (!mxId) {
+      console.log(`⚠  ${p.name}: lipsește myfxbookUrl — date din JSON`);
       enriched.push(p);
       continue;
     }
 
     try {
-      console.log(`📊 ${p.name} (myfxbook ID: ${p.myfxbookId})...`);
+      console.log(`📊 ${p.name} (ID: ${mxId})...`);
       const fetched = await fetchParticipantData(session, p);
 
       console.log(
@@ -277,7 +290,7 @@ async function main() {
   const updatedParticipants = enriched.map(p => ({
     id:                       p.id,
     name:                     p.name,
-    myfxbookId:               p.myfxbookId || null,
+    myfxbookUrl:              p.myfxbookUrl || null,
     accountBalanceStart:      p.accountBalanceStart,
     // Auto (actualizate din Myfxbook):
     profitPercent:            p.profitPercent,
