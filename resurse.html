@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Resurse — Profit District</title>
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-base: #0a0a0b; --bg-surface: #111113; --bg-elevated: #18181b; --bg-floating: #1f1f23;
+      --gold: #c9a84c; --gold-bright: #e2bf6a; --gold-dim: #8a6e2f;
+      --text-primary: #f0ece0; --text-secondary: #a09880; --text-tertiary: #5c5848;
+      --border-subtle: rgba(201,168,76,0.10); --border-mid: rgba(201,168,76,0.22); --border-strong: rgba(201,168,76,0.45);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-base); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    ::selection { background: var(--gold); color: var(--bg-base); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* NAV */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      height: 62px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(10,10,11,0.82);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.3s ease;
+    }
+    #navbar.scrolled { background: rgba(10,10,11,0.96); }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { width: 32px; height: 32px; object-fit: contain; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--gold); letter-spacing: 0.04em; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary);
+      text-decoration: none; transition: color 0.2s ease; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold); transform: scaleX(0);
+      transition: transform 0.22s ease; transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.nav-active { color: var(--gold); }
+    .nav-links a.nav-active::after { transform: scaleX(1); }
+    .nav-cta {
+      font-family: 'Outfit', sans-serif !important; font-weight: 600 !important;
+      font-size: 0.78rem !important; letter-spacing: 0.04em !important; text-transform: none !important;
+      background: var(--gold); color: var(--bg-base) !important;
+      padding: 0.5rem 1.1rem; border-radius: 4px;
+      transition: background 0.2s ease, transform 0.2s ease !important;
+    }
+    .nav-cta:hover { background: var(--gold-bright); transform: translateY(-1px); color: var(--bg-base) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: transform 0.42s cubic-bezier(0.16,1,0.3,1), opacity 0.28s ease; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @keyframes menu-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes menu-item-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: fixed;
+        top: 62px; left: 0; right: 0; background: rgba(10,10,11,0.97);
+        border-bottom: 1px solid var(--border-subtle); padding: 1.5rem 2rem; gap: 1.25rem;
+        backdrop-filter: blur(14px); animation: menu-in 0.32s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      .nav-links.open li { animation: menu-item-in 0.38s cubic-bezier(0.16,1,0.3,1) both; }
+      .nav-links.open li:nth-child(1) { animation-delay: 0.04s; }
+      .nav-links.open li:nth-child(2) { animation-delay: 0.09s; }
+      .nav-links.open li:nth-child(3) { animation-delay: 0.14s; }
+      .nav-links.open li:nth-child(4) { animation-delay: 0.19s; }
+      .nav-links.open li:nth-child(5) { animation-delay: 0.24s; }
+      .nav-links.open li:nth-child(6) { animation-delay: 0.29s; }
+      .nav-links.open li:nth-child(7) { animation-delay: 0.34s; }
+      .nav-links.open li:nth-child(8) { animation-delay: 0.39s; }
+    }
+
+    /* PAGE */
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 9rem 1.5rem 6rem; min-height: calc(100vh - 240px); }
+    .section-label {
+      display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.63rem;
+      font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .page-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); letter-spacing: -0.03em; color: var(--text-primary); line-height: 1.1; margin-bottom: 1rem; }
+    .page-subtitle { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 1.05rem; color: var(--text-secondary); max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+    .coming-soon-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold-dim); background: rgba(201,168,76,0.06); border: 1px solid var(--border-subtle);
+      border-radius: 100px; padding: 0.35rem 0.85rem;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-tertiary); text-decoration: none; transition: color 0.2s ease; margin-top: 2.5rem;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    /* FOOTER */
+    footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 2.5rem 1.5rem; text-align: center; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.01em; color: var(--gold); margin-bottom: 0.4rem; }
+    .footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin-bottom: 1.1rem; }
+    .footer-nav a { font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s ease; }
+    .footer-nav a:hover { color: var(--gold); }
+    .footer-social { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .footer-social a { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Outfit', sans-serif; font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; padding: 0.35rem 0.9rem; border: 1px solid var(--border-subtle); border-radius: 100px; transition: color 0.2s ease, border-color 0.2s ease; }
+    .footer-social a:hover { color: var(--gold); border-color: var(--border-mid); }
+    .footer-social svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+    .footer-legal-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); }
+    .footer-legal-col h4 { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.55rem; }
+    .footer-legal-col a { display: block; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.78rem; color: var(--text-tertiary); text-decoration: none; line-height: 2.1; transition: color 0.2s ease; }
+    .footer-legal-col a:hover { color: var(--gold); }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.67rem; color: var(--text-tertiary); margin-bottom: 1rem; }
+    .footer-disclaimer { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.75rem; color: var(--text-tertiary); max-width: 620px; margin: 0 auto; line-height: 1.65; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar" aria-label="Navigare principală">
+  <a href="index.html" class="nav-logo" aria-label="Profit District - acasă">
+    <img src="logo/logo.png" alt="Profit District logo">
+    <span class="nav-logo-text">Profit District</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html#community">Despre Noi</a></li>
+    <li><a href="index.html#systems">Copytrading</a></li>
+    <li><a href="index.html#mentori">Mentori</a></li>
+    <li><a href="index.html#educatie">Educație</a></li>
+    <li><a href="index.html#webinar">Webinar</a></li>
+    <li><a href="evenimente.html">Evenimente</a></li>
+    <li><a href="resurse.html" class="nav-active">Resurse</a></li>
+    <li><a href="index.html#apply-form" class="nav-cta">Aplică Acum</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Deschide meniu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main class="page-wrap">
+  <span class="section-label">Profit District</span>
+  <h1 class="page-title">Resurse</h1>
+  <p class="page-subtitle">Ghiduri, articole și materiale educaționale pentru traderi. Conținut în curând.</p>
+  <span class="coming-soon-badge">În construcție</span>
+  <br>
+  <a href="index.html" class="back-link">← Înapoi la site</a>
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <p class="footer-brand">Profit District</p>
+    <nav class="footer-nav" aria-label="Link-uri rapide">
+      <a href="index.html">Acasă</a>
+      <a href="index.html#community">Despre Noi</a>
+      <a href="index.html#systems">Copytrading</a>
+      <a href="index.html#webinar">Webinar</a>
+      <a href="index.html#apply-form">Aplică Acum</a>
+    </nav>
+    <div class="footer-social">
+      <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.281c-.144.658-.537.818-1.083.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.033 13.39l-2.969-.924c-.643-.204-.656-.643.135-.953l11.572-4.461c.535-.194 1.004.131.835.953l-.044-.757z"/></svg>
+        Telegram
+      </a>
+      <a href="https://discord.gg/cWjgpvSqvT" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        Discord
+      </a>
+    </div>
+    <div class="footer-legal-grid">
+      <div class="footer-legal-col">
+        <h4>Legal</h4>
+        <a href="politica-confidentialitate.html">Politica de Confidențialitate</a>
+        <a href="termeni-si-conditii.html">Termeni și Condiții</a>
+        <a href="politica-cookies.html">Politica Cookies</a>
+      </div>
+      <div class="footer-legal-col">
+        <h4>Contact</h4>
+        <a href="mailto:haneloreandreea@yahoo.com">haneloreandreea@yahoo.com</a>
+        <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://discord.gg/cWjgpvSqvT" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+    <p class="footer-copy">© <span id="footer-year">2026</span> Profit District · Toate Drepturile Rezervate</p>
+    <p class="footer-disclaimer">Legal disclaimer: CFDs sunt instrumente periculoase și tranzacționarea lor poate duce la pierderea parțială sau totală a capitalului. Rezultatele din trecut nu garantează rezultate din viitor.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var navbar    = document.getElementById('navbar');
+  var hamburger = document.getElementById('nav-hamburger');
+  var navLinks  = document.getElementById('nav-links');
+  var yr        = document.getElementById('footer-year');
+  if (yr) yr.textContent = new Date().getFullYear();
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 40) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  }, { passive: true });
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+      hamburger.classList.toggle('open', open);
+    });
+  }
+  if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
