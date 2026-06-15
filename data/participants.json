@@ -2,7 +2,7 @@
   {
     "id": "p001",
     "name": "Hane Andree",
-    "myfxbookUrl": "https://www.myfxbook.com/members/haneandree/profit-district/12026855",
+    "metaApiAccountId": null,
     "accountBalanceStart": 1000,
     "profitPercent": 0,
     "maxDrawdown": 0,
@@ -13,12 +13,12 @@
     "journalCompletionPercent": 0,
     "disciplineScore": 0,
     "improvementScore": 0,
-    "registeredAt": "2025-06-12T00:00:00.000Z"
+    "registeredAt": "2026-06-01T00:00:00.000Z"
   },
   {
     "id": "p002",
     "name": "Ioana Cioban",
-    "myfxbookUrl": "https://www.myfxbook.com/members/ioana99/ioana-cioban/12072246",
+    "metaApiAccountId": null,
     "accountBalanceStart": 1000,
     "profitPercent": 0,
     "maxDrawdown": 0,
@@ -29,6 +29,6 @@
     "journalCompletionPercent": 0,
     "disciplineScore": 0,
     "improvementScore": 0,
-    "registeredAt": "2025-06-12T00:00:00.000Z"
+    "registeredAt": "2026-06-01T00:00:00.000Z"
   }
 ]

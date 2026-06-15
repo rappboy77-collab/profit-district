@@ -22,11 +22,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fetch Myfxbook data & calculate scores
+      - name: Fetch MetaApi data & calculate scores
         run: node scripts/fetch-leaderboard.js
         env:
-          MYFXBOOK_EMAIL: ${{ secrets.MYFXBOOK_EMAIL }}
-          MYFXBOOK_PASSWORD: ${{ secrets.MYFXBOOK_PASSWORD }}
+          METAAPI_TOKEN: ${{ secrets.METAAPI_TOKEN }}
 
       - name: Commit updated leaderboard
         run: |
