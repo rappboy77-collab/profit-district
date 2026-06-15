@@ -22,8 +22,8 @@ const fs   = require('fs');
 const path = require('path');
 
 const MYFXBOOK_API       = 'https://www.myfxbook.com/api';
-const COMPETITION_START  = '2025-06-12';
-const COMPETITION_END    = '2025-09-20';
+const COMPETITION_START  = '2026-06-01';
+const COMPETITION_END    = '2026-09-20';
 const PARTICIPANTS_FILE  = path.join(__dirname, '..', 'data', 'participants.json');
 const LEADERBOARD_FILE   = path.join(__dirname, '..', 'data', 'leaderboard.json');
 
