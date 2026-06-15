@@ -111,6 +111,17 @@ async function fetchParticipantData(session, participant) {
   const histResp = await myfxGet('get-history', { session, id, start, end });
   const history  = histResp.history || [];
 
+  console.log(`   DEBUG daily gain entries: ${dailyGain.length}`);
+  console.log(`   DEBUG history entries: ${history.length}`);
+  if (history.length > 0) {
+    console.log(`   DEBUG primul trade: ${JSON.stringify(history[0])}`);
+    console.log(`   DEBUG ultimul trade: ${JSON.stringify(history[history.length - 1])}`);
+  }
+  if (dailyGain.length > 0) {
+    console.log(`   DEBUG prima zi gain: ${JSON.stringify(dailyGain[0])}`);
+    console.log(`   DEBUG ultima zi gain: ${JSON.stringify(dailyGain[dailyGain.length - 1])}`);
+  }
+
   // totalTrades = numărul de tranzacții închise
   const totalTrades = history.length;
 
