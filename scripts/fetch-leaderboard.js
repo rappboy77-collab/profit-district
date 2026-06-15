@@ -54,13 +54,35 @@ function extractMyfxbookId(urlOrId) {
   return match ? match[1] : null;
 }
 
+let cookieJar = '';
+
 async function myfxGet(endpoint, params) {
   const url = new URL(`${MYFXBOOK_API}/${endpoint}.json`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
 
-  const res = await fetch(url.toString(), {
-    headers: { 'User-Agent': 'ProfitDistrictBot/1.0' },
-  });
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Referer': 'https://www.myfxbook.com/',
+    'X-Requested-With': 'XMLHttpRequest',
+  };
+  if (cookieJar) headers['Cookie'] = cookieJar;
+
+  const res = await fetch(url.toString(), { headers });
+
+  // Salvează cookie-urile primite (necesare pentru sesiune)
+  const setCookie = res.headers.get('set-cookie');
+  if (setCookie) {
+    const newCookies = setCookie.split(',').map(c => c.split(';')[0].trim()).filter(Boolean);
+    const existing  = cookieJar ? cookieJar.split('; ') : [];
+    for (const nc of newCookies) {
+      const key = nc.split('=')[0];
+      const idx = existing.findIndex(e => e.startsWith(key + '='));
+      if (idx >= 0) existing[idx] = nc; else existing.push(nc);
+    }
+    cookieJar = existing.join('; ');
+  }
 
   if (!res.ok) throw new Error(`HTTP ${res.status} la ${endpoint}`);
 
