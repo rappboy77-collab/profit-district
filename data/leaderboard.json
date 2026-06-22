@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-06-22T17:44:07.468Z",
+  "lastUpdated": "2026-06-22T18:35:07.010Z",
   "overall": [
     {
       "rank": 1,
       "id": "p001",
       "name": "Hane Andreea",
-      "score": 94.57,
-      "profitPercent": 87.46,
-      "maxDrawdown": 43.98,
-      "totalTrades": 438,
-      "activeDays": 0
+      "score": 97.88,
+      "profitPercent": 28.12,
+      "maxDrawdown": 30.38,
+      "totalTrades": 537,
+      "activeDays": 16
     }
   ],
   "performance": [
@@ -17,11 +17,11 @@
       "rank": 1,
       "id": "p001",
       "name": "Hane Andreea",
-      "score": 57.74,
-      "profitPercent": 87.46,
-      "maxDrawdown": 43.98,
-      "totalTrades": 438,
-      "activeDays": 0,
+      "score": 31.47,
+      "profitPercent": 28.12,
+      "maxDrawdown": 30.38,
+      "totalTrades": 537,
+      "activeDays": 16,
       "riskScore": 0
     }
   ],
@@ -30,11 +30,11 @@
       "rank": 1,
       "id": "p001",
       "name": "Hane Andreea",
-      "score": 262.8,
-      "profitPercent": 87.46,
-      "maxDrawdown": 43.98,
-      "totalTrades": 438,
-      "activeDays": 0,
+      "score": 328.6,
+      "profitPercent": 28.12,
+      "maxDrawdown": 30.38,
+      "totalTrades": 537,
+      "activeDays": 16,
       "weeklyReports": 0
     }
   ],
@@ -44,10 +44,10 @@
       "id": "p001",
       "name": "Hane Andreea",
       "score": 0,
-      "profitPercent": 87.46,
-      "maxDrawdown": 43.98,
-      "totalTrades": 438,
-      "activeDays": 0,
+      "profitPercent": 28.12,
+      "maxDrawdown": 30.38,
+      "totalTrades": 537,
+      "activeDays": 16,
       "journalPercent": 0,
       "disciplineScore": 0
     }
