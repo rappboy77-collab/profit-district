@@ -19,7 +19,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const METAAPI_TOKEN     = process.env.METAAPI_TOKEN;
-const METASTATS_URL     = 'https://metastats-api-v1.agiliumtrade.agiliumtrade.ai';
+const PROVISION_URL     = 'https://mt-provisioning-api-v1.agiliumtrade.agiliumtrade.ai';
 const COMPETITION_START = '2026-06-01T00:00:00.000Z';
 const COMPETITION_END   = '2026-09-20T23:59:59.000Z';
 const PARTICIPANTS_FILE = path.join(__dirname, '..', 'data', 'participants.json');
@@ -41,23 +41,43 @@ function round2(n) { return Math.round(n * 100) / 100; }
 
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 
-// ─── MetaStats API ────────────────────────────────────────────────────────────
+// ─── MetaApi helpers ──────────────────────────────────────────────────────────
 
-async function fetchMetaStats(accountId) {
-  const url = new URL(`${METASTATS_URL}/users/current/accounts/${accountId}/metrics`);
-  url.searchParams.set('startTime', COMPETITION_START);
-  url.searchParams.set('endTime',   COMPETITION_END);
-
-  const res = await fetch(url.toString(), {
+async function metaApiGet(url) {
+  const res = await fetch(url, {
     headers: { 'auth-token': METAAPI_TOKEN },
   });
-
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.message || `HTTP ${res.status}`);
   }
+  return res.json();
+}
 
-  const data = await res.json();
+// Găsește regiunea contului din provisioning API
+async function getAccountRegion(accountId) {
+  const data = await metaApiGet(
+    `${PROVISION_URL}/users/current/accounts/${accountId}`
+  );
+  console.log(`   DEBUG account info:`, JSON.stringify(data).slice(0, 300));
+  return data.region || data.server?.region || 'new-york';
+}
+
+// ─── MetaStats API ────────────────────────────────────────────────────────────
+
+async function fetchMetaStats(accountId) {
+  // Află regiunea contului
+  const region = await getAccountRegion(accountId);
+  console.log(`   DEBUG regiune: ${region}`);
+
+  const base = `https://metastats-api-v1.${region}.agiliumtrade.ai`;
+  const url  = new URL(`${base}/users/current/accounts/${accountId}/metrics`);
+  url.searchParams.set('startTime', COMPETITION_START);
+  url.searchParams.set('endTime',   COMPETITION_END);
+
+  console.log(`   DEBUG MetaStats URL: ${url.toString()}`);
+
+  const data = await metaApiGet(url.toString());
   return data.metrics || data;
 }
 
@@ -157,6 +177,7 @@ async function main() {
       enriched.push({ ...p, profitPercent, maxDrawdown, totalTrades, activeDays });
     } catch (err) {
       console.warn(`   ⚠  ${err.message} — se păstrează datele existente`);
+      console.warn(`   DEBUG eroare completă:`, err);
       enriched.push(p);
     }
   }
