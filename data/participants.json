@@ -1,8 +1,8 @@
 [
   {
     "id": "p001",
-    "name": "Hane Andree",
-    "metaApiAccountId": null,
+    "name": "Hane Andreea",
+    "metaApiAccountId": "fddbd172-9297-4241-855a-7ed295f8f4db",
     "accountBalanceStart": 1000,
     "profitPercent": 0,
     "maxDrawdown": 0,
@@ -13,22 +13,6 @@
     "journalCompletionPercent": 0,
     "disciplineScore": 0,
     "improvementScore": 0,
-    "registeredAt": "2026-06-01T00:00:00.000Z"
-  },
-  {
-    "id": "p002",
-    "name": "Ioana Cioban",
-    "metaApiAccountId": null,
-    "accountBalanceStart": 1000,
-    "profitPercent": 0,
-    "maxDrawdown": 0,
-    "totalTrades": 0,
-    "activeDays": 0,
-    "riskScore": 0,
-    "weeklyReportsCompleted": 0,
-    "journalCompletionPercent": 0,
-    "disciplineScore": 0,
-    "improvementScore": 0,
-    "registeredAt": "2026-06-01T00:00:00.000Z"
+    "registeredAt": "2026-06-22T15:47:30.205Z"
   }
 ]
