@@ -1,20 +1,10 @@
 {
-  "lastUpdated": "2026-06-21T23:04:19.769Z",
+  "lastUpdated": "2026-06-22T15:57:41.054Z",
   "overall": [
     {
       "rank": 1,
       "id": "p001",
-      "name": "Hane Andree",
-      "score": 12.5,
-      "profitPercent": 0,
-      "maxDrawdown": 0,
-      "totalTrades": 0,
-      "activeDays": 0
-    },
-    {
-      "rank": 2,
-      "id": "p002",
-      "name": "Ioana Cioban",
+      "name": "Hane Andreea",
       "score": 12.5,
       "profitPercent": 0,
       "maxDrawdown": 0,
@@ -26,18 +16,7 @@
     {
       "rank": 1,
       "id": "p001",
-      "name": "Hane Andree",
-      "score": 25,
-      "profitPercent": 0,
-      "maxDrawdown": 0,
-      "totalTrades": 0,
-      "activeDays": 0,
-      "riskScore": 0
-    },
-    {
-      "rank": 2,
-      "id": "p002",
-      "name": "Ioana Cioban",
+      "name": "Hane Andreea",
       "score": 25,
       "profitPercent": 0,
       "maxDrawdown": 0,
@@ -50,18 +29,7 @@
     {
       "rank": 1,
       "id": "p001",
-      "name": "Hane Andree",
-      "score": 0,
-      "profitPercent": 0,
-      "maxDrawdown": 0,
-      "totalTrades": 0,
-      "activeDays": 0,
-      "weeklyReports": 0
-    },
-    {
-      "rank": 2,
-      "id": "p002",
-      "name": "Ioana Cioban",
+      "name": "Hane Andreea",
       "score": 0,
       "profitPercent": 0,
       "maxDrawdown": 0,
@@ -74,19 +42,7 @@
     {
       "rank": 1,
       "id": "p001",
-      "name": "Hane Andree",
-      "score": 0,
-      "profitPercent": 0,
-      "maxDrawdown": 0,
-      "totalTrades": 0,
-      "activeDays": 0,
-      "journalPercent": 0,
-      "disciplineScore": 0
-    },
-    {
-      "rank": 2,
-      "id": "p002",
-      "name": "Ioana Cioban",
+      "name": "Hane Andreea",
       "score": 0,
       "profitPercent": 0,
       "maxDrawdown": 0,
