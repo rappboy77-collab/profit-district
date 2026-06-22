@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-22T19:00:32.535Z",
+  "lastUpdated": "2026-06-22T19:10:26.006Z",
   "overall": [
     {
       "rank": 1,
@@ -10,6 +10,16 @@
       "maxDrawdown": 30.38,
       "totalTrades": 537,
       "activeDays": 16
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Alexandru",
+      "score": 27.22,
+      "profitPercent": -18.09,
+      "maxDrawdown": 21.24,
+      "totalTrades": 138,
+      "activeDays": 12
     }
   ],
   "performance": [
@@ -22,6 +32,17 @@
       "maxDrawdown": 30.38,
       "totalTrades": 537,
       "activeDays": 16,
+      "riskScore": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Alexandru",
+      "score": 10.65,
+      "profitPercent": -18.09,
+      "maxDrawdown": 21.24,
+      "totalTrades": 138,
+      "activeDays": 12,
       "riskScore": 0
     }
   ],
@@ -36,6 +57,17 @@
       "totalTrades": 537,
       "activeDays": 16,
       "weeklyReports": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Alexandru",
+      "score": 87.6,
+      "profitPercent": -18.09,
+      "maxDrawdown": 21.24,
+      "totalTrades": 138,
+      "activeDays": 12,
+      "weeklyReports": 0
     }
   ],
   "transformation": [
@@ -48,6 +80,18 @@
       "maxDrawdown": 30.38,
       "totalTrades": 537,
       "activeDays": 16,
+      "journalPercent": 0,
+      "disciplineScore": 0
+    },
+    {
+      "rank": 2,
+      "id": "p002",
+      "name": "Alexandru",
+      "score": 0,
+      "profitPercent": -18.09,
+      "maxDrawdown": 21.24,
+      "totalTrades": 138,
+      "activeDays": 12,
       "journalPercent": 0,
       "disciplineScore": 0
     }
