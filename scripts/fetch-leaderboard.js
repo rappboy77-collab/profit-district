@@ -54,31 +54,64 @@ async function metaApiGet(url) {
   return res.json();
 }
 
-// Găsește regiunea contului din provisioning API
 async function getAccountRegion(accountId) {
-  const data = await metaApiGet(
-    `${PROVISION_URL}/users/current/accounts/${accountId}`
-  );
-  console.log(`   DEBUG account info:`, JSON.stringify(data).slice(0, 300));
-  return data.region || data.server?.region || 'new-york';
+  const data = await metaApiGet(`${PROVISION_URL}/users/current/accounts/${accountId}`);
+  return data.region || 'new-york';
 }
 
-// ─── MetaStats API ────────────────────────────────────────────────────────────
+// ─── MetaStats + Deals History ────────────────────────────────────────────────
 
 async function fetchMetaStats(accountId) {
-  // Află regiunea contului
   const region = await getAccountRegion(accountId);
-  console.log(`   DEBUG regiune: ${region}`);
 
-  const base = `https://metastats-api-v1.${region}.agiliumtrade.ai`;
-  const url  = new URL(`${base}/users/current/accounts/${accountId}/metrics`);
-  url.searchParams.set('startTime', COMPETITION_START);
-  url.searchParams.set('endTime',   COMPETITION_END);
+  // Balanța curentă din MetaStats
+  const statsUrl = `https://metastats-api-v1.${region}.agiliumtrade.ai/users/current/accounts/${accountId}/metrics`;
+  const data     = await metaApiGet(statsUrl);
+  const metrics  = data.metrics || data;
+  const currentBalance = metrics.balance || 0;
 
-  console.log(`   DEBUG MetaStats URL: ${url.toString()}`);
+  // Deals din perioada competiției — sursă unică de adevăr
+  const dealsUrl  = `https://mt-client-api-v1.${region}.agiliumtrade.ai/users/current/accounts/${accountId}/history-deals/time/${COMPETITION_START}/${COMPETITION_END}`;
+  const dealsData = await metaApiGet(dealsUrl);
+  const allDeals  = Array.isArray(dealsData) ? dealsData : (dealsData.deals || []);
 
-  const data = await metaApiGet(url.toString());
-  return data.metrics || data;
+  // Doar tranzacții reale (nu depozite/retrageri)
+  const tradingDeals = allDeals.filter(d =>
+    d.type !== 'DEAL_TYPE_BALANCE' && d.type !== 'DEAL_TYPE_CREDIT'
+  );
+
+  const totalTrades    = tradingDeals.length;
+  const profitInPeriod = tradingDeals.reduce((sum, d) => sum + (d.profit || 0), 0);
+  const balanceAtStart = currentBalance - profitInPeriod;
+  const profitPercent  = balanceAtStart > 0
+    ? (profitInPeriod / balanceAtStart) * 100
+    : 0;
+
+  // Zile active și drawdown din curba zilnică de capital
+  const byDate = {};
+  for (const d of tradingDeals) {
+    const date = (d.time || d.brokerTime || '').split('T')[0];
+    if (date) byDate[date] = (byDate[date] || 0) + (d.profit || 0);
+  }
+
+  const activeDays = Object.keys(byDate).length;
+
+  let balance = balanceAtStart;
+  let peak    = balance;
+  let maxDD   = 0;
+  for (const date of Object.keys(byDate).sort()) {
+    balance += byDate[date];
+    if (balance > peak) peak = balance;
+    const dd = peak > 0 ? ((peak - balance) / peak) * 100 : 0;
+    if (dd > maxDD) maxDD = dd;
+  }
+
+  return {
+    profitPercent: round2(profitPercent),
+    maxDrawdown:   round2(maxDD),
+    totalTrades,
+    activeDays,
+  };
 }
 
 // ─── Formule scoruri ──────────────────────────────────────────────────────────
@@ -165,12 +198,7 @@ async function main() {
       console.log(`📊 ${p.name}...`);
       const m = await fetchMetaStats(p.metaApiAccountId);
 
-      console.log(`   DEBUG răspuns MetaStats:`, JSON.stringify(m, null, 2).slice(0, 400));
-
-      const profitPercent = round2(parseFloat(m.gain          ?? m.absoluteGain ?? 0));
-      const maxDrawdown   = round2(parseFloat(m.maxDrawdown   ?? m.maxAbsoluteDrawdown ?? 0));
-      const totalTrades   = parseInt(m.trades ?? m.tradesCount ?? m.wonTrades + m.lostTrades ?? 0, 10);
-      const activeDays    = parseInt(m.tradingDays ?? m.daysTradedCount ?? 0, 10);
+      const { profitPercent, maxDrawdown, totalTrades, activeDays } = m;
 
       console.log(`   profit ${profitPercent}% | dd ${maxDrawdown}% | trades ${totalTrades} | zile ${activeDays}`);
 
