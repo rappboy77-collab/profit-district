@@ -393,7 +393,7 @@
     <!-- General -->
     <div class="lb-table-scroll" id="tab-overall">
       <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Profit %</th><th>Max DD</th><th>Lot</th><th>Zile Active</th></tr></thead>
+        <thead><tr><th>#</th><th>Trader</th><th>Profit %</th><th>Max DD</th></tr></thead>
         <tbody id="tbody-overall"></tbody>
       </table>
     </div>
@@ -763,14 +763,12 @@
     }
 
     /* General */
-    renderTable('tbody-overall', data.general, 6, function (p) {
+    renderTable('tbody-overall', data.general, 4, function (p) {
       var profit = p.profitPercent >= 0 ? '+' + p.profitPercent : '' + p.profitPercent;
       return '<td>' + rkBadge(p.rank) + '</td>'
         + '<td class="td-name">' + p.name + '</td>'
         + '<td class="td-roi">' + profit + '%</td>'
-        + '<td>' + p.maxDrawdown + '%</td>'
-        + '<td>' + p.totalLots + '</td>'
-        + '<td>' + p.activeDays + '</td>';
+        + '<td>' + p.maxDrawdown + '%</td>';
     });
 
     /* Consistență */
