@@ -382,45 +382,27 @@
       </div>
       <p id="last-updated" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);padding-bottom:0.5rem;">Se încarcă...</p>
     </div>
-    <p class="lb-desc">Scor general = 50% Performance + 25% Activitate + 25% Transformare</p>
+    <p class="lb-desc">Scor general = 60% ROI% + 40% (100 − Max Drawdown)</p>
 
     <!-- TABS -->
     <div class="lb-tabs" role="tablist">
       <button class="lb-tab active" role="tab" aria-selected="true"  onclick="showTab('overall', this)">General</button>
-      <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('perf', this)">Performance</button>
-      <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('activ', this)">Most Active</button>
-      <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('transform', this)">Transformare</button>
+      <button class="lb-tab" role="tab" aria-selected="false" onclick="showTab('activ', this)">Consistență</button>
     </div>
 
     <!-- General -->
     <div class="lb-table-scroll" id="tab-overall">
       <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Scor General</th><th>ROI %</th><th>Max DD</th><th>Trades</th><th>Zile Active</th></tr></thead>
+        <thead><tr><th>#</th><th>Trader</th><th>Scor</th><th>ROI %</th><th>Max DD</th><th>Lot</th><th>Zile Active</th></tr></thead>
         <tbody id="tbody-overall"></tbody>
       </table>
     </div>
 
-    <!-- Performance -->
-    <div class="lb-table-scroll" id="tab-perf" style="display:none;">
-      <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Scor Perf.</th><th>ROI %</th><th>Max DD</th><th>Risk Score</th><th>Trades</th></tr></thead>
-        <tbody id="tbody-perf"></tbody>
-      </table>
-    </div>
-
-    <!-- Most Active -->
+    <!-- Consistență -->
     <div class="lb-table-scroll" id="tab-activ" style="display:none;">
       <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Scor Act.</th><th>Trades</th><th>Zile Active</th><th>ROI %</th><th>Rapoarte</th></tr></thead>
+        <thead><tr><th>#</th><th>Trader</th><th>Lot</th><th>Zile Active</th><th>ROI %</th></tr></thead>
         <tbody id="tbody-activ"></tbody>
-      </table>
-    </div>
-
-    <!-- Transformare -->
-    <div class="lb-table-scroll" id="tab-transform" style="display:none;">
-      <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Scor Trans.</th><th>Disciplină</th><th>Jurnal %</th><th>Trades</th><th>Zile Active</th></tr></thead>
-        <tbody id="tbody-transform"></tbody>
       </table>
     </div>
 
@@ -723,7 +705,7 @@
   setInterval(tick, 1000);
 
   /* ── TABS ─────────────────────────────────────────────────── */
-  var TAB_IDS = ['overall', 'perf', 'activ', 'transform'];
+  var TAB_IDS = ['overall', 'activ'];
   window.showTab = function (tab, btn) {
     TAB_IDS.forEach(function (id) {
       var el = document.getElementById('tab-' + id);
@@ -780,48 +762,26 @@
       }
     }
 
-    /* Overall */
-    renderTable('tbody-overall', data.overall, 7, function (p) {
+    /* General */
+    renderTable('tbody-overall', data.general, 7, function (p) {
+      var roi = p.profitPercent >= 0 ? '+' + p.profitPercent : '' + p.profitPercent;
       return '<td>' + rkBadge(p.rank) + '</td>'
         + '<td class="td-name">' + p.name + '</td>'
         + '<td class="td-score">' + p.score + '</td>'
-        + '<td class="td-roi">+' + p.profitPercent + '%</td>'
+        + '<td class="td-roi">' + roi + '%</td>'
         + '<td>' + p.maxDrawdown + '%</td>'
-        + '<td>' + p.totalTrades + '</td>'
+        + '<td>' + p.totalLots + '</td>'
         + '<td>' + p.activeDays + '</td>';
     });
 
-    /* Performance */
-    renderTable('tbody-perf', data.performance, 7, function (p) {
+    /* Consistență */
+    renderTable('tbody-activ', data.consistenta, 5, function (p) {
+      var roi = p.profitPercent >= 0 ? '+' + p.profitPercent : '' + p.profitPercent;
       return '<td>' + rkBadge(p.rank) + '</td>'
         + '<td class="td-name">' + p.name + '</td>'
-        + '<td class="td-score">' + p.score + '</td>'
-        + '<td class="td-roi">+' + p.profitPercent + '%</td>'
-        + '<td>' + p.maxDrawdown + '%</td>'
-        + '<td>' + (p.riskScore || '—') + '</td>'
-        + '<td>' + p.totalTrades + '</td>';
-    });
-
-    /* Activity */
-    renderTable('tbody-activ', data.activity, 7, function (p) {
-      return '<td>' + rkBadge(p.rank) + '</td>'
-        + '<td class="td-name">' + p.name + '</td>'
-        + '<td class="td-activity">' + p.score + '</td>'
-        + '<td class="td-activity">' + p.totalTrades + '</td>'
+        + '<td class="td-activity">' + p.totalLots + '</td>'
         + '<td>' + p.activeDays + '</td>'
-        + '<td class="td-roi">+' + p.profitPercent + '%</td>'
-        + '<td>' + (p.weeklyReports || 0) + '</td>';
-    });
-
-    /* Transformation */
-    renderTable('tbody-transform', data.transformation, 7, function (p) {
-      return '<td>' + rkBadge(p.rank) + '</td>'
-        + '<td class="td-name">' + p.name + '</td>'
-        + '<td class="td-score">' + p.score + '</td>'
-        + '<td>' + (p.disciplineScore || '—') + '</td>'
-        + '<td>' + (p.journalPercent || '—') + '%</td>'
-        + '<td>' + p.totalTrades + '</td>'
-        + '<td>' + p.activeDays + '</td>';
+        + '<td class="td-roi">' + roi + '%</td>';
     });
 
     /* Lucky Draw */
@@ -841,7 +801,7 @@
         /* API indisponibil — arată mesaj neutru */
         var lu = document.getElementById('last-updated');
         if (lu) lu.textContent = 'Server offline';
-        ['tbody-overall','tbody-perf','tbody-activ','tbody-transform'].forEach(function(id) {
+        ['tbody-overall','tbody-activ'].forEach(function(id) {
           var el = document.getElementById(id);
           if (el) el.innerHTML = emptyRow(7, 'Înscrierile nu au început încă');
         });
