@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "p001",
+    "name": "Silviu Fire",
+    "profitPercent": 1.35,
+    "maxDrawdown": 4.94,
+    "totalLots": 0,
+    "activeDays": 0,
+    "registeredAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "p002",
+    "name": "Ioana Cioban",
+    "profitPercent": -6.93,
+    "maxDrawdown": 18.48,
+    "totalLots": 0,
+    "activeDays": 0,
+    "registeredAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "p003",
+    "name": "CrisL",
+    "profitPercent": -0.07,
+    "maxDrawdown": 19.86,
+    "totalLots": 0,
+    "activeDays": 0,
+    "registeredAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "p004",
+    "name": "Florin1998",
+    "profitPercent": -18.90,
+    "maxDrawdown": 19.42,
+    "totalLots": 0,
+    "activeDays": 0,
+    "registeredAt": "2026-06-01T00:00:00.000Z"
+  }
+]

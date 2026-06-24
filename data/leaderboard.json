@@ -1,100 +1,79 @@
 {
-  "lastUpdated": "2026-06-23T23:02:19.597Z",
-  "overall": [
+  "lastUpdated": "2026-06-24T12:24:20.206Z",
+  "general": [
     {
       "rank": 1,
       "id": "p001",
-      "name": "Hane Andreea",
-      "score": 97.88,
-      "profitPercent": 28.12,
-      "maxDrawdown": 30.38,
-      "totalTrades": 537,
-      "activeDays": 16
+      "name": "Silviu Fire",
+      "score": 0.27,
+      "profitPercent": 1.35,
+      "maxDrawdown": 4.94,
+      "totalLots": 0,
+      "activeDays": 0
     },
     {
       "rank": 2,
-      "id": "p002",
-      "name": "Alexandru",
-      "score": 27.22,
-      "profitPercent": -18.09,
-      "maxDrawdown": 21.24,
-      "totalTrades": 138,
-      "activeDays": 12
-    }
-  ],
-  "performance": [
-    {
-      "rank": 1,
-      "id": "p001",
-      "name": "Hane Andreea",
-      "score": 31.47,
-      "profitPercent": 28.12,
-      "maxDrawdown": 30.38,
-      "totalTrades": 537,
-      "activeDays": 16,
-      "riskScore": 0
-    },
-    {
-      "rank": 2,
-      "id": "p002",
-      "name": "Alexandru",
-      "score": 10.65,
-      "profitPercent": -18.09,
-      "maxDrawdown": 21.24,
-      "totalTrades": 138,
-      "activeDays": 12,
-      "riskScore": 0
-    }
-  ],
-  "activity": [
-    {
-      "rank": 1,
-      "id": "p001",
-      "name": "Hane Andreea",
-      "score": 328.6,
-      "profitPercent": 28.12,
-      "maxDrawdown": 30.38,
-      "totalTrades": 537,
-      "activeDays": 16,
-      "weeklyReports": 0
-    },
-    {
-      "rank": 2,
-      "id": "p002",
-      "name": "Alexandru",
-      "score": 87.6,
-      "profitPercent": -18.09,
-      "maxDrawdown": 21.24,
-      "totalTrades": 138,
-      "activeDays": 12,
-      "weeklyReports": 0
-    }
-  ],
-  "transformation": [
-    {
-      "rank": 1,
-      "id": "p001",
-      "name": "Hane Andreea",
+      "id": "p003",
+      "name": "CrisL",
       "score": 0,
-      "profitPercent": 28.12,
-      "maxDrawdown": 30.38,
-      "totalTrades": 537,
-      "activeDays": 16,
-      "journalPercent": 0,
-      "disciplineScore": 0
+      "profitPercent": -0.07,
+      "maxDrawdown": 19.86,
+      "totalLots": 0,
+      "activeDays": 0
+    },
+    {
+      "rank": 3,
+      "id": "p002",
+      "name": "Ioana Cioban",
+      "score": -0.37,
+      "profitPercent": -6.93,
+      "maxDrawdown": 18.48,
+      "totalLots": 0,
+      "activeDays": 0
+    },
+    {
+      "rank": 4,
+      "id": "p004",
+      "name": "Florin1998",
+      "score": -0.97,
+      "profitPercent": -18.9,
+      "maxDrawdown": 19.42,
+      "totalLots": 0,
+      "activeDays": 0
+    }
+  ],
+  "consistenta": [
+    {
+      "rank": 1,
+      "id": "p001",
+      "name": "Silviu Fire",
+      "totalLots": 0,
+      "activeDays": 0,
+      "profitPercent": 1.35
     },
     {
       "rank": 2,
       "id": "p002",
-      "name": "Alexandru",
-      "score": 0,
-      "profitPercent": -18.09,
-      "maxDrawdown": 21.24,
-      "totalTrades": 138,
-      "activeDays": 12,
-      "journalPercent": 0,
-      "disciplineScore": 0
+      "name": "Ioana Cioban",
+      "totalLots": 0,
+      "activeDays": 0,
+      "profitPercent": -6.93
+    },
+    {
+      "rank": 3,
+      "id": "p003",
+      "name": "CrisL",
+      "totalLots": 0,
+      "activeDays": 0,
+      "profitPercent": -0.07
+    },
+    {
+      "rank": 4,
+      "id": "p004",
+      "name": "Florin1998",
+      "totalLots": 0,
+      "activeDays": 0,
+      "profitPercent": -18.9
     }
-  ],
-  "luckyDraw": null
+  ]
 }
