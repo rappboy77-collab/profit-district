@@ -30,8 +30,9 @@ function round2(n) { return Math.round(n * 100) / 100; }
 // ─── Formule scoruri ──────────────────────────────────────────────────────────
 
 function calcGeneral(p) {
-  // ROI% contribuie 60%, absența drawdown-ului 40%
-  return round2((p.profitPercent * 0.6) + ((100 - p.maxDrawdown) * 0.4));
+  // Raport Profit% / MaxDrawdown% — recompensează profit bun cu risc mic
+  if (!p.maxDrawdown || p.maxDrawdown === 0) return round2(p.profitPercent > 0 ? p.profitPercent : 0);
+  return round2(p.profitPercent / p.maxDrawdown);
 }
 
 // ─── Main ────────────────────────────────────────────────────────────────────

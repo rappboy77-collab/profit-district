@@ -382,7 +382,7 @@
       </div>
       <p id="last-updated" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);padding-bottom:0.5rem;">Se încarcă...</p>
     </div>
-    <p class="lb-desc">Scor general = 60% ROI% + 40% (100 − Max Drawdown)</p>
+    <p class="lb-desc">Scor general = Profit% ÷ Max Drawdown%</p>
 
     <!-- TABS -->
     <div class="lb-tabs" role="tablist">
@@ -393,7 +393,7 @@
     <!-- General -->
     <div class="lb-table-scroll" id="tab-overall">
       <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Scor</th><th>ROI %</th><th>Max DD</th><th>Lot</th><th>Zile Active</th></tr></thead>
+        <thead><tr><th>#</th><th>Trader</th><th>Scor</th><th>Profit %</th><th>Max DD</th><th>Lot</th><th>Zile Active</th></tr></thead>
         <tbody id="tbody-overall"></tbody>
       </table>
     </div>
@@ -764,11 +764,11 @@
 
     /* General */
     renderTable('tbody-overall', data.general, 7, function (p) {
-      var roi = p.profitPercent >= 0 ? '+' + p.profitPercent : '' + p.profitPercent;
+      var profit = p.profitPercent >= 0 ? '+' + p.profitPercent : '' + p.profitPercent;
       return '<td>' + rkBadge(p.rank) + '</td>'
         + '<td class="td-name">' + p.name + '</td>'
         + '<td class="td-score">' + p.score + '</td>'
-        + '<td class="td-roi">' + roi + '%</td>'
+        + '<td class="td-roi">' + profit + '%</td>'
         + '<td>' + p.maxDrawdown + '%</td>'
         + '<td>' + p.totalLots + '</td>'
         + '<td>' + p.activeDays + '</td>';
