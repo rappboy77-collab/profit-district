@@ -52,5 +52,14 @@
     "totalLots": 0,
     "activeDays": 0,
     "registeredAt": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "p007",
+    "name": "Diana Summer League",
+    "profitPercent": 9.97,
+    "maxDrawdown": 31.59,
+    "totalLots": 1.31,
+    "activeDays": 7,
+    "registeredAt": "2026-07-02T00:00:00.000Z"
   }
 ]
