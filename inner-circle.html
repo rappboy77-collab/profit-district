@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inner Circle — Profit District</title>
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600;1,700&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #080809;
+      --surface:   #0e0e10;
+      --elevated:  #141417;
+      --float:     #1b1b1f;
+      --gold:      #c9a84c;
+      --gold-b:    #e2bf6a;
+      --gold-d:    #7a6230;
+      --glow:      rgba(201,168,76,0.15);
+      --glow-s:    rgba(201,168,76,0.06);
+      --tp:        #ede9dd;
+      --ts:        #9a9080;
+      --tm:        #4f4a3c;
+      --border:    rgba(201,168,76,0.11);
+      --bm:        rgba(201,168,76,0.22);
+      --bs:        rgba(201,168,76,0.42);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--tp);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2.5rem;background:rgba(8,8,9,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+    .nav-logo{height:30px}
+    .nav-pill{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--bm);padding:0.45rem 1.1rem;border-radius:100px;text-decoration:none;transition:background .2s,color .2s}
+    .nav-pill:hover{background:var(--glow-s);color:var(--gold-b)}
+
+    /* HERO */
+    .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 2rem 7rem;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 90% 55% at 50% -5%,rgba(201,168,76,0.13) 0%,transparent 55%),radial-gradient(ellipse 60% 50% at 15% 100%,rgba(30,80,40,0.13) 0%,transparent 55%),radial-gradient(ellipse 40% 40% at 85% 85%,rgba(201,168,76,0.05) 0%,transparent 50%)}
+    .hero-grain{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+    .eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);position:relative;z-index:2;margin-bottom:1.75rem}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:clamp(5.5rem,15vw,14rem);line-height:.85;letter-spacing:-.02em;color:var(--tp);position:relative;z-index:2}
+    .hero-title em{color:var(--gold);font-style:italic}
+    .hero-sub{font-family:'Syne',sans-serif;font-size:clamp(.78rem,1.8vw,1rem);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ts);position:relative;z-index:2;margin-top:1.5rem}
+    .hero-meta{display:flex;align-items:center;gap:1.5rem;margin-top:2.5rem;position:relative;z-index:2;flex-wrap:wrap;justify-content:center}
+    .meta-item{display:flex;align-items:center;gap:.45rem;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ts)}
+    .meta-item svg{color:var(--gold)}
+    .meta-sep{width:1px;height:20px;background:var(--border)}
+    .hero-btns{display:flex;gap:1rem;margin-top:3rem;position:relative;z-index:2;flex-wrap:wrap;justify-content:center}
+    .btn-g{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:.95rem 2.4rem;border-radius:4px;text-decoration:none;box-shadow:0 4px 24px rgba(201,168,76,.28);transition:background .2s,transform .15s,box-shadow .2s}
+    .btn-g:hover{background:var(--gold-b);transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,168,76,.38)}
+    .btn-o{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);background:transparent;padding:.95rem 2.4rem;border-radius:4px;text-decoration:none;border:1px solid var(--bm);transition:border-color .2s,background .2s,transform .15s}
+    .btn-o:hover{border-color:var(--gold);background:var(--glow-s);transform:translateY(-2px)}
+    .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:.45}
+    .scroll-hint span{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ts)}
+    .scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sl 2s ease-in-out infinite}
+    @keyframes sl{0%,100%{opacity:.5}50%{opacity:1;transform:scaleY(.8)}}
+
+    /* LAYOUT */
+    .wrap{max-width:1100px;margin:0 auto;padding:0 2rem}
+    .wrap-n{max-width:740px;margin:0 auto;padding:0 2rem}
+    section{padding:6rem 0}
+    .on-surface{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+    /* LABELS & HEADINGS */
+    .lbl{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.9rem}
+    .h-display{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:clamp(2.4rem,5.5vw,5rem);line-height:1.05;letter-spacing:-.01em;color:var(--tp);text-wrap:balance}
+    .h-syne{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;letter-spacing:-.02em;color:var(--tp);text-wrap:balance}
+    .body-txt{color:var(--ts);font-size:1rem;line-height:1.78}
+    .rule{width:36px;height:2px;background:var(--gold);margin:1.25rem 0}
+    .rule.c{margin:1.25rem auto}
+
+    /* INTRO */
+    .intro-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(1.5rem,3.2vw,2.6rem);line-height:1.3;color:var(--tp);text-wrap:balance;margin-bottom:1.75rem}
+    .intro-q strong{color:var(--gold)}
+
+    /* TWO-COL */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    @media(max-width:768px){.two-col{grid-template-columns:1fr;gap:2.5rem}}
+
+    /* FEATURE LIST */
+    .feat-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin-top:.5rem}
+    .feat-list li{display:flex;align-items:flex-start;gap:.9rem;padding:1rem 1.1rem;background:var(--elevated);border:1px solid var(--border);border-radius:6px;transition:border-color .2s}
+    .feat-list li:hover{border-color:var(--bm)}
+    .arr{color:var(--gold);flex-shrink:0;margin-top:.15rem;font-size:.95rem}
+    .feat-t{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;color:var(--tp);margin-bottom:.15rem}
+    .feat-d{font-size:.82rem;color:var(--ts);line-height:1.55}
+
+    /* EXP CARDS */
+    .exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;margin-top:3rem}
+    .exp-card{background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:1.75rem;transition:border-color .25s,transform .2s}
+    .exp-card:hover{border-color:var(--bm);transform:translateY(-3px)}
+    .exp-icon{font-size:1.6rem;margin-bottom:.9rem}
+    .exp-name{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.55rem}
+    .exp-d{font-size:.85rem;color:var(--ts);line-height:1.6}
+
+    /* SCHEDULE */
+    .tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem}
+    .dtab{flex:1;padding:.8rem .75rem;background:var(--elevated);border:none;border-right:1px solid var(--border);color:var(--tm);font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+    .dtab:last-child{border-right:none}
+    .dtab:hover{background:var(--float);color:var(--ts)}
+    .dtab.on{background:var(--glow-s);color:var(--gold);border-bottom:2px solid var(--gold)}
+    .day{display:none}.day.on{display:block}
+    .tl{display:flex;flex-direction:column}
+    .tl-row{display:grid;grid-template-columns:72px 1fr;gap:1.5rem;align-items:start;padding:1.1rem 0;border-bottom:1px solid var(--border)}
+    .tl-row:last-child{border-bottom:none}
+    .tl-time{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);padding-top:.15rem}
+    .tl-name{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;color:var(--tp);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem}
+    .tl-desc{font-size:.8rem;color:var(--ts);line-height:1.5}
+
+    /* FIT */
+    .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2.75rem}
+    @media(max-width:768px){.fit-grid{grid-template-columns:1fr;gap:2rem}}
+    .fit-ht{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem}
+    .fit-ht.y{color:#4ade80}.fit-ht.n{color:var(--tm)}
+    .fit-items{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+    .fi{display:flex;align-items:flex-start;gap:.7rem;font-size:.88rem;color:var(--ts);line-height:1.5}
+    .fi-y{color:#4ade80;flex-shrink:0}.fi-n{color:var(--tm);flex-shrink:0}
+
+    /* TAKEAWAYS */
+    .pills{display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;margin-top:2.5rem}
+    .pill{display:flex;align-items:center;gap:.55rem;padding:.8rem 1.4rem;background:var(--elevated);border:1px solid var(--border);border-radius:100px;font-size:.86rem;color:var(--tp);transition:border-color .2s}
+    .pill:hover{border-color:var(--bm)}
+    .pill .ck{color:var(--gold)}
+
+    /* PRICING */
+    .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+    @media(max-width:680px){.price-grid{grid-template-columns:1fr}}
+    .pc{background:var(--elevated);border:1px solid var(--border);border-radius:10px;padding:2.5rem;position:relative}
+    .pc.feat{border-color:var(--bs);background:linear-gradient(135deg,rgba(201,168,76,.05) 0%,var(--elevated) 100%);box-shadow:0 0 48px rgba(201,168,76,.07)}
+    .pc-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:.28rem 1.1rem;border-radius:100px;white-space:nowrap}
+    .pc-type{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ts);margin-bottom:1.4rem}
+    .pc-amt{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:3.2rem;line-height:1;color:var(--tp);margin-bottom:.2rem}
+    .pc-amt .cur{font-size:1.3rem;vertical-align:super;color:var(--gold)}
+    .pc-amt .unit{font-family:'Outfit',sans-serif;font-size:.85rem;color:var(--ts);font-weight:400}
+    .pc-child{font-size:.8rem;color:var(--ts);margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border)}
+    .pc-dl{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);letter-spacing:.08em;margin-bottom:1.5rem}
+    .pc-btn{display:block;width:100%;text-align:center;padding:.88rem;border-radius:6px;font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+    .pc-btn.g{background:var(--gold);color:var(--bg);box-shadow:0 4px 20px rgba(201,168,76,.22)}
+    .pc-btn.g:hover{background:var(--gold-b);transform:translateY(-1px)}
+    .pc-btn.s{border:1px solid var(--bm);color:var(--ts)}
+    .pc-btn.s:hover{border-color:var(--gold-d);color:var(--gold)}
+
+    /* INCLUSIONS */
+    .inc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.7rem;margin-top:1.5rem}
+    .inc-row{display:flex;align-items:flex-start;gap:.7rem;font-size:.86rem;color:var(--ts);line-height:1.5}
+    .inc-row .ck{color:var(--gold);flex-shrink:0}
+
+    /* BENEFITS */
+    .ben-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem;margin-top:3rem}
+    .ben-card{padding:1.6rem;background:var(--elevated);border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+    .ben-card:hover{border-color:var(--bm)}
+    .ben-icon{font-size:1.4rem;margin-bottom:.85rem}
+    .ben-t{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--tp);margin-bottom:.45rem}
+    .ben-d{font-size:.82rem;color:var(--ts);line-height:1.6}
+
+    /* GALLERY */
+    .gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+    @media(max-width:640px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+    .gal-item{aspect-ratio:4/3;background:var(--elevated);border:1px dashed var(--bm);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--tm);font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}
+    .gal-item.w{grid-column:span 2;aspect-ratio:16/9}
+    .gal-icon{font-size:1.4rem;opacity:.4}
+
+    /* FINAL CTA */
+    .final{text-align:center;padding:9rem 2rem;position:relative;overflow:hidden}
+    .final-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(201,168,76,.09) 0%,transparent 60%)}
+    .final-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:clamp(2.8rem,7vw,6rem);color:var(--tp);line-height:1.05;margin-bottom:1rem;position:relative}
+    .final-sub{font-size:1rem;color:var(--ts);margin-bottom:2.5rem;position:relative}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:2rem;text-align:center}
+    .ft{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--tm);letter-spacing:.1em}
+
+    /* REVEAL */
+    [data-r]{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+    [data-r].vis{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){[data-r]{opacity:1;transform:none;transition:none}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img src="logo/2.png" alt="Profit District" class="nav-logo"></a>
+  <a href="#apply" class="nav-pill">Aplică pentru un Loc</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <p class="eyebrow">Profit District &nbsp;·&nbsp; Eveniment Exclusiv &nbsp;·&nbsp; 4 Zile / 3 Nopți</p>
+  <h1 class="hero-title">Inner<br><em>Circle</em></h1>
+  <p class="hero-sub">The Ultimate Trading &amp; Performance Experience</p>
+  <!-- Editions -->
+  <div style="display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:2.5rem;position:relative;z-index:2">
+    <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ts);display:flex;align-items:center;margin-right:.4rem">Ediții 2026 →</div>
+    <span style="background:var(--glow-s);border:1px solid var(--bm);border-radius:100px;padding:.35rem .9rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--gold);letter-spacing:.06em">Ediția II &nbsp;·&nbsp; 16–19 iulie</span>
+    <span style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:100px;padding:.35rem .9rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ts);letter-spacing:.06em">Ediția III &nbsp;·&nbsp; 30 iulie – 2 aug</span>
+    <span style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:100px;padding:.35rem .9rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ts);letter-spacing:.06em">Ediția IV &nbsp;·&nbsp; 13–16 august</span>
+    <span style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:100px;padding:.35rem .9rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ts);letter-spacing:.06em">Ediția V &nbsp;·&nbsp; 27–29 august</span>
+  </div>
+
+  <div class="hero-meta" style="margin-top:1.5rem">
+    <div class="meta-item">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Ca la Mama Acasă · Trestia, Hunedoara
+    </div>
+    <div class="meta-sep"></div>
+    <div class="meta-item">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Maxim 4–6 participanți
+    </div>
+  </div>
+  <div class="hero-btns">
+    <a href="https://t.me/hanetrades" target="_blank" rel="noopener noreferrer" class="btn-g">Aplică pentru un Loc</a>
+    <a href="#program" class="btn-o">Vezi Programul</a>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Descoperă</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="on-surface">
+  <div class="wrap-n" data-r>
+    <span class="lbl">De ce Inner Circle</span>
+    <p class="intro-q">"Cum ar arăta viața ta <strong>peste un an</strong> dacă ai petrece patru zile alături de <strong>oamenii potriviți</strong>?"</p>
+    <p class="body-txt">Ce ai spune dacă, pentru patru zile, ai ieși complet din rutina zilnică? Ai lăsa în urmă notificările, stresul și programul aglomerat pentru a petrece timp într-un cadru privat, departe de haos, alături de doar câțiva participanți care împărtășesc aceeași dorință de evoluție.</p>
+  </div>
+</section>
+
+<!-- DEFINITION -->
+<section>
+  <div class="wrap">
+    <div class="two-col">
+      <div data-r>
+        <span class="lbl">Ce este</span>
+        <h2 class="h-display">Nu este<br>un curs.</h2>
+        <div class="rule"></div>
+        <p class="body-txt" style="margin-bottom:1rem">Inner Circle nu este un curs și nu este un retreat clasic.</p>
+        <p class="body-txt">Este o experiență construită pentru oameni care vor să investească în performanța lor, în relațiile pe care le construiesc și în direcția pe care o dau următorilor ani.</p>
+        <p class="body-txt" style="margin-top:1rem">În fiecare zi vei alterna sesiuni practice de trading cu activități în natură, conversații autentice și momente de reflecție — un ritm care îți permite să înveți, dar și să te reconectezi.</p>
+      </div>
+      <div data-r>
+        <span class="lbl" style="margin-bottom:1.4rem">Ce vei experimenta</span>
+        <ul class="feat-list">
+          <li><span class="arr">→</span><div><p class="feat-t">Live Trading &amp; Market Analysis</p><p class="feat-d">Sesiuni practice în timp real și feedback personalizat.</p></div></li>
+          <li><span class="arr">→</span><div><p class="feat-t">Performance Sessions</p><p class="feat-d">Strategie, mindset și decizii care pot accelera rezultatele.</p></div></li>
+          <li><span class="arr">→</span><div><p class="feat-t">Mastermind Privat</p><p class="feat-d">Discuții deschise, idei și perspective într-un grup restrâns.</p></div></li>
+          <li><span class="arr">→</span><div><p class="feat-t">Networking Autentic</p><p class="feat-d">Patru zile alături de oameni cu aceleași obiective.</p></div></li>
+          <li><span class="arr">→</span><div><p class="feat-t">Natură, Liniște &amp; Reconectare</p><p class="feat-d">Drumeții, seri în jurul focului și momente fără grabă.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE EXPANDED -->
+<section class="on-surface" id="experience">
+  <div class="wrap">
+    <div style="text-align:center" data-r>
+      <span class="lbl">Detaliat</span>
+      <h2 class="h-syne">Ce vei experimenta în cele 4 zile</h2>
+      <p class="body-txt" style="max-width:540px;margin:.75rem auto 0">Fiecare activitate creează contexte reale de învățare pe care nu le poți reproduce într-un webinar.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card" data-r>
+        <div class="exp-icon">📈</div>
+        <p class="exp-name">Live Trading &amp; Market Analysis</p>
+        <p class="exp-d">Participă la sesiuni de trading în timp real, analize de piață și discuții aplicate. Urmărește procesul de la analiză până la închiderea tranzacției.</p>
+      </div>
+      <div class="exp-card" data-r>
+        <div class="exp-icon">🧠</div>
+        <p class="exp-name">Performance Mastermind</p>
+        <p class="exp-d">Discuții strategice despre trading, investiții, productivitate și mentalitate orientată spre performanță pe termen lung.</p>
+      </div>
+      <div class="exp-card" data-r>
+        <div class="exp-icon">🎯</div>
+        <p class="exp-name">Feedback Personalizat</p>
+        <p class="exp-d">Într-un grup de 4–6 participanți ai acces direct la feedback, întrebări și conversații aplicate, adaptate obiectivelor tale.</p>
+      </div>
+      <div class="exp-card" data-r>
+        <div class="exp-icon">🤝</div>
+        <p class="exp-name">Networking de Calitate</p>
+        <p class="exp-d">Relații autentice cu oameni care împartășesc aceleași obiective și valori. Conexiuni care continuă mult după eveniment.</p>
+      </div>
+      <div class="exp-card" data-r>
+        <div class="exp-icon">🌿</div>
+        <p class="exp-name">Reconnect with Nature</p>
+        <p class="exp-d">Drumeții, momente de liniște, seri în jurul focului — un cadru care oferă spațiu pentru claritate și reflecție.</p>
+      </div>
+      <div class="exp-card" data-r>
+        <div class="exp-icon">🏠</div>
+        <p class="exp-name">Experiență All Inclusive</p>
+        <p class="exp-d">Cazare, mese, băuturi și acces complet la toate activitățile. Tot ce ai nevoie este inclus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="program">
+  <div class="wrap" data-r>
+    <span class="lbl">Programul Evenimentului</span>
+    <h2 class="h-syne" style="margin-bottom:.75rem">Patru zile.<br>O singură experiență.</h2>
+    <p class="body-txt" style="margin-bottom:2.5rem;max-width:540px">Nu urmărim un program încărcat. Urmărim conversații care schimbă perspective și momente care aduc claritate.</p>
+
+    <div class="tabs">
+      <button class="dtab on" data-day="joi">Joi</button>
+      <button class="dtab" data-day="vineri">Vineri</button>
+      <button class="dtab" data-day="sambata">Sâmbătă</button>
+      <button class="dtab" data-day="duminica">Duminică</button>
+    </div>
+
+    <div class="day on" id="day-joi">
+      <div class="tl">
+        <div class="tl-row"><span class="tl-time">13:00</span><div><p class="tl-name">Prime Connection Brunch</p></div></div>
+        <div class="tl-row"><span class="tl-time">14:30</span><div><p class="tl-name">Vision &amp; Values Circle</p><p class="tl-desc">Speed networking &amp; conexiuni autentice.</p></div></div>
+        <div class="tl-row"><span class="tl-time">16:00</span><div><p class="tl-name">Market Intelligence Live</p><p class="tl-desc">Sesiune de trading live &amp; Q&amp;A cu insight-uri aplicate.</p></div></div>
+        <div class="tl-row"><span class="tl-time">18:00</span><div><p class="tl-name">The Collaboration Games</p><p class="tl-desc">Activități de echipă &amp; comunicare. Limbajul care construiește rezultate.</p></div></div>
+        <div class="tl-row"><span class="tl-time">20:00</span><div><p class="tl-name">Founders Table Dinner</p><p class="tl-desc">Discuții reale. Oameni reali. Relații care contează.</p></div></div>
+      </div>
+    </div>
+
+    <div class="day" id="day-vineri">
+      <div class="tl">
+        <div class="tl-row"><span class="tl-time">08:00</span><div><p class="tl-name">Peak Performance Activation</p><p class="tl-desc">Mișcare în natură &amp; reset mental.</p></div></div>
+        <div class="tl-row"><span class="tl-time">09:00</span><div><p class="tl-name">Mic Dejun</p></div></div>
+        <div class="tl-row"><span class="tl-time">10:00</span><div><p class="tl-name">Strategy &amp; Execution Lab</p><p class="tl-desc">Trading &amp; analiză avansată.</p></div></div>
+        <div class="tl-row"><span class="tl-time">12:00</span><div><p class="tl-name">Nourish &amp; Connect Brunch</p><p class="tl-desc">Energie bună, conversații reale.</p></div></div>
+        <div class="tl-row"><span class="tl-time">14:00</span><div><p class="tl-name">Mindset Mastery</p><p class="tl-desc">Panel exclusiv cu lideri în domeniu.</p></div></div>
+        <div class="tl-row"><span class="tl-time">16:00</span><div><p class="tl-name">Trading Mastery Session</p><p class="tl-desc">Structuri, strategii, execuție și management.</p></div></div>
+        <div class="tl-row"><span class="tl-time">18:00</span><div><p class="tl-name">Nature Expedition</p><p class="tl-desc">Drumeție ghidată &amp; reconectare cu natura.</p></div></div>
+        <div class="tl-row"><span class="tl-time">20:00</span><div><p class="tl-name">Legends Dinner</p><p class="tl-desc">Seară de povești, inspirație și insight-uri.</p></div></div>
+      </div>
+    </div>
+
+    <div class="day" id="day-sambata">
+      <div class="tl">
+        <div class="tl-row"><span class="tl-time">08:00</span><div><p class="tl-name">Intention Morning Ritual</p><p class="tl-desc">Aliniere, respirație, claritate.</p></div></div>
+        <div class="tl-row"><span class="tl-time">10:00</span><div><p class="tl-name">Advanced Trading Blueprint</p><p class="tl-desc">Tehnici avansate &amp; scenarii reale.</p></div></div>
+        <div class="tl-row"><span class="tl-time">12:00</span><div><p class="tl-name">Integration Lunch</p><p class="tl-desc">Reflecție &amp; conectare.</p></div></div>
+        <div class="tl-row"><span class="tl-time">14:00</span><div><p class="tl-name">Deep Mind Reset</p><p class="tl-desc">Sesiune de resetare mentală și eliberare de blocaje.</p></div></div>
+        <div class="tl-row"><span class="tl-time">16:00</span><div><p class="tl-name">Advanced Training</p><p class="tl-desc">Cum să treci peste blocaje, cum să îți faci un plan și cum să gestionezi emoțiile.</p></div></div>
+        <div class="tl-row"><span class="tl-time">20:00</span><div><p class="tl-name">Networking Dinner</p><p class="tl-desc">Cină, foc de tabără, Q&amp;A.</p></div></div>
+      </div>
+    </div>
+
+    <div class="day" id="day-duminica">
+      <div class="tl">
+        <div class="tl-row"><span class="tl-time">09:00</span><div><p class="tl-name">Mic Dejun</p></div></div>
+        <div class="tl-row"><span class="tl-time">11:00</span><div><p class="tl-name">Closing Mastermind</p><p class="tl-desc">Debrief final, testimoniale &amp; next steps.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="on-surface">
+  <div class="wrap" data-r>
+    <span class="lbl">Potrivire</span>
+    <h2 class="h-syne">Este Inner Circle pentru tine?</h2>
+    <p class="body-txt" style="max-width:540px;margin:.75rem 0 0">Inner Circle este creat pentru cei care înțeleg că performanța se construiește și prin mediul în care aleg să evolueze.</p>
+    <div class="fit-grid">
+      <div>
+        <p class="fit-ht y">✓ &nbsp;Este pentru tine dacă</p>
+        <ul class="fit-items">
+          <li class="fi"><span class="fi-y">→</span>Îți dorești să evoluezi în trading și simți că ai nevoie de mai multă claritate.</li>
+          <li class="fi"><span class="fi-y">→</span>Cauți un grup restrâns de oameni ambițioși cu care să ai conversații autentice.</li>
+          <li class="fi"><span class="fi-y">→</span>Simți nevoia să ieși din rutină și să petreci câteva zile într-un mediu care îți oferă liniște.</li>
+          <li class="fi"><span class="fi-y">→</span>Îți dorești feedback direct, fără filtre, într-un cadru privat și relaxat.</li>
+          <li class="fi"><span class="fi-y">→</span>Apreciezi experiențele premium și înțelegi valoarea timpului cu oamenii potriviți.</li>
+          <li class="fi"><span class="fi-y">→</span>Ești dispus să investești în dezvoltarea ta, nu doar în informație.</li>
+          <li class="fi"><span class="fi-y">→</span>Îți dorești o experiență autentică, limitată la 4–6 participanți.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="fit-ht n">✗ &nbsp;Nu este pentru tine dacă</p>
+        <ul class="fit-items">
+          <li class="fi"><span class="fi-n">—</span>Cauți un curs clasic sau un seminar cu sute de participanți.</li>
+          <li class="fi"><span class="fi-n">—</span>Vrei doar teorie, fără implicare și discuții aplicate.</li>
+          <li class="fi"><span class="fi-n">—</span>Nu ești dispus să ieși din zona de confort.</li>
+          <li class="fi"><span class="fi-n">—</span>Cauți rezultate rapide fără să investești timp și energie în proces.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAKEAWAYS -->
+<section style="text-align:center">
+  <div class="wrap" data-r>
+    <span class="lbl">Ce iei acasă</span>
+    <h2 class="h-syne">Nu promitem rezultate rapide.<br>Promitem:</h2>
+    <div class="pills">
+      <div class="pill"><span class="ck">✔</span>O perspectivă diferită asupra pieței</div>
+      <div class="pill"><span class="ck">✔</span>O disciplină mai bună</div>
+      <div class="pill"><span class="ck">✔</span>Mai multă claritate</div>
+      <div class="pill"><span class="ck">✔</span>Oameni pe care îi poți suna și peste șase luni</div>
+      <div class="pill"><span class="ck">✔</span>Un plan concret pentru următoarea etapă</div>
+      <div class="pill"><span class="ck">✔</span>Perspective noi asupra tradingului</div>
+      <div class="pill"><span class="ck">✔</span>Relații care continuă după eveniment</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="on-surface" id="apply">
+  <div class="wrap">
+    <div style="text-align:center" data-r>
+      <span class="lbl">Investiție</span>
+      <h2 class="h-syne">Prețul unui loc</h2>
+      <p class="body-txt" style="max-width:480px;margin:.75rem auto 0">Locuri disponibile în limita capacității. Early booking activ până la <strong style="color:var(--gold)">10 iulie 2026</strong>.</p>
+    </div>
+    <div class="price-grid" data-r>
+      <div class="pc feat">
+        <div class="pc-badge">Early Bird · Disponibil acum</div>
+        <p class="pc-type">Cu Early Booking</p>
+        <div class="pc-amt"><span class="cur">Lei</span> 3.499 <span class="unit">/adult</span></div>
+        <p class="pc-child">+ <strong>499 Lei</strong> / copil care doarme în același pat cu părinții</p>
+        <p class="pc-dl">⏰ Valabil până la 10 iulie 2026</p>
+        <a href="https://t.me/hanetrades" target="_blank" rel="noopener noreferrer" class="pc-btn g">Rezervă Locul Tău</a>
+      </div>
+      <div class="pc">
+        <p class="pc-type">Preț Standard</p>
+        <div class="pc-amt" style="color:var(--ts)"><span class="cur" style="color:var(--tm)">Lei</span> 4.999 <span class="unit">/adult</span></div>
+        <p class="pc-child" style="color:var(--tm)">+ <strong style="color:var(--ts)">499 Lei</strong> / copil (același preț)</p>
+        <p class="pc-dl" style="color:var(--tm)">După 10 iulie 2026</p>
+        <a href="#contact" class="pc-btn s">Solicită Informații</a>
+      </div>
+    </div>
+    <div style="margin-top:3rem" data-r>
+      <span class="lbl">Tariful include</span>
+      <div class="inc-grid">
+        <div class="inc-row"><span class="ck">✔</span>4 zile / 3 nopți cazare — cameră cu baie proprie</div>
+        <div class="inc-row"><span class="ck">✔</span>Toate mesele (prânz joi → prânz duminică)</div>
+        <div class="inc-row"><span class="ck">✔</span>Toate activitățile din program</div>
+        <div class="inc-row"><span class="ck">✔</span>Toate materialele necesare</div>
+        <div class="inc-row"><span class="ck">✔</span>Speakeri și mentori incluși</div>
+        <div class="inc-row"><span class="ck">✔</span>2 sesiuni 1:1 după eveniment</div>
+        <div class="inc-row"><span class="ck">✔</span>Personal specializat pentru copii</div>
+      </div>
+      <p style="margin-top:1.5rem;font-size:.8rem;color:var(--tm);line-height:1.65">Notă: Activitățile pentru copii vor fi adaptate în funcție de vârstă și numărul lor. Pentru cerințe speciale (vegan/vegetarian, alergii, intoleranțe), specificați la înscriere.</p>
+    </div>
+
+    <!-- PAYMENT TERMS -->
+    <div style="margin-top:3rem;padding:2rem;background:var(--float);border:1px solid var(--border);border-radius:8px" data-r>
+      <span class="lbl" style="margin-bottom:1.25rem">Termeni de rezervare &amp; plată</span>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div style="display:flex;align-items:flex-start;gap:.85rem;font-size:.86rem;color:var(--ts);line-height:1.65">
+          <span style="color:var(--gold);flex-shrink:0;margin-top:.15rem">01</span>
+          <p>Rezervarea locurilor se face în ordinea înscrierilor, în funcție de locurile disponibile, cu plata unui avans minim de <strong style="color:var(--tp)">998 Ron/adult</strong> și <strong style="color:var(--tp)">250 Ron/copil</strong>. Locul este reținut în momentul în care se achită avansul minim.</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.85rem;font-size:.86rem;color:var(--ts);line-height:1.65">
+          <span style="color:var(--gold);flex-shrink:0;margin-top:.15rem">02</span>
+          <p>Diferența de bani se va achita cu cel mult <strong style="color:var(--tp)">5 zile înainte</strong> de eveniment.</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.85rem;font-size:.86rem;color:var(--ts);line-height:1.65">
+          <span style="color:var(--gold);flex-shrink:0;margin-top:.15rem">03</span>
+          <p>În cazul în care nu se plătește diferența în termen, se pierde locul rezervat și avansul achitat.</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.85rem;font-size:.86rem;color:var(--ts);line-height:1.65">
+          <span style="color:var(--gold);flex-shrink:0;margin-top:.15rem">04</span>
+          <p>Avansul (sau suma achitată) se restituie doar în cazul în care se găsește un înlocuitor. În caz contrar, suma nu se restituie și nu poate fi folosită pentru un alt eveniment, indiferent de motivul neprezentării. Vom încerca să găsim înlocuitori, dar nu ne asumăm acest lucru.</p>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:1.25rem;margin-top:.25rem">
+          <p style="font-size:.86rem;color:var(--ts);line-height:1.65;margin-bottom:.5rem">Pentru rezervări sau informații suplimentare:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+            <a href="https://wa.me/40752427454" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--gold);text-decoration:none;border:1px solid var(--bm);padding:.45rem .9rem;border-radius:100px;transition:background .2s" onmouseover="this.style.background='var(--glow-s)'" onmouseout="this.style.background='transparent'">
+              📱 WhatsApp +40752427454
+            </a>
+            <a href="mailto:haneloreandreea@yahoo.com" style="display:flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--gold);text-decoration:none;border:1px solid var(--bm);padding:.45rem .9rem;border-radius:100px;transition:background .2s" onmouseover="this.style.background='var(--glow-s)'" onmouseout="this.style.background='transparent'">
+              ✉️ haneloreandreea@yahoo.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section>
+  <div class="wrap" data-r>
+    <span class="lbl">De ce merită</span>
+    <h2 class="h-syne">Beneficiile experienței</h2>
+    <div class="ben-grid">
+      <div class="ben-card"><div class="ben-icon">📊</div><p class="ben-t">Dezvoltare în Trading</p><p class="ben-d">Workshop-uri practice care schimbă perspectiva asupra tradingului într-un cadru controlat de profesioniști.</p></div>
+      <div class="ben-card"><div class="ben-icon">🏔️</div><p class="ben-t">Conectare cu Natura</p><p class="ben-d">Locație în mijlocul naturii — oportunitatea de a te bucura de liniște și de a te reîncărca cu energie pozitivă.</p></div>
+      <div class="ben-card"><div class="ben-icon">👨‍👩‍👧</div><p class="ben-t">Activități pentru Copii</p><p class="ben-d">Jocuri, ateliere creative, drumeții — activități distractive și educative, adaptate vârstei, cu personal calificat.</p></div>
+      <div class="ben-card"><div class="ben-icon">🎓</div><p class="ben-t">Învățare Aplicată</p><p class="ben-d">Feedback direct și activități concrete care îți dezvoltă abilitățile și cunoștințele în trading.</p></div>
+      <div class="ben-card"><div class="ben-icon">🏃</div><p class="ben-t">Mișcare &amp; Performanță</p><p class="ben-d">Sesiunile de mișcare și drumeții te apropie de performanță prin reconectare cu natura și cu tine însuți.</p></div>
+      <div class="ben-card"><div class="ben-icon">🍽️</div><p class="ben-t">Alimentație de Calitate</p><p class="ben-d">Mese din ingrediente proaspete, pe stil clasic, pentru întreaga familie, cu opțiuni pentru cerințe speciale.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="on-surface" id="galerie">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:2.5rem" data-r>
+      <span class="lbl">Atmosferă &amp; Momente</span>
+      <h2 class="h-syne">Fotografii &amp; Video</h2>
+      <p class="body-txt" style="max-width:440px;margin:.5rem auto 0">Imagini și înregistrări de la edițiile anterioare — în curând.</p>
+    </div>
+    <div class="gal-grid" data-r>
+      <div class="gal-item w"><span class="gal-icon">🎬</span><span>Video · Coming Soon</span></div>
+      <div class="gal-item"><span class="gal-icon">📷</span><span>Foto · Coming Soon</span></div>
+      <div class="gal-item"><span class="gal-icon">📷</span><span>Foto · Coming Soon</span></div>
+      <div class="gal-item"><span class="gal-icon">📷</span><span>Foto · Coming Soon</span></div>
+      <div class="gal-item"><span class="gal-icon">📷</span><span>Foto · Coming Soon</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="contact">
+  <div class="final-bg"></div>
+  <div class="wrap-n" style="position:relative">
+    <span class="lbl" style="text-align:center;display:block;margin-bottom:1.5rem">Locuri Limitate</span>
+    <h2 class="final-title">Aplică pentru<br>un loc.</h2>
+    <p class="final-sub">Maximum 4–6 participanți per ediție.<br>Locurile se acordă pe baza unui proces de selecție.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem;align-items:center">
+      <a href="https://t.me/hanetrades" target="_blank" rel="noopener noreferrer" class="btn-g" style="min-width:260px;text-align:center">Aplică pentru un Loc</a>
+      <p style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--tm);letter-spacing:.1em;text-align:center">Sau contactează-ne direct pentru mai multe detalii</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="ft">© 2026 Profit District &nbsp;·&nbsp; Inner Circle &nbsp;·&nbsp; Toate Drepturile Rezervate</p>
+</footer>
+
+<script>
+  // Day tabs
+  document.querySelectorAll('.dtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.dtab').forEach(t => t.classList.remove('on'));
+      document.querySelectorAll('.day').forEach(d => d.classList.remove('on'));
+      tab.classList.add('on');
+      document.getElementById('day-' + tab.dataset.day).classList.add('on');
+    });
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('[data-r]').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
