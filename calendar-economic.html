@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
-  <title>Resurse — Profit District</title>
+  <title>Calendar Economic — Profit District</title>
   <link rel="icon" type="image/png" href="logo/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,12 @@
     :root {
       --bg-base: #0a0a0b; --bg-surface: #111113; --bg-elevated: #18181b; --bg-floating: #1f1f23;
       --gold: #c9a84c; --gold-bright: #e2bf6a; --gold-dim: #8a6e2f;
+      --green: #00ff88; --green-dim: rgba(0,255,136,0.12); --red: #ff5c5c;
       --text-primary: #f0ece0; --text-secondary: #a09880; --text-tertiary: #5c5848;
       --border-subtle: rgba(201,168,76,0.10); --border-mid: rgba(201,168,76,0.22); --border-strong: rgba(201,168,76,0.45);
       --shadow-card: 0 2px 4px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.07);
+      --shadow-button: 0 4px 16px rgba(201,168,76,0.28), 0 1px 3px rgba(0,0,0,0.6);
+      --shadow-input: 0 0 0 1px rgba(201,168,76,0.10), inset 0 1px 3px rgba(0,0,0,0.5);
     }
     html { scroll-behavior: smooth; }
     body { background: var(--bg-base); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
@@ -100,7 +103,7 @@
       margin-bottom: 1rem;
     }
     .page-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); letter-spacing: -0.03em; color: var(--text-primary); line-height: 1.1; margin-bottom: 1rem; }
-    .page-subtitle { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 1.05rem; color: var(--text-secondary); max-width: 520px; line-height: 1.7; margin-bottom: 3.5rem; }
+    .page-subtitle { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 1.05rem; color: var(--text-secondary); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
     .back-link {
       display: inline-flex; align-items: center; gap: 0.4rem;
       font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
@@ -108,38 +111,19 @@
     }
     .back-link:hover { color: var(--gold); }
 
-    /* HUB */
-    .hub-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 900px; }
-    @media (min-width: 640px) { .hub-grid { grid-template-columns: repeat(2, 1fr); } }
-    .hub-card {
-      display: block; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px;
-      padding: 2.25rem; text-decoration: none; box-shadow: var(--shadow-card);
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.25s ease;
+    /* CALENDAR */
+    .tool-section { margin-top: 0.5rem; }
+    .calc-card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 2.25rem; box-shadow: var(--shadow-card); max-width: 900px; }
+    .calc-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem;
+      letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 1.5rem;
     }
-    .hub-card:hover {
-      transform: translateY(-5px); border-color: var(--border-mid);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.12);
+    .calendar-intro {
+      font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.85rem;
+      color: var(--text-secondary); margin-bottom: 1.5rem;
     }
-    .hub-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-    .hub-card-icon {
-      width: 44px; height: 44px; border-radius: 8px; background: rgba(201,168,76,0.1);
-      display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--gold);
-    }
-    .hub-card-icon svg { width: 22px; height: 22px; }
-    .hub-card h2 {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem;
-      color: var(--text-primary); margin-bottom: 0.6rem; letter-spacing: -0.02em;
-    }
-    .hub-card p {
-      font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.88rem;
-      color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.75rem;
-    }
-    .hub-card-cta {
-      font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--gold); display: inline-flex; align-items: center; gap: 0.4rem;
-      transition: gap 0.25s ease;
-    }
-    .hub-card:hover .hub-card-cta { gap: 0.7rem; }
+    .calendar-embed { border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-input); }
+    .calendar-embed iframe { display: block; width: 100%; border: none; }
 
     /* FOOTER */
     footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 2.5rem 1.5rem; text-align: center; }
@@ -184,31 +168,21 @@
 </nav>
 
 <main class="page-wrap">
-  <span class="section-label">Profit District</span>
-  <h1 class="page-title">Resurse</h1>
-  <p class="page-subtitle">Instrumente utile pentru traderi — alege una din categoriile de mai jos.</p>
+  <span class="section-label">Resurse</span>
+  <h1 class="page-title">Calendar Economic</h1>
+  <p class="page-subtitle">Evenimente economice majore, actualizate live, care pot influența piețele financiare.</p>
 
-  <div class="hub-grid">
-    <a href="calculator-pozitie.html" class="hub-card">
-      <div class="hub-card-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+  <section class="tool-section" aria-labelledby="calendar-heading">
+    <div class="calc-card">
+      <h3 id="calendar-heading">Calendar Economic</h3>
+      <p class="calendar-intro">Date live — furnizat de MyFxBook.</p>
+      <div class="calendar-embed">
+        <script type="text/javascript" src="https://widgets.myfxbook.com/scripts/fxCalendar.js"></script>
       </div>
-      <h2>Calculator Mărime Poziție</h2>
-      <p>Calculează mărimea poziției în funcție de risc, pentru forex, commodities și indici.</p>
-      <span class="hub-card-cta">Deschide →</span>
-    </a>
+    </div>
+  </section>
 
-    <a href="calendar-economic.html" class="hub-card">
-      <div class="hub-card-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </div>
-      <h2>Calendar Economic</h2>
-      <p>Evenimente economice majore, actualizate live, care pot influența piețele financiare.</p>
-      <span class="hub-card-cta">Deschide →</span>
-    </a>
-  </div>
-
-  <a href="index.html" class="back-link">← Înapoi la site</a>
+  <a href="resurse.html" class="back-link">← Înapoi la Resurse</a>
 </main>
 
 <footer role="contentinfo">

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Calculator Mărime Poziție — Profit District</title>
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-base: #0a0a0b; --bg-surface: #111113; --bg-elevated: #18181b; --bg-floating: #1f1f23;
+      --gold: #c9a84c; --gold-bright: #e2bf6a; --gold-dim: #8a6e2f;
+      --green: #00ff88; --green-dim: rgba(0,255,136,0.12); --red: #ff5c5c;
+      --text-primary: #f0ece0; --text-secondary: #a09880; --text-tertiary: #5c5848;
+      --border-subtle: rgba(201,168,76,0.10); --border-mid: rgba(201,168,76,0.22); --border-strong: rgba(201,168,76,0.45);
+      --shadow-card: 0 2px 4px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.07);
+      --shadow-button: 0 4px 16px rgba(201,168,76,0.28), 0 1px 3px rgba(0,0,0,0.6);
+      --shadow-input: 0 0 0 1px rgba(201,168,76,0.10), inset 0 1px 3px rgba(0,0,0,0.5);
+      --shadow-input-focus: 0 0 0 2px rgba(201,168,76,0.38), inset 0 1px 3px rgba(0,0,0,0.5);
+    }
+    @keyframes pulse-ring {
+      0%,100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.55); }
+      50% { transform: scale(1.2); opacity: 0.75; box-shadow: 0 0 0 7px rgba(0,255,136,0); }
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-base); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    ::selection { background: var(--gold); color: var(--bg-base); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* NAV */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      height: 62px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(10,10,11,0.82);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.3s ease;
+    }
+    #navbar.scrolled { background: rgba(10,10,11,0.96); }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { width: 32px; height: 32px; object-fit: contain; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--gold); letter-spacing: 0.04em; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary);
+      text-decoration: none; transition: color 0.2s ease; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold); transform: scaleX(0);
+      transition: transform 0.22s ease; transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.nav-active { color: var(--gold); }
+    .nav-links a.nav-active::after { transform: scaleX(1); }
+    .nav-cta {
+      font-family: 'Outfit', sans-serif !important; font-weight: 600 !important;
+      font-size: 0.78rem !important; letter-spacing: 0.04em !important; text-transform: none !important;
+      background: var(--gold); color: var(--bg-base) !important;
+      padding: 0.5rem 1.1rem; border-radius: 4px;
+      transition: background 0.2s ease, transform 0.2s ease !important;
+    }
+    .nav-cta:hover { background: var(--gold-bright); transform: translateY(-1px); color: var(--bg-base) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: transform 0.42s cubic-bezier(0.16,1,0.3,1), opacity 0.28s ease; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @keyframes menu-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes menu-item-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: fixed;
+        top: 62px; left: 0; right: 0; background: rgba(10,10,11,0.97);
+        border-bottom: 1px solid var(--border-subtle); padding: 1.5rem 2rem; gap: 1.25rem;
+        backdrop-filter: blur(14px); animation: menu-in 0.32s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      .nav-links.open li { animation: menu-item-in 0.38s cubic-bezier(0.16,1,0.3,1) both; }
+      .nav-links.open li:nth-child(1) { animation-delay: 0.04s; }
+      .nav-links.open li:nth-child(2) { animation-delay: 0.09s; }
+      .nav-links.open li:nth-child(3) { animation-delay: 0.14s; }
+      .nav-links.open li:nth-child(4) { animation-delay: 0.19s; }
+      .nav-links.open li:nth-child(5) { animation-delay: 0.24s; }
+      .nav-links.open li:nth-child(6) { animation-delay: 0.29s; }
+      .nav-links.open li:nth-child(7) { animation-delay: 0.34s; }
+      .nav-links.open li:nth-child(8) { animation-delay: 0.39s; }
+      .nav-links.open li:nth-child(9) { animation-delay: 0.44s; }
+    }
+
+    /* PAGE */
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 9rem 1.5rem 6rem; min-height: calc(100vh - 240px); }
+    .section-label {
+      display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.63rem;
+      font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .page-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); letter-spacing: -0.03em; color: var(--text-primary); line-height: 1.1; margin-bottom: 1rem; }
+    .page-subtitle { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 1.05rem; color: var(--text-secondary); max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-tertiary); text-decoration: none; transition: color 0.2s ease; margin-top: 2.5rem;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: var(--gold); color: var(--bg-base);
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.9rem;
+      letter-spacing: 0.01em; padding: 0.9rem 1.75rem; border-radius: 4px; border: none;
+      cursor: pointer; text-decoration: none; position: relative; overflow: hidden;
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, background 0.22s ease;
+      box-shadow: var(--shadow-button);
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .btn-primary:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.48), 0 1px 3px rgba(0,0,0,0.6); }
+    .btn-primary:active { transform: translateY(0px); box-shadow: 0 2px 8px rgba(201,168,76,0.25); }
+    .btn-primary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .btn-large { font-size: 1.05rem; padding: 1.1rem 2.75rem; }
+
+    /* CALCULATOR */
+    .tool-section { margin-top: 0.5rem; }
+
+    .calc-card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 2.25rem; box-shadow: var(--shadow-card); max-width: 780px; }
+    .calc-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem;
+      letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 1.5rem;
+    }
+
+    .field-group { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.15rem; }
+    .field-group label {
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.09em; color: var(--gold-dim);
+    }
+    .field-group input, .field-group select {
+      background: var(--bg-elevated); border: none; border-radius: 4px;
+      padding: 0.875rem 1rem; font-family: 'Outfit', sans-serif; font-weight: 400;
+      font-size: 0.925rem; color: var(--text-primary); box-shadow: var(--shadow-input);
+      outline: none; width: 100%; transition: box-shadow 0.2s ease;
+    }
+    .field-group select {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      padding-right: 2.4rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23c9a84c' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; background-size: 10px;
+    }
+    .field-group input::placeholder { color: var(--text-tertiary); }
+    .field-group input:focus, .field-group select:focus { box-shadow: var(--shadow-input-focus); }
+
+    /* SYMBOL PICKER */
+    .symbol-picker { position: relative; }
+    .symbol-trigger {
+      display: flex; align-items: center; justify-content: space-between; text-align: left;
+      background: var(--bg-elevated); border: none; border-radius: 4px;
+      padding: 0.875rem 1rem; font-family: 'Outfit', sans-serif; font-weight: 400;
+      font-size: 0.925rem; color: var(--text-primary); box-shadow: var(--shadow-input);
+      outline: none; width: 100%; cursor: pointer; transition: box-shadow 0.2s ease;
+      appearance: none; -webkit-appearance: none; padding-right: 2.4rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23c9a84c' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; background-size: 10px;
+    }
+    .symbol-trigger:focus-visible, .symbol-trigger.open { box-shadow: var(--shadow-input-focus); }
+
+    .symbol-dropdown {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
+      background: var(--bg-floating); border: 1px solid var(--border-mid); border-radius: 8px;
+      box-shadow: var(--shadow-card); overflow: hidden;
+    }
+    .symbol-search-wrap { position: relative; border-bottom: 1px solid var(--border-subtle); }
+    .symbol-search-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--text-tertiary); pointer-events: none; }
+    .symbol-search {
+      width: 100%; background: transparent; border: none; outline: none;
+      padding: 0.8rem 1rem 0.8rem 2.5rem; font-family: 'Outfit', sans-serif;
+      font-size: 0.875rem; color: var(--text-primary);
+    }
+    .symbol-search::placeholder { color: var(--text-tertiary); }
+    .symbol-list { max-height: 280px; overflow-y: auto; padding: 0.4rem; }
+    .symbol-group-label {
+      padding: 0.55rem 0.7rem 0.3rem; font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary);
+    }
+    .symbol-item {
+      display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem;
+      border-radius: 5px; cursor: pointer; transition: background 0.15s ease;
+    }
+    .symbol-item:hover, .symbol-item.active { background: rgba(201,168,76,0.09); }
+    .symbol-code { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--text-primary); flex-shrink: 0; width: 6rem; }
+    .symbol-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.78rem; color: var(--text-secondary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .symbol-tag {
+      flex-shrink: 0; font-family: 'DM Mono', monospace; font-size: 0.56rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--gold); background: rgba(201,168,76,0.14);
+      border-radius: 100px; padding: 0.2rem 0.5rem;
+    }
+    .symbol-empty { padding: 1.2rem 1rem; text-align: center; font-family: 'Outfit', sans-serif; font-size: 0.8rem; color: var(--text-tertiary); }
+
+    .calc-fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.1rem; }
+    @media (max-width: 480px) { .calc-fields-grid { grid-template-columns: 1fr; } }
+    .calc-fields-grid .field-group.col-solo { grid-column: 1; }
+
+    .risk-combo { display: flex; gap: 0.5rem; }
+    .risk-combo input { flex: 1; min-width: 0; }
+    .risk-combo select { flex: 0 0 5.5rem; padding-right: 2rem; }
+
+    .calc-divider { border-top: 1px solid var(--border-subtle); margin: 0.5rem 0 1.75rem; }
+    .calc-button-wrap { display: flex; justify-content: center; margin-bottom: 2.25rem; }
+
+    .calc-stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+      text-align: center; padding-top: 0.25rem; border-top: 1px solid var(--border-subtle);
+    }
+    @media (max-width: 560px) { .calc-stats-row { grid-template-columns: 1fr; gap: 1.75rem; padding-top: 1.75rem; } }
+    .calc-stat { padding-top: 1.75rem; }
+    .calc-stat .value {
+      display: block; font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: clamp(1.5rem, 3.5vw, 2rem); color: var(--gold); letter-spacing: -0.02em; line-height: 1;
+      margin-bottom: 0.55rem;
+    }
+    .calc-stat .value.warn { color: var(--red); }
+    .calc-stat .label {
+      display: block; font-family: 'DM Mono', monospace; font-size: 0.63rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary);
+    }
+
+    .rates-status { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.07em; color: var(--text-tertiary); margin-top: 1.75rem; }
+    .rates-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse-ring 1.9s cubic-bezier(0.4,0,0.6,1) infinite; }
+    .rates-dot.offline { background: var(--text-tertiary); animation: none; }
+
+    .calc-disclaimer {
+      font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.78rem;
+      color: var(--text-tertiary); line-height: 1.65; margin-top: 2.5rem; max-width: 760px;
+    }
+
+    /* FOOTER */
+    footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 2.5rem 1.5rem; text-align: center; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.01em; color: var(--gold); margin-bottom: 0.4rem; }
+    .footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin-bottom: 1.1rem; }
+    .footer-nav a { font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s ease; }
+    .footer-nav a:hover { color: var(--gold); }
+    .footer-social { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .footer-social a { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Outfit', sans-serif; font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; padding: 0.35rem 0.9rem; border: 1px solid var(--border-subtle); border-radius: 100px; transition: color 0.2s ease, border-color 0.2s ease; }
+    .footer-social a:hover { color: var(--gold); border-color: var(--border-mid); }
+    .footer-social svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+    .footer-legal-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); }
+    .footer-legal-col h4 { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.55rem; }
+    .footer-legal-col a { display: block; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.78rem; color: var(--text-tertiary); text-decoration: none; line-height: 2.1; transition: color 0.2s ease; }
+    .footer-legal-col a:hover { color: var(--gold); }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.67rem; color: var(--text-tertiary); margin-bottom: 1rem; }
+    .footer-disclaimer { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.75rem; color: var(--text-tertiary); max-width: 620px; margin: 0 auto; line-height: 1.65; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar" aria-label="Navigare principală">
+  <a href="index.html" class="nav-logo" aria-label="Profit District - acasă">
+    <img src="logo/logo.png" alt="Profit District logo">
+    <span class="nav-logo-text">Profit District</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html#community">Despre Noi</a></li>
+    <li><a href="index.html#systems">Copytrading</a></li>
+    <li><a href="index.html#mentori">Mentori</a></li>
+    <li><a href="index.html#educatie">Educație</a></li>
+    <li><a href="index.html#webinar">Webinar</a></li>
+    <li><a href="evenimente.html">Evenimente</a></li>
+    <li><a href="concurs.html">Concurs</a></li>
+    <li><a href="resurse.html" class="nav-active">Resurse</a></li>
+    <li><a href="index.html#apply-form" class="nav-cta">Aplică Acum</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Deschide meniu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main class="page-wrap">
+  <span class="section-label">Resurse</span>
+  <h1 class="page-title">Calculator Mărime Poziție</h1>
+  <p class="page-subtitle">Calculează mărimea poziției în funcție de risc, înainte să deschizi o tranzacție.</p>
+
+  <section class="tool-section" aria-labelledby="calc-heading">
+    <div class="calc-card">
+      <h3 id="calc-heading">Calculator Mărime Poziție</h3>
+
+      <div class="calc-fields-grid">
+        <div class="field-group">
+          <label for="symbol-trigger">Instrument</label>
+          <div class="symbol-picker" id="symbol-picker">
+            <button type="button" class="symbol-trigger" id="symbol-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="symbol-trigger-label">EUR/USD</span>
+            </button>
+            <div class="symbol-dropdown" id="symbol-dropdown" hidden>
+              <div class="symbol-search-wrap">
+                <svg class="symbol-search-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M13.5 12h-.8l-.3-.3c1-1.1 1.6-2.6 1.6-4.2C14 3.9 11.6 1.5 8.75 1.5S3.5 3.9 3.5 6.75 5.9 12 8.75 12c1.6 0 3.1-.6 4.2-1.6l.3.3v.8L17.5 15.7l1.2-1.2L13.5 12zm-4.75 0C6.4 12 4.5 10.1 4.5 7.75S6.4 3.5 8.75 3.5s4.25 1.9 4.25 4.25S11.1 12 8.75 12z" fill="currentColor"/></svg>
+                <input type="text" id="symbol-search" class="symbol-search" placeholder="Caută pereche (ex: EUR, JPY)…" autocomplete="off">
+              </div>
+              <div class="symbol-list" id="symbol-list" role="listbox"></div>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="calc-currency">Monedă Cont</label>
+          <select id="calc-currency">
+            <option value="USD">USD — Dolar American</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="GBP">GBP — Liră Sterlină</option>
+            <option value="RON">RON — Leu Românesc</option>
+            <option value="CHF">CHF — Franc Elvețian</option>
+            <option value="JPY">JPY — Yen Japonez</option>
+            <option value="CAD">CAD — Dolar Canadian</option>
+            <option value="AUD">AUD — Dolar Australian</option>
+            <option value="NZD">NZD — Dolar Neozeelandez</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="calc-sl">Stop Loss (pips)</label>
+          <input type="number" id="calc-sl" inputmode="decimal" min="0" step="any" value="20" placeholder="20">
+        </div>
+        <div class="field-group">
+          <label for="calc-balance">Balanță Cont</label>
+          <input type="number" id="calc-balance" inputmode="decimal" min="0" step="any" value="1000" placeholder="1000">
+        </div>
+
+        <div class="field-group col-solo">
+          <label for="calc-risk-value">Risc</label>
+          <div class="risk-combo">
+            <input type="number" id="calc-risk-value" inputmode="decimal" min="0" step="any" value="1" placeholder="1">
+            <select id="calc-risk-unit" aria-label="Tip risc">
+              <option value="percent">%</option>
+              <option value="fixed">USD</option>
+            </select>
+          </div>
+        </div>
+
+        <input type="hidden" id="calc-pip-size" value="0.0001">
+        <input type="hidden" id="calc-contract-size" value="100000">
+      </div>
+
+      <div class="calc-divider"></div>
+      <div class="calc-button-wrap">
+        <button type="button" class="btn-primary btn-large" id="calc-btn">Calculează</button>
+      </div>
+
+      <div class="calc-stats-row">
+        <div class="calc-stat">
+          <span class="value" id="res-lots">—</span>
+          <span class="label">Loturi (mărime tranzacție)</span>
+        </div>
+        <div class="calc-stat">
+          <span class="value" id="res-units">—</span>
+          <span class="label">Unități (mărime tranzacție)</span>
+        </div>
+        <div class="calc-stat">
+          <span class="value" id="res-risk">—</span>
+          <span class="label">Bani în Risc</span>
+        </div>
+      </div>
+
+      <div class="rates-status" id="rates-status">
+        <span class="rates-dot" id="rates-dot"></span>
+        <span id="rates-label">Se încarcă cursurile valutare live…</span>
+      </div>
+    </div>
+
+    <p class="calc-disclaimer">Cursurile valutare sunt orientative și pot diferi ușor față de cele din platforma ta de trading. Acest calculator este un instrument educațional și nu constituie sfat financiar — verifică întotdeauna mărimea poziției direct în broker înainte de a deschide o tranzacție.</p>
+  </section>
+
+  <a href="resurse.html" class="back-link">← Înapoi la Resurse</a>
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <p class="footer-brand">Profit District</p>
+    <nav class="footer-nav" aria-label="Link-uri rapide">
+      <a href="index.html">Acasă</a>
+      <a href="index.html#community">Despre Noi</a>
+      <a href="index.html#systems">Copytrading</a>
+      <a href="index.html#webinar">Webinar</a>
+      <a href="index.html#apply-form">Aplică Acum</a>
+    </nav>
+    <div class="footer-social">
+      <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.281c-.144.658-.537.818-1.083.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.033 13.39l-2.969-.924c-.643-.204-.656-.643.135-.953l11.572-4.461c.535-.194 1.004.131.835.953l-.044-.757z"/></svg>
+        Telegram
+      </a>
+      <a href="https://discord.gg/cWjgpvSqvT" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        Discord
+      </a>
+    </div>
+    <div class="footer-legal-grid">
+      <div class="footer-legal-col">
+        <h4>Legal</h4>
+        <a href="politica-confidentialitate.html">Politica de Confidențialitate</a>
+        <a href="termeni-si-conditii.html">Termeni și Condiții</a>
+        <a href="politica-cookies.html">Politica Cookies</a>
+      </div>
+      <div class="footer-legal-col">
+        <h4>Contact</h4>
+        <a href="mailto:haneloreandreea@yahoo.com">haneloreandreea@yahoo.com</a>
+        <a href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://discord.gg/cWjgpvSqvT" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+    <p class="footer-copy">© <span id="footer-year">2026</span> Profit District · Toate Drepturile Rezervate</p>
+    <p class="footer-disclaimer">Legal disclaimer: CFDs sunt instrumente periculoase și tranzacționarea lor poate duce la pierderea parțială sau totală a capitalului. Rezultatele din trecut nu garantează rezultate din viitor.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var navbar    = document.getElementById('navbar');
+  var hamburger = document.getElementById('nav-hamburger');
+  var navLinks  = document.getElementById('nav-links');
+  var yr        = document.getElementById('footer-year');
+  if (yr) yr.textContent = new Date().getFullYear();
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 40) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  }, { passive: true });
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+      hamburger.classList.toggle('open', open);
+    });
+  }
+  if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+      });
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  var FALLBACK_RATES = {
+    USD: 1, EUR: 0.92, GBP: 0.79, JPY: 157.5, CHF: 0.90, CAD: 1.37, AUD: 1.52, NZD: 1.65, RON: 4.58,
+    TRY: 34.5, ZAR: 18.5, MXN: 18.0, SEK: 10.6, NOK: 10.9, DKK: 6.9, PLN: 4.0, HUF: 390, CZK: 23.5,
+    SGD: 1.35, HKD: 7.82, THB: 34.5, ILS: 3.75
+  };
+  var rates = FALLBACK_RATES;
+
+  var PAIRS = [
+    { code: 'EURUSD', display: 'EUR/USD', desc: 'Euro / Dolar American', category: 'major', quote: 'USD', pip: 0.0001, contract: 100000, popular: true },
+    { code: 'GBPUSD', display: 'GBP/USD', desc: 'Liră Sterlină / Dolar American', category: 'major', quote: 'USD', pip: 0.0001, contract: 100000, popular: true },
+    { code: 'USDJPY', display: 'USD/JPY', desc: 'Dolar American / Yen Japonez', category: 'major', quote: 'JPY', pip: 0.01, contract: 100000, popular: true },
+    { code: 'USDCHF', display: 'USD/CHF', desc: 'Dolar American / Franc Elvețian', category: 'major', quote: 'CHF', pip: 0.0001, contract: 100000, popular: true },
+    { code: 'USDCAD', display: 'USD/CAD', desc: 'Dolar American / Dolar Canadian', category: 'major', quote: 'CAD', pip: 0.0001, contract: 100000, popular: true },
+    { code: 'AUDUSD', display: 'AUD/USD', desc: 'Dolar Australian / Dolar American', category: 'major', quote: 'USD', pip: 0.0001, contract: 100000, popular: true },
+    { code: 'NZDUSD', display: 'NZD/USD', desc: 'Dolar Neozeelandez / Dolar American', category: 'major', quote: 'USD', pip: 0.0001, contract: 100000, popular: true },
+
+    { code: 'XAUUSD', display: 'XAU/USD', desc: 'Aur / Dolar American', category: 'commodity', quote: 'USD', pip: 0.1, contract: 100, popular: true },
+    { code: 'XAGUSD', display: 'XAG/USD', desc: 'Argint / Dolar American', category: 'commodity', quote: 'USD', pip: 0.001, contract: 5000 },
+    { code: 'USOIL',  display: 'USOIL',   desc: 'Petrol American WTI / Dolar American', category: 'commodity', quote: 'USD', pip: 0.01, contract: 1000 },
+    { code: 'UKOIL',  display: 'UKOIL',   desc: 'Petrol Brent / Dolar American', category: 'commodity', quote: 'USD', pip: 0.01, contract: 1000 },
+    { code: 'NATGAS', display: 'NATGAS',  desc: 'Gaze Naturale / Dolar American', category: 'commodity', quote: 'USD', pip: 0.001, contract: 10000 },
+
+    { code: 'US30',   display: 'US30',   desc: 'Dow Jones Industrial Average', category: 'index', quote: 'USD', pip: 1, contract: 1, popular: true },
+    { code: 'US500',  display: 'US500',  desc: 'S&P 500', category: 'index', quote: 'USD', pip: 1, contract: 1, popular: true },
+    { code: 'US100',  display: 'US100',  desc: 'Nasdaq 100', category: 'index', quote: 'USD', pip: 1, contract: 1, popular: true },
+    { code: 'UK100',  display: 'UK100',  desc: 'FTSE 100', category: 'index', quote: 'GBP', pip: 1, contract: 1 },
+    { code: 'GER40',  display: 'GER40',  desc: 'DAX 40', category: 'index', quote: 'EUR', pip: 1, contract: 1 },
+    { code: 'FRA40',  display: 'FRA40',  desc: 'CAC 40', category: 'index', quote: 'EUR', pip: 1, contract: 1 },
+    { code: 'ESP35',  display: 'ESP35',  desc: 'IBEX 35', category: 'index', quote: 'EUR', pip: 1, contract: 1 },
+    { code: 'EU50',   display: 'EU50',   desc: 'Euro Stoxx 50', category: 'index', quote: 'EUR', pip: 1, contract: 1 },
+    { code: 'JPN225', display: 'JPN225', desc: 'Nikkei 225', category: 'index', quote: 'JPY', pip: 1, contract: 1 },
+    { code: 'AUS200', display: 'AUS200', desc: 'ASX 200', category: 'index', quote: 'AUD', pip: 1, contract: 1 },
+    { code: 'HK50',   display: 'HK50',   desc: 'Hang Seng', category: 'index', quote: 'HKD', pip: 1, contract: 1 },
+
+    { code: 'EURGBP', display: 'EUR/GBP', desc: 'Euro / Liră Sterlină', category: 'cross', quote: 'GBP', pip: 0.0001, contract: 100000 },
+    { code: 'EURJPY', display: 'EUR/JPY', desc: 'Euro / Yen Japonez', category: 'cross', quote: 'JPY', pip: 0.01, contract: 100000 },
+    { code: 'EURCHF', display: 'EUR/CHF', desc: 'Euro / Franc Elvețian', category: 'cross', quote: 'CHF', pip: 0.0001, contract: 100000 },
+    { code: 'EURCAD', display: 'EUR/CAD', desc: 'Euro / Dolar Canadian', category: 'cross', quote: 'CAD', pip: 0.0001, contract: 100000 },
+    { code: 'EURAUD', display: 'EUR/AUD', desc: 'Euro / Dolar Australian', category: 'cross', quote: 'AUD', pip: 0.0001, contract: 100000 },
+    { code: 'EURNZD', display: 'EUR/NZD', desc: 'Euro / Dolar Neozeelandez', category: 'cross', quote: 'NZD', pip: 0.0001, contract: 100000 },
+    { code: 'GBPJPY', display: 'GBP/JPY', desc: 'Liră Sterlină / Yen Japonez', category: 'cross', quote: 'JPY', pip: 0.01, contract: 100000 },
+    { code: 'GBPCHF', display: 'GBP/CHF', desc: 'Liră Sterlină / Franc Elvețian', category: 'cross', quote: 'CHF', pip: 0.0001, contract: 100000 },
+    { code: 'GBPCAD', display: 'GBP/CAD', desc: 'Liră Sterlină / Dolar Canadian', category: 'cross', quote: 'CAD', pip: 0.0001, contract: 100000 },
+    { code: 'GBPAUD', display: 'GBP/AUD', desc: 'Liră Sterlină / Dolar Australian', category: 'cross', quote: 'AUD', pip: 0.0001, contract: 100000 },
+    { code: 'GBPNZD', display: 'GBP/NZD', desc: 'Liră Sterlină / Dolar Neozeelandez', category: 'cross', quote: 'NZD', pip: 0.0001, contract: 100000 },
+    { code: 'AUDJPY', display: 'AUD/JPY', desc: 'Dolar Australian / Yen Japonez', category: 'cross', quote: 'JPY', pip: 0.01, contract: 100000 },
+    { code: 'AUDCAD', display: 'AUD/CAD', desc: 'Dolar Australian / Dolar Canadian', category: 'cross', quote: 'CAD', pip: 0.0001, contract: 100000 },
+    { code: 'AUDCHF', display: 'AUD/CHF', desc: 'Dolar Australian / Franc Elvețian', category: 'cross', quote: 'CHF', pip: 0.0001, contract: 100000 },
+    { code: 'AUDNZD', display: 'AUD/NZD', desc: 'Dolar Australian / Dolar Neozeelandez', category: 'cross', quote: 'NZD', pip: 0.0001, contract: 100000 },
+    { code: 'CADJPY', display: 'CAD/JPY', desc: 'Dolar Canadian / Yen Japonez', category: 'cross', quote: 'JPY', pip: 0.01, contract: 100000 },
+    { code: 'CADCHF', display: 'CAD/CHF', desc: 'Dolar Canadian / Franc Elvețian', category: 'cross', quote: 'CHF', pip: 0.0001, contract: 100000 },
+    { code: 'NZDJPY', display: 'NZD/JPY', desc: 'Dolar Neozeelandez / Yen Japonez', category: 'cross', quote: 'JPY', pip: 0.01, contract: 100000 },
+    { code: 'NZDCHF', display: 'NZD/CHF', desc: 'Dolar Neozeelandez / Franc Elvețian', category: 'cross', quote: 'CHF', pip: 0.0001, contract: 100000 },
+    { code: 'NZDCAD', display: 'NZD/CAD', desc: 'Dolar Neozeelandez / Dolar Canadian', category: 'cross', quote: 'CAD', pip: 0.0001, contract: 100000 },
+    { code: 'CHFJPY', display: 'CHF/JPY', desc: 'Franc Elvețian / Yen Japonez', category: 'cross', quote: 'JPY', pip: 0.01, contract: 100000 },
+
+    { code: 'USDTRY', display: 'USD/TRY', desc: 'Dolar American / Liră Turcească', category: 'exotic', quote: 'TRY', pip: 0.0001, contract: 100000 },
+    { code: 'USDZAR', display: 'USD/ZAR', desc: 'Dolar American / Rand Sud-African', category: 'exotic', quote: 'ZAR', pip: 0.0001, contract: 100000 },
+    { code: 'USDMXN', display: 'USD/MXN', desc: 'Dolar American / Peso Mexican', category: 'exotic', quote: 'MXN', pip: 0.0001, contract: 100000 },
+    { code: 'USDSEK', display: 'USD/SEK', desc: 'Dolar American / Coroană Suedeză', category: 'exotic', quote: 'SEK', pip: 0.0001, contract: 100000 },
+    { code: 'USDNOK', display: 'USD/NOK', desc: 'Dolar American / Coroană Norvegiană', category: 'exotic', quote: 'NOK', pip: 0.0001, contract: 100000 },
+    { code: 'USDDKK', display: 'USD/DKK', desc: 'Dolar American / Coroană Daneză', category: 'exotic', quote: 'DKK', pip: 0.0001, contract: 100000 },
+    { code: 'USDPLN', display: 'USD/PLN', desc: 'Dolar American / Zlot Polonez', category: 'exotic', quote: 'PLN', pip: 0.0001, contract: 100000 },
+    { code: 'USDHUF', display: 'USD/HUF', desc: 'Dolar American / Forint Maghiar', category: 'exotic', quote: 'HUF', pip: 0.01, contract: 100000 },
+    { code: 'USDCZK', display: 'USD/CZK', desc: 'Dolar American / Coroană Cehă', category: 'exotic', quote: 'CZK', pip: 0.0001, contract: 100000 },
+    { code: 'USDSGD', display: 'USD/SGD', desc: 'Dolar American / Dolar Singaporean', category: 'exotic', quote: 'SGD', pip: 0.0001, contract: 100000 },
+    { code: 'USDHKD', display: 'USD/HKD', desc: 'Dolar American / Dolar Hong Kong', category: 'exotic', quote: 'HKD', pip: 0.0001, contract: 100000 },
+    { code: 'USDTHB', display: 'USD/THB', desc: 'Dolar American / Baht Thailandez', category: 'exotic', quote: 'THB', pip: 0.0001, contract: 100000 },
+    { code: 'USDILS', display: 'USD/ILS', desc: 'Dolar American / Șekel Israelian', category: 'exotic', quote: 'ILS', pip: 0.0001, contract: 100000 },
+    { code: 'USDRON', display: 'USD/RON', desc: 'Dolar American / Leu Românesc', category: 'exotic', quote: 'RON', pip: 0.0001, contract: 100000 },
+    { code: 'EURTRY', display: 'EUR/TRY', desc: 'Euro / Liră Turcească', category: 'exotic', quote: 'TRY', pip: 0.0001, contract: 100000 },
+    { code: 'EURZAR', display: 'EUR/ZAR', desc: 'Euro / Rand Sud-African', category: 'exotic', quote: 'ZAR', pip: 0.0001, contract: 100000 },
+    { code: 'EURSEK', display: 'EUR/SEK', desc: 'Euro / Coroană Suedeză', category: 'exotic', quote: 'SEK', pip: 0.0001, contract: 100000 },
+    { code: 'EURNOK', display: 'EUR/NOK', desc: 'Euro / Coroană Norvegiană', category: 'exotic', quote: 'NOK', pip: 0.0001, contract: 100000 },
+    { code: 'EURDKK', display: 'EUR/DKK', desc: 'Euro / Coroană Daneză', category: 'exotic', quote: 'DKK', pip: 0.0001, contract: 100000 },
+    { code: 'EURPLN', display: 'EUR/PLN', desc: 'Euro / Zlot Polonez', category: 'exotic', quote: 'PLN', pip: 0.0001, contract: 100000 },
+    { code: 'EURHUF', display: 'EUR/HUF', desc: 'Euro / Forint Maghiar', category: 'exotic', quote: 'HUF', pip: 0.01, contract: 100000 },
+    { code: 'EURCZK', display: 'EUR/CZK', desc: 'Euro / Coroană Cehă', category: 'exotic', quote: 'CZK', pip: 0.0001, contract: 100000 },
+    { code: 'EURSGD', display: 'EUR/SGD', desc: 'Euro / Dolar Singaporean', category: 'exotic', quote: 'SGD', pip: 0.0001, contract: 100000 },
+    { code: 'EURMXN', display: 'EUR/MXN', desc: 'Euro / Peso Mexican', category: 'exotic', quote: 'MXN', pip: 0.0001, contract: 100000 },
+    { code: 'EURRON', display: 'EUR/RON', desc: 'Euro / Leu Românesc', category: 'exotic', quote: 'RON', pip: 0.0001, contract: 100000 },
+    { code: 'GBPTRY', display: 'GBP/TRY', desc: 'Liră Sterlină / Liră Turcească', category: 'exotic', quote: 'TRY', pip: 0.0001, contract: 100000 },
+    { code: 'GBPZAR', display: 'GBP/ZAR', desc: 'Liră Sterlină / Rand Sud-African', category: 'exotic', quote: 'ZAR', pip: 0.0001, contract: 100000 },
+    { code: 'GBPSEK', display: 'GBP/SEK', desc: 'Liră Sterlină / Coroană Suedeză', category: 'exotic', quote: 'SEK', pip: 0.0001, contract: 100000 },
+    { code: 'GBPNOK', display: 'GBP/NOK', desc: 'Liră Sterlină / Coroană Norvegiană', category: 'exotic', quote: 'NOK', pip: 0.0001, contract: 100000 },
+    { code: 'GBPPLN', display: 'GBP/PLN', desc: 'Liră Sterlină / Zlot Polonez', category: 'exotic', quote: 'PLN', pip: 0.0001, contract: 100000 },
+    { code: 'GBPSGD', display: 'GBP/SGD', desc: 'Liră Sterlină / Dolar Singaporean', category: 'exotic', quote: 'SGD', pip: 0.0001, contract: 100000 },
+    { code: 'AUDSGD', display: 'AUD/SGD', desc: 'Dolar Australian / Dolar Singaporean', category: 'exotic', quote: 'SGD', pip: 0.0001, contract: 100000 },
+    { code: 'NZDSGD', display: 'NZD/SGD', desc: 'Dolar Neozeelandez / Dolar Singaporean', category: 'exotic', quote: 'SGD', pip: 0.0001, contract: 100000 }
+  ];
+  var selectedPair = 'EURUSD';
+
+  function getPair(code) {
+    for (var i = 0; i < PAIRS.length; i++) { if (PAIRS[i].code === code) return PAIRS[i]; }
+    return PAIRS[0];
+  }
+
+  var currencyEl     = document.getElementById('calc-currency');
+  var slEl           = document.getElementById('calc-sl');
+  var balanceEl      = document.getElementById('calc-balance');
+  var pipSizeEl      = document.getElementById('calc-pip-size');
+  var riskValueEl    = document.getElementById('calc-risk-value');
+  var riskUnitEl     = document.getElementById('calc-risk-unit');
+  var contractSizeEl = document.getElementById('calc-contract-size');
+  var calcBtn        = document.getElementById('calc-btn');
+
+  var resLots  = document.getElementById('res-lots');
+  var resUnits = document.getElementById('res-units');
+  var resRisk  = document.getElementById('res-risk');
+  var ratesDot   = document.getElementById('rates-dot');
+  var ratesLabel = document.getElementById('rates-label');
+
+  var symbolPicker   = document.getElementById('symbol-picker');
+  var symbolTrigger  = document.getElementById('symbol-trigger');
+  var symbolLabel    = document.getElementById('symbol-trigger-label');
+  var symbolDropdown = document.getElementById('symbol-dropdown');
+  var symbolSearch   = document.getElementById('symbol-search');
+  var symbolList     = document.getElementById('symbol-list');
+
+  function formatMoney(amount, ccy) {
+    try {
+      return new Intl.NumberFormat('ro-RO', { style: 'currency', currency: ccy, maximumFractionDigits: 2 }).format(amount);
+    } catch (e) {
+      return amount.toFixed(2) + ' ' + ccy;
+    }
+  }
+
+  var CATEGORY_LABELS = { major: 'Perechi Majore', commodity: 'Commodity', index: 'Indici', cross: 'Cross-uri', exotic: 'Exotice' };
+  var CATEGORY_ORDER = ['major', 'commodity', 'index', 'cross', 'exotic'];
+
+  function createSymbolItem(p) {
+    var item = document.createElement('div');
+    item.className = 'symbol-item' + (p.code === selectedPair ? ' active' : '');
+    item.setAttribute('role', 'option');
+    item.setAttribute('data-code', p.code);
+    item.innerHTML =
+      '<span class="symbol-code">' + p.display + '</span>' +
+      '<span class="symbol-desc">' + p.desc + '</span>' +
+      (p.popular ? '<span class="symbol-tag">Popular</span>' : '');
+    item.addEventListener('click', function () {
+      selectedPair = p.code;
+      symbolLabel.textContent = p.display;
+      closeSymbolDropdown();
+      updatePipField();
+      calculate();
+    });
+    return item;
+  }
+
+  function renderSymbolList(query) {
+    var q = (query || '').trim().toUpperCase();
+    var matches = PAIRS.filter(function (p) {
+      return !q || p.code.indexOf(q) !== -1 || p.display.toUpperCase().indexOf(q) !== -1 || p.desc.toUpperCase().indexOf(q) !== -1;
+    });
+    symbolList.innerHTML = '';
+    if (!matches.length) {
+      var empty = document.createElement('div');
+      empty.className = 'symbol-empty';
+      empty.textContent = 'Nicio pereche găsită.';
+      symbolList.appendChild(empty);
+      return;
+    }
+    if (!q) {
+      CATEGORY_ORDER.forEach(function (cat) {
+        var group = matches.filter(function (p) { return p.category === cat; });
+        if (!group.length) return;
+        var header = document.createElement('div');
+        header.className = 'symbol-group-label';
+        header.textContent = CATEGORY_LABELS[cat];
+        symbolList.appendChild(header);
+        group.forEach(function (p) { symbolList.appendChild(createSymbolItem(p)); });
+      });
+    } else {
+      matches.forEach(function (p) { symbolList.appendChild(createSymbolItem(p)); });
+    }
+  }
+
+  function openSymbolDropdown() {
+    symbolDropdown.hidden = false;
+    symbolTrigger.classList.add('open');
+    symbolTrigger.setAttribute('aria-expanded', 'true');
+    symbolSearch.value = '';
+    renderSymbolList('');
+    symbolSearch.focus();
+  }
+
+  function closeSymbolDropdown() {
+    symbolDropdown.hidden = true;
+    symbolTrigger.classList.remove('open');
+    symbolTrigger.setAttribute('aria-expanded', 'false');
+  }
+
+  symbolTrigger.addEventListener('click', function () {
+    if (symbolDropdown.hidden) openSymbolDropdown();
+    else closeSymbolDropdown();
+  });
+  symbolSearch.addEventListener('input', function () { renderSymbolList(symbolSearch.value); });
+  document.addEventListener('click', function (e) {
+    if (!symbolPicker.contains(e.target)) closeSymbolDropdown();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSymbolDropdown();
+  });
+
+  function updatePipField() {
+    var p = getPair(selectedPair);
+    pipSizeEl.value = p.pip;
+    contractSizeEl.value = p.contract;
+  }
+
+  function updateRiskUnitLabel() {
+    var accCcy = currencyEl.value;
+    riskUnitEl.options[1].text = accCcy;
+  }
+
+  function calculate() {
+    var balance      = parseFloat(balanceEl.value) || 0;
+    var riskRaw      = parseFloat(riskValueEl.value) || 0;
+    var slPips       = parseFloat(slEl.value) || 0;
+    var pipSize      = parseFloat(pipSizeEl.value) || 0.0001;
+    var contractSize = parseFloat(contractSizeEl.value) || 100000;
+    var accCcy       = currencyEl.value;
+    var riskMode     = riskUnitEl.value;
+
+    var riskAmount = riskMode === 'percent' ? balance * (riskRaw / 100) : riskRaw;
+
+    var quote = getPair(selectedPair).quote;
+    var quoteToAcc = (1 / rates[quote]) * rates[accCcy];
+    var pipValuePerUnit = pipSize * quoteToAcc;
+
+    var units = (slPips > 0 && pipValuePerUnit > 0) ? riskAmount / (slPips * pipValuePerUnit) : 0;
+
+    resLots.textContent  = (units / contractSize).toFixed(2);
+    resUnits.textContent = Math.round(units).toLocaleString('ro-RO');
+    resRisk.textContent  = formatMoney(riskAmount, accCcy);
+
+    var riskPct = balance > 0 ? (riskAmount / balance) * 100 : 0;
+    resRisk.classList.toggle('warn', riskMode === 'percent' && riskPct > 5);
+  }
+
+  currencyEl.addEventListener('change', function () { updateRiskUnitLabel(); calculate(); });
+  calcBtn.addEventListener('click', calculate);
+
+  [slEl, balanceEl, riskValueEl, riskUnitEl].forEach(function (el) {
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') calculate(); });
+  });
+
+  updatePipField();
+  updateRiskUnitLabel();
+  calculate();
+
+  var currencies = Object.keys(FALLBACK_RATES).filter(function (c) { return c !== 'USD'; }).join(',');
+  fetch('https://api.frankfurter.app/latest?from=USD&to=' + currencies)
+    .then(function (r) { if (!r.ok) throw new Error('bad response'); return r.json(); })
+    .then(function (data) {
+      rates = Object.assign({ USD: 1 }, data.rates);
+      ratesDot.classList.remove('offline');
+      ratesLabel.textContent = 'Cursuri live (' + data.date + ')';
+      calculate();
+    })
+    .catch(function () {
+      rates = FALLBACK_RATES;
+      ratesDot.classList.add('offline');
+      ratesLabel.textContent = 'Cursuri offline (aproximative)';
+      calculate();
+    });
+})();
+</script>
+
+</body>
+</html>
