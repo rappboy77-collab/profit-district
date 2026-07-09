@@ -1,75 +1,75 @@
 {
-  "lastUpdated": "2026-07-08T22:57:47.196Z",
+  "lastUpdated": "2026-07-09T09:03:42.147Z",
   "general": [
     {
       "rank": 1,
-      "id": "p007",
-      "name": "Diana Summer League",
-      "score": 1.44,
-      "profitPercent": 127.98,
-      "maxDrawdown": 88.78,
-      "totalLots": 1.67,
-      "activeDays": 9
+      "id": "p003",
+      "name": "CrisL",
+      "score": 2.17,
+      "profitPercent": 120.74,
+      "maxDrawdown": 55.72,
+      "totalLots": 0.71,
+      "activeDays": 8
     },
     {
       "rank": 2,
-      "id": "p003",
-      "name": "CrisL",
-      "score": 1.42,
-      "profitPercent": 79.23,
-      "maxDrawdown": 55.72,
-      "totalLots": 0.36,
-      "activeDays": 5
+      "id": "p007",
+      "name": "Diana Summer League",
+      "score": 2.11,
+      "profitPercent": 187.03,
+      "maxDrawdown": 88.78,
+      "totalLots": 2.34,
+      "activeDays": 14
     },
     {
       "rank": 3,
-      "id": "p006",
-      "name": "AdrianNewWave",
-      "score": 0.59,
-      "profitPercent": 2.39,
-      "maxDrawdown": 4.04,
-      "totalLots": 0.52,
-      "activeDays": 3
+      "id": "p001",
+      "name": "Silviu Fire",
+      "score": -0.16,
+      "profitPercent": -2.32,
+      "maxDrawdown": 14.95,
+      "totalLots": 1.4,
+      "activeDays": 12
     },
     {
       "rank": 4,
-      "id": "p001",
-      "name": "Silviu Fire",
-      "score": -0.05,
-      "profitPercent": -0.82,
-      "maxDrawdown": 14.95,
-      "totalLots": 0.97,
-      "activeDays": 8
+      "id": "p006",
+      "name": "AdrianNewWave",
+      "score": -0.97,
+      "profitPercent": -81.74,
+      "maxDrawdown": 84.27,
+      "totalLots": 6.34,
+      "activeDays": 5
     },
     {
       "rank": 5,
-      "id": "p005",
-      "name": "AnaMariaB",
-      "score": -0.92,
-      "profitPercent": -91.3,
-      "maxDrawdown": 99.52,
-      "totalLots": 4.06,
-      "activeDays": 3
+      "id": "p002",
+      "name": "Ioana Cioban",
+      "score": -1,
+      "profitPercent": -98.79,
+      "maxDrawdown": 99.14,
+      "totalLots": 0.32,
+      "activeDays": 11
     },
     {
       "rank": 6,
-      "id": "p002",
-      "name": "Ioana Cioban",
-      "score": -0.96,
-      "profitPercent": -90.36,
-      "maxDrawdown": 93.76,
-      "totalLots": 0.24,
-      "activeDays": 8
-    },
-    {
-      "rank": 7,
       "id": "p004",
       "name": "Florin1998",
       "score": -1,
       "profitPercent": -87.98,
       "maxDrawdown": 88.06,
       "totalLots": 0.08,
-      "activeDays": 3
+      "activeDays": 4
+    },
+    {
+      "rank": 7,
+      "id": "p005",
+      "name": "AnaMariaB",
+      "score": -1,
+      "profitPercent": -99.9,
+      "maxDrawdown": 99.99,
+      "totalLots": 33.31,
+      "activeDays": 8
     }
   ],
   "consistenta": [
@@ -77,56 +77,56 @@
       "rank": 1,
       "id": "p005",
       "name": "AnaMariaB",
-      "totalLots": 4.06,
-      "activeDays": 3,
-      "profitPercent": -91.3
+      "totalLots": 33.31,
+      "activeDays": 8,
+      "profitPercent": -99.9
     },
     {
       "rank": 2,
-      "id": "p007",
-      "name": "Diana Summer League",
-      "totalLots": 1.67,
-      "activeDays": 9,
-      "profitPercent": 127.98
+      "id": "p006",
+      "name": "AdrianNewWave",
+      "totalLots": 6.34,
+      "activeDays": 5,
+      "profitPercent": -81.74
     },
     {
       "rank": 3,
-      "id": "p001",
-      "name": "Silviu Fire",
-      "totalLots": 0.97,
-      "activeDays": 8,
-      "profitPercent": -0.82
+      "id": "p007",
+      "name": "Diana Summer League",
+      "totalLots": 2.34,
+      "activeDays": 14,
+      "profitPercent": 187.03
     },
     {
       "rank": 4,
-      "id": "p006",
-      "name": "AdrianNewWave",
-      "totalLots": 0.52,
-      "activeDays": 3,
-      "profitPercent": 2.39
+      "id": "p001",
+      "name": "Silviu Fire",
+      "totalLots": 1.4,
+      "activeDays": 12,
+      "profitPercent": -2.32
     },
     {
       "rank": 5,
       "id": "p003",
       "name": "CrisL",
-      "totalLots": 0.36,
-      "activeDays": 5,
-      "profitPercent": 79.23
+      "totalLots": 0.71,
+      "activeDays": 8,
+      "profitPercent": 120.74
     },
     {
       "rank": 6,
       "id": "p002",
       "name": "Ioana Cioban",
-      "totalLots": 0.24,
-      "activeDays": 8,
-      "profitPercent": -90.36
+      "totalLots": 0.32,
+      "activeDays": 11,
+      "profitPercent": -98.79
     },
     {
       "rank": 7,
       "id": "p004",
       "name": "Florin1998",
       "totalLots": 0.08,
-      "activeDays": 3,
+      "activeDays": 4,
       "profitPercent": -87.98
     }
   ]
