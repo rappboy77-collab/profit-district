@@ -339,11 +339,7 @@
           <input type="number" id="calc-balance" inputmode="decimal" min="0" step="any" value="1000" placeholder="1000">
         </div>
 
-        <div class="field-group">
-          <label for="calc-pip-size" id="calc-pip-label">Mărime 1 Pip (EUR/USD)</label>
-          <input type="number" id="calc-pip-size" inputmode="decimal" min="0" step="any" value="0.0001">
-        </div>
-        <div class="field-group">
+        <div class="field-group col-solo">
           <label for="calc-risk-value">Risc</label>
           <div class="risk-combo">
             <input type="number" id="calc-risk-value" inputmode="decimal" min="0" step="any" value="1" placeholder="1">
@@ -354,10 +350,8 @@
           </div>
         </div>
 
-        <div class="field-group col-solo">
-          <label for="calc-contract-size">Mărime Contract (Unități/Lot)</label>
-          <input type="number" id="calc-contract-size" inputmode="decimal" min="1" step="any" value="100000">
-        </div>
+        <input type="hidden" id="calc-pip-size" value="0.0001">
+        <input type="hidden" id="calc-contract-size" value="100000">
       </div>
 
       <div class="calc-divider"></div>
@@ -478,7 +472,7 @@
     { code: 'AUDUSD', display: 'AUD/USD', desc: 'Dolar Australian / Dolar American', category: 'major', quote: 'USD', pip: 0.0001, contract: 100000, popular: true },
     { code: 'NZDUSD', display: 'NZD/USD', desc: 'Dolar Neozeelandez / Dolar American', category: 'major', quote: 'USD', pip: 0.0001, contract: 100000, popular: true },
 
-    { code: 'XAUUSD', display: 'XAU/USD', desc: 'Aur / Dolar American', category: 'commodity', quote: 'USD', pip: 0.01, contract: 100, popular: true },
+    { code: 'XAUUSD', display: 'XAU/USD', desc: 'Aur / Dolar American', category: 'commodity', quote: 'USD', pip: 0.1, contract: 100, popular: true },
     { code: 'XAGUSD', display: 'XAG/USD', desc: 'Argint / Dolar American', category: 'commodity', quote: 'USD', pip: 0.001, contract: 5000 },
     { code: 'USOIL',  display: 'USOIL',   desc: 'Petrol American WTI / Dolar American', category: 'commodity', quote: 'USD', pip: 0.01, contract: 1000 },
     { code: 'UKOIL',  display: 'UKOIL',   desc: 'Petrol Brent / Dolar American', category: 'commodity', quote: 'USD', pip: 0.01, contract: 1000 },
@@ -563,7 +557,6 @@
   var slEl           = document.getElementById('calc-sl');
   var balanceEl      = document.getElementById('calc-balance');
   var pipSizeEl      = document.getElementById('calc-pip-size');
-  var pipLabelEl     = document.getElementById('calc-pip-label');
   var riskValueEl    = document.getElementById('calc-risk-value');
   var riskUnitEl     = document.getElementById('calc-risk-unit');
   var contractSizeEl = document.getElementById('calc-contract-size');
@@ -671,7 +664,6 @@
     var p = getPair(selectedPair);
     pipSizeEl.value = p.pip;
     contractSizeEl.value = p.contract;
-    pipLabelEl.textContent = 'Mărime 1 Pip (' + p.display + ')';
   }
 
   function updateRiskUnitLabel() {
@@ -707,7 +699,7 @@
   currencyEl.addEventListener('change', function () { updateRiskUnitLabel(); calculate(); });
   calcBtn.addEventListener('click', calculate);
 
-  [slEl, balanceEl, pipSizeEl, riskValueEl, riskUnitEl, contractSizeEl].forEach(function (el) {
+  [slEl, balanceEl, riskValueEl, riskUnitEl].forEach(function (el) {
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter') calculate(); });
   });
 
