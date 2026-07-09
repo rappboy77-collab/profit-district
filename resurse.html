@@ -248,6 +248,15 @@
       color: var(--text-tertiary); line-height: 1.65; margin-top: 2.5rem; max-width: 760px;
     }
 
+    /* CALENDAR */
+    .calendar-section { margin-top: 3rem; }
+    .calendar-intro {
+      font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.85rem;
+      color: var(--text-secondary); margin-bottom: 1.5rem;
+    }
+    .calendar-embed { border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-input); }
+    .calendar-embed iframe { display: block; width: 100%; border: none; }
+
     /* FOOTER */
     footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 2.5rem 1.5rem; text-align: center; }
     .footer-inner { max-width: 1200px; margin: 0 auto; }
@@ -381,6 +390,16 @@
     </div>
 
     <p class="calc-disclaimer">Cursurile valutare sunt orientative și pot diferi ușor față de cele din platforma ta de trading. Acest calculator este un instrument educațional și nu constituie sfat financiar — verifică întotdeauna mărimea poziției direct în broker înainte de a deschide o tranzacție.</p>
+  </section>
+
+  <section class="tool-section calendar-section" aria-labelledby="calendar-heading">
+    <div class="calc-card">
+      <h3 id="calendar-heading">Calendar Economic</h3>
+      <p class="calendar-intro">Evenimente economice majore, actualizate live — furnizat de MyFxBook.</p>
+      <div class="calendar-embed">
+        <script type="text/javascript" src="https://widgets.myfxbook.com/scripts/fxCalendar.js"></script>
+      </div>
+    </div>
   </section>
 
   <a href="index.html" class="back-link">← Înapoi la site</a>
