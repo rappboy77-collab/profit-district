@@ -2,64 +2,64 @@
   {
     "id": "p001",
     "name": "Silviu Fire",
-    "profitPercent": -2.32,
+    "profitPercent": 22.29,
     "maxDrawdown": 14.95,
-    "totalLots": 1.40,
-    "activeDays": 12,
+    "totalLots": 2.19,
+    "activeDays": 19,
     "registeredAt": "2026-06-01T00:00:00.000Z"
   },
   {
     "id": "p002",
     "name": "Ioana Cioban",
-    "profitPercent": -98.79,
-    "maxDrawdown": 99.14,
-    "totalLots": 0.32,
+    "profitPercent": -99.90,
+    "maxDrawdown": 99.93,
+    "totalLots": 0.90,
     "activeDays": 11,
     "registeredAt": "2026-06-01T00:00:00.000Z"
   },
   {
     "id": "p003",
     "name": "CrisL",
-    "profitPercent": 120.74,
-    "maxDrawdown": 55.72,
-    "totalLots": 0.71,
+    "profitPercent": -91.99,
+    "maxDrawdown": 96.46,
+    "totalLots": 1.03,
     "activeDays": 8,
     "registeredAt": "2026-06-01T00:00:00.000Z"
   },
   {
     "id": "p004",
     "name": "Florin1998",
-    "profitPercent": -87.98,
-    "maxDrawdown": 88.06,
-    "totalLots": 0.08,
+    "profitPercent": -99.52,
+    "maxDrawdown": 99.52,
+    "totalLots": 0.15,
     "activeDays": 4,
     "registeredAt": "2026-06-01T00:00:00.000Z"
   },
   {
     "id": "p005",
     "name": "AnaMariaB",
-    "profitPercent": -99.90,
+    "profitPercent": -99.89,
     "maxDrawdown": 99.99,
-    "totalLots": 33.31,
+    "totalLots": 58.68,
     "activeDays": 8,
     "registeredAt": "2026-07-01T00:00:00.000Z"
   },
   {
     "id": "p006",
     "name": "AdrianNewWave",
-    "profitPercent": -81.74,
-    "maxDrawdown": 84.27,
-    "totalLots": 6.34,
+    "profitPercent": -95.32,
+    "maxDrawdown": 95.58,
+    "totalLots": 7.16,
     "activeDays": 5,
     "registeredAt": "2026-07-01T00:00:00.000Z"
   },
   {
     "id": "p007",
     "name": "Diana Summer League",
-    "profitPercent": 187.03,
+    "profitPercent": -28.29,
     "maxDrawdown": 88.78,
-    "totalLots": 2.34,
-    "activeDays": 14,
+    "totalLots": 3.40,
+    "activeDays": 21,
     "registeredAt": "2026-07-02T00:00:00.000Z"
   }
 ]
