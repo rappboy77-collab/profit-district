@@ -187,6 +187,20 @@
     }
 
     /* ─────────────────────────────────────────
+       AMBIENT BLOBS — pete de lumină plutitoare
+    ───────────────────────────────────────── */
+    @keyframes blobDrift1 {
+      0%   { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(70px,50px) scale(1.12); }
+      66%  { transform: translate(-40px,70px) scale(0.92); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+    @keyframes blobDrift2 {
+      0%,100% { transform: translate(0,0); }
+      50%     { transform: translate(-90px,-30px); }
+    }
+
+    /* ─────────────────────────────────────────
        REVEAL SYSTEM
     ───────────────────────────────────────── */
     [data-reveal] {
@@ -569,6 +583,7 @@
       height: 550px;
       background: radial-gradient(ellipse at center, rgba(201,168,76,0.035) 0%, transparent 65%);
       pointer-events: none;
+      animation: blobDrift2 16s ease-in-out infinite;
     }
     /* Subtle grid line decoration */
     .hero-grid-lines {
@@ -871,6 +886,174 @@
       letter-spacing: 0.13em;
       color: var(--text-tertiary);
     }
+
+    /* ─────────────────────────────────────────
+       PROCES — timeline vertical cu pași alternanți
+    ───────────────────────────────────────── */
+    #proces {
+      background: var(--bg-base);
+      padding: 6.5rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .proces-blob-wrap { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .proces-blob { position: absolute; border-radius: 50%; filter: blur(90px); }
+    .pb-1 {
+      width: 520px; height: 520px; left: -140px; top: 8%;
+      background: radial-gradient(circle, rgba(201,168,76,0.16) 0%, transparent 70%);
+      animation: blobDrift1 24s ease-in-out infinite;
+    }
+    .pb-2 {
+      width: 420px; height: 420px; right: -110px; bottom: 5%;
+      background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+      animation: blobDrift2 18s ease-in-out infinite;
+    }
+    #proces .section-inner { position: relative; z-index: 1; }
+
+    .proces-timeline { position: relative; max-width: 900px; margin: 0 auto; padding: 1rem 0; }
+    .proces-line {
+      position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--border-strong) 8%, var(--border-strong) 92%, transparent);
+      transform: translateX(-50%);
+    }
+    .proces-step {
+      position: relative; display: flex; align-items: center;
+      justify-content: flex-start;
+      width: 100%; margin-bottom: 3.25rem;
+    }
+    .proces-step:last-child { margin-bottom: 0; }
+    .proces-step-right { justify-content: flex-end; }
+    .proces-num {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-base); border: 1px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--gold);
+      z-index: 2; box-shadow: 0 0 0 6px var(--bg-base), 0 0 24px rgba(201,168,76,0.28);
+    }
+    .proces-card {
+      width: calc(50% - 3.5rem);
+      background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px;
+      padding: 1.75rem 2rem; box-shadow: var(--shadow-card);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.25s ease;
+    }
+    .proces-card:hover { transform: translateY(-4px); border-color: var(--border-mid); }
+    .proces-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem;
+      color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.01em;
+    }
+    .proces-card p {
+      font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.88rem;
+      color: var(--text-secondary); line-height: 1.65; margin-bottom: 0.9rem;
+    }
+    .proces-check { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .proces-check li {
+      position: relative; padding-left: 1.4rem;
+      font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 0.82rem;
+      color: var(--text-secondary); line-height: 1.5;
+    }
+    .proces-check li::before {
+      content: ''; position: absolute; left: 0; top: 0.35em; width: 9px; height: 5px;
+      border-left: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold);
+      transform: rotate(-45deg);
+    }
+
+    .proces-marker {
+      position: relative; z-index: 2; display: flex; align-items: center; gap: 0.5rem;
+      justify-content: center; margin: 0 auto 2.5rem; width: fit-content;
+      background: var(--bg-base); border: 1px solid var(--border-mid); border-radius: 100px;
+      padding: 0.5rem 1.1rem;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold);
+    }
+    .proces-marker-end { margin: 2.5rem auto 0; }
+
+    .proces-panels {
+      display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+      max-width: 900px; margin: 4rem auto 0;
+    }
+    @media (min-width: 700px) { .proces-panels { grid-template-columns: 1fr 1fr; } }
+    .proces-panel {
+      background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px;
+      padding: 2rem; box-shadow: var(--shadow-card);
+    }
+    .proces-panel h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem;
+      color: var(--text-primary); margin-bottom: 1.25rem; letter-spacing: -0.01em;
+    }
+    .proces-check-2col { display: grid; grid-template-columns: 1fr; gap: 0.65rem; }
+    @media (min-width: 480px) { .proces-check-2col { grid-template-columns: 1fr 1fr; } }
+
+    .proces-principles { display: flex; flex-direction: column; gap: 0.85rem; }
+    .proces-principle {
+      font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.85rem;
+      color: var(--text-secondary); line-height: 1.5;
+    }
+    .proces-principle span {
+      display: block; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+      color: var(--gold); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem;
+    }
+
+    .proces-bar {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+      gap: 0.6rem 1.5rem; max-width: 1100px; margin: 3rem auto 0;
+      padding-top: 2rem; border-top: 1px solid var(--border-subtle);
+    }
+    .proces-bar span {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-tertiary);
+      text-align: center;
+    }
+    .proces-bar span:first-child { color: var(--gold); }
+
+    @media (max-width: 760px) {
+      .proces-line { left: 20px; }
+      .proces-step, .proces-step-right { justify-content: flex-start; padding-left: 52px; }
+      .proces-num { left: 20px; width: 32px; height: 32px; font-size: 0.85rem; }
+      .proces-card { width: 100%; }
+      .proces-marker { margin-left: 0; margin-right: auto; }
+      .proces-marker-start { margin-left: 52px; }
+      .proces-marker-end { margin-left: 52px; margin-right: auto; }
+    }
+
+    /* ─────────────────────────────────────────
+       SESIUNI FOREX — glob 3D
+    ───────────────────────────────────────── */
+    #educatie { background: var(--bg-surface); padding: 6.5rem 1.5rem; }
+    .sessions-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+    @media (min-width: 900px) {
+      .sessions-layout { grid-template-columns: 1.05fr 0.95fr; gap: 4rem; }
+    }
+    .sessions-globe-wrap {
+      position: relative; width: 100%; max-width: 460px; margin: 0 auto; aspect-ratio: 1;
+    }
+    .sessions-globe-wrap canvas { width: 100%; height: 100%; cursor: grab; }
+    .sessions-globe-wrap canvas:active { cursor: grabbing; }
+
+    .sessions-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .session-item {
+      display: flex; align-items: center; gap: 0.9rem;
+      background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 8px;
+      padding: 1rem 1.25rem; transition: border-color 0.3s ease;
+    }
+    .session-item.is-live { border-color: var(--border-mid); }
+    .session-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--text-tertiary); }
+    .session-item.is-live .session-dot {
+      background: var(--green); animation: pulse-ring 1.9s cubic-bezier(0.4,0,0.6,1) infinite;
+    }
+    .session-info { flex: 1; min-width: 0; }
+    .session-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text-primary); }
+    .session-hours { font-family: 'DM Mono', monospace; font-size: 0.66rem; color: var(--text-tertiary); letter-spacing: 0.04em; margin-top: 0.2rem; }
+    .session-status {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-tertiary); background: rgba(255,255,255,0.03); border-radius: 100px; padding: 0.3rem 0.75rem; flex-shrink: 0;
+    }
+    .session-item.is-live .session-status { color: var(--green); background: var(--green-dim); }
+    .sessions-note {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-tertiary);
+      letter-spacing: 0.05em; margin-top: 0.5rem; text-align: center;
+    }
+    .sessions-note strong { color: var(--gold); }
 
     /* ─────────────────────────────────────────
        SYSTEMS SECTION
@@ -2036,6 +2219,199 @@
 </section>
 
 <!-- ═══════════════════════════════════════
+     PROCES — Cum Funcționează
+════════════════════════════════════════ -->
+<section id="proces" aria-label="Harta ta spre trading profitabil">
+  <div class="proces-blob-wrap" aria-hidden="true">
+    <div class="proces-blob pb-1"></div>
+    <div class="proces-blob pb-2"></div>
+  </div>
+  <div class="section-inner">
+
+    <div class="section-header" data-reveal>
+      <span class="section-label">Cum Funcționează</span>
+      <h2>Harta Ta Spre<br>Trading Profitabil</h2>
+      <p class="sub">O comunitate. Resurse complete. Mentorat gratuit. Tu aduci disciplina, noi îți oferim drumul.</p>
+    </div>
+
+    <div class="proces-timeline" data-reveal>
+      <div class="proces-line" aria-hidden="true"></div>
+
+      <div class="proces-marker proces-marker-start" data-stagger>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        Start — Zero Cunoștințe
+      </div>
+
+      <div class="proces-step" data-stagger>
+        <div class="proces-num">1</div>
+        <div class="proces-card">
+          <h3>Aplici Pentru Mentorat</h3>
+          <p>Completezi formularul de aplicare — locuri limitate, acceptate lunar.</p>
+          <ul class="proces-check">
+            <li>Analizăm fiecare cerere în 24h</li>
+            <li>Fără costuri, fără obligații</li>
+            <li>Confirmare rapidă prin Telegram</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="proces-step proces-step-right" data-stagger>
+        <div class="proces-num">2</div>
+        <div class="proces-card">
+          <h3>Mentorat Gratuit 30 de Zile</h3>
+          <p>Înveți Forex de la zero, alături de un mentor cu istoric verificat.</p>
+          <ul class="proces-check">
+            <li>Analiză tehnică și fundamentală</li>
+            <li>Execuții live, în timp real</li>
+            <li>Management de risc corect</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="proces-step" data-stagger>
+        <div class="proces-num">3</div>
+        <div class="proces-card">
+          <h3>Telegram — Analize Zilnice</h3>
+          <p>Pentru cei care au bazele, dar încă se luptă cu consecvența.</p>
+          <ul class="proces-check">
+            <li>Analize zilnice de piață</li>
+            <li>Idei de tranzacționare</li>
+            <li>Comunitate activă, non-stop</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="proces-step proces-step-right" data-stagger>
+        <div class="proces-num">4</div>
+        <div class="proces-card">
+          <h3>Discord — Nivelul Următor</h3>
+          <p>Pentru traderii activi și serioși, gata să se dezvolte constant.</p>
+          <ul class="proces-check">
+            <li>Sesiuni live și feedback pe trade-uri</li>
+            <li>Jurnalizare și accountability</li>
+            <li>Acces direct la mentori și echipă</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="proces-step" data-stagger>
+        <div class="proces-num">5</div>
+        <div class="proces-card">
+          <h3>Copytrading &amp; Scalare</h3>
+          <p>Îți diversifici portofoliul și îți optimizezi gestionarea riscului.</p>
+          <ul class="proces-check">
+            <li>12 sisteme verificate public</li>
+            <li>Istoric transparent, actualizat zilnic</li>
+            <li>Diversificare fără efort activ</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="proces-step proces-step-right" data-stagger>
+        <div class="proces-num">6</div>
+        <div class="proces-card">
+          <h3>Trader Profitabil</h3>
+          <p>Trăiești din trading — cu disciplină, consistență și libertate.</p>
+          <ul class="proces-check">
+            <li>Independență financiară</li>
+            <li>Stil de viață pe care ți l-ai construit</li>
+            <li>Parte din Inner Circle</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="proces-marker proces-marker-end" data-stagger>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22V4a1 1 0 0 1 1-1h13.5a.5.5 0 0 1 .4.8l-3.2 4.2a1 1 0 0 0 0 1.2l3.2 4.2a.5.5 0 0 1-.4.8H5"/></svg>
+        Destinație — Libertate Financiară
+      </div>
+    </div>
+
+    <!-- Panouri: ce primești + principii -->
+    <div class="proces-panels" data-reveal>
+      <div class="proces-panel">
+        <h3>Ce Primești În Comunitate</h3>
+        <ul class="proces-check proces-check-2col">
+          <li>Educație structurată, pas cu pas</li>
+          <li>Analize &amp; idei de trading zilnic</li>
+          <li>Comunitate activă, aceeași mentalitate</li>
+          <li>Feedback și suport direct</li>
+          <li>Disciplină &amp; accountability</li>
+          <li>Susținere pe termen lung</li>
+        </ul>
+      </div>
+      <div class="proces-panel">
+        <h3>Principiile Noastre</h3>
+        <div class="proces-principles">
+          <div class="proces-principle"><span>Educație</span>Învățăm continuu.</div>
+          <div class="proces-principle"><span>Disciplină</span>Urmezi planul.</div>
+          <div class="proces-principle"><span>Consistență</span>Pași mici, zilnic.</div>
+          <div class="proces-principle"><span>Răbdare</span>Timpul îți va răsplăti munca.</div>
+          <div class="proces-principle"><span>Comunitate</span>Împreună suntem mai puternici.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bară taglines -->
+    <div class="proces-bar" data-reveal>
+      <span>Mentoratul e 100% gratuit.</span>
+      <span>Îți oferim toate resursele.</span>
+      <span>Tu trebuie doar să fii prezent și să acționezi.</span>
+      <span>Împreună construim traderi profitabili.</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SESIUNI FOREX — glob 3D
+════════════════════════════════════════ -->
+<section id="educatie" aria-label="Sesiunile pieței Forex">
+  <div class="section-inner">
+
+    <div class="section-header" data-reveal>
+      <span class="section-label">Piața Globală</span>
+      <h2>Forex Nu Doarme<br>Niciodată</h2>
+      <p class="sub">Piața valutară e activă 24 de ore din 5 zile, urmărind soarele prin 3 sesiuni majore de tranzacționare.</p>
+    </div>
+
+    <div class="sessions-layout" data-reveal>
+      <div class="sessions-globe-wrap">
+        <canvas id="fx-globe" role="img" aria-label="Glob 3D interactiv cu cele 3 sesiuni majore ale pieței Forex"></canvas>
+      </div>
+
+      <div class="sessions-list">
+        <div class="session-item" data-session="tokyo">
+          <span class="session-dot" aria-hidden="true"></span>
+          <div class="session-info">
+            <p class="session-name">Tokyo</p>
+            <p class="session-hours">03:00 – 11:00 (UTC+3)</p>
+          </div>
+          <span class="session-status">—</span>
+        </div>
+        <div class="session-item" data-session="london">
+          <span class="session-dot" aria-hidden="true"></span>
+          <div class="session-info">
+            <p class="session-name">Londra</p>
+            <p class="session-hours">10:00 – 18:00 (UTC+3)</p>
+          </div>
+          <span class="session-status">—</span>
+        </div>
+        <div class="session-item" data-session="newyork">
+          <span class="session-dot" aria-hidden="true"></span>
+          <div class="session-info">
+            <p class="session-name">New York</p>
+            <p class="session-hours">16:00 – 00:00 (UTC+3)</p>
+          </div>
+          <span class="session-status">—</span>
+        </div>
+        <p class="sessions-note">Ora actuală (UTC+3): <strong id="utc-clock">--:--</strong></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
      COPYTRADING SYSTEMS
 ════════════════════════════════════════ -->
 <section id="systems" aria-label="Copy Trading — Sisteme verificate">
@@ -3148,6 +3524,117 @@
     .to('.loader-core', { opacity: 0, y: -26, duration: 0.45, ease: 'power2.in' }, '+=0.2')
     .to('.loader-panel.top',    { yPercent: -101, duration: 0.9, ease: 'power4.inOut' }, '-=0.1')
     .to('.loader-panel.bottom', { yPercent: 101,  duration: 0.9, ease: 'power4.inOut' }, '<');
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     GLOB 3D — sesiuni Forex
+════════════════════════════════════════ -->
+<script type="module">
+(function () {
+  var canvas = document.getElementById('fx-globe');
+  if (!canvas) return;
+
+  var SESSIONS = [
+    { id: 'tokyo',   name: 'Tokyo',    lat: 35.6762,  lng: 139.6503, open: 3,  close: 11 },
+    { id: 'london',  name: 'Londra',   lat: 51.5074,  lng: -0.1278,  open: 10, close: 18 },
+    { id: 'newyork', name: 'New York', lat: 40.7128,  lng: -74.0060, open: 16, close: 0  }
+  ];
+
+  var GOLD  = [0.541, 0.431, 0.184];
+  var GREEN = [0, 1, 0.533];
+  var UTC_OFFSET = 3;
+
+  function isOpen(s, hour) {
+    return s.open > s.close ? (hour >= s.open || hour < s.close) : (hour >= s.open && hour < s.close);
+  }
+
+  function updateLiveState() {
+    var now  = new Date();
+    var hour = (now.getUTCHours() + UTC_OFFSET) % 24;
+    var clock = document.getElementById('utc-clock');
+    if (clock) clock.textContent = String(hour).padStart(2, '0') + ':' + String(now.getUTCMinutes()).padStart(2, '0');
+
+    return SESSIONS.map(function (s) {
+      var live = isOpen(s, hour);
+      var item = document.querySelector('.session-item[data-session="' + s.id + '"]');
+      if (item) {
+        item.classList.toggle('is-live', live);
+        var status = item.querySelector('.session-status');
+        if (status) status.textContent = live ? 'Activă' : 'Închisă';
+      }
+      return { location: [s.lat, s.lng], size: live ? 0.09 : 0.06, color: live ? GREEN : GOLD };
+    });
+  }
+
+  var phi = 0;
+  var width = 0;
+  var pointerDown = false;
+  var pointerX = 0;
+  var pointerPhiOffset = 0;
+
+  function resize() {
+    width = canvas.offsetWidth;
+    canvas.width = width * 2;
+    canvas.height = width * 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  import('https://cdn.jsdelivr.net/npm/cobe@2.0.1/dist/index.esm.js').then(function (mod) {
+    var createGlobe = mod.default;
+
+    var globe = createGlobe(canvas, {
+      devicePixelRatio: 2,
+      width: canvas.width,
+      height: canvas.height,
+      phi: 0,
+      theta: 0.32,
+      dark: 1,
+      diffuse: 1.2,
+      mapSamples: 14000,
+      mapBrightness: 5,
+      baseColor: [0.16, 0.14, 0.09],
+      markerColor: GOLD,
+      glowColor: [0.29, 0.24, 0.13],
+      markers: updateLiveState(),
+      arcs: [
+        { from: [35.6762, 139.6503], to: [51.5074, -0.1278] },
+        { from: [51.5074, -0.1278],  to: [40.7128, -74.0060] }
+      ],
+      arcColor: GOLD,
+      arcWidth: 2,
+      arcHeight: 0.32
+    });
+
+    var rafId;
+    function frame() {
+      if (!pointerDown) phi += 0.0035;
+      globe.update({ phi: phi + pointerPhiOffset, width: width * 2, height: width * 2 });
+      rafId = requestAnimationFrame(frame);
+    }
+    rafId = requestAnimationFrame(frame);
+
+    canvas.addEventListener('pointerdown', function (e) {
+      pointerDown = true;
+      pointerX = e.clientX;
+      canvas.style.cursor = 'grabbing';
+    });
+    window.addEventListener('pointerup', function () {
+      pointerDown = false;
+      canvas.style.cursor = 'grab';
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!pointerDown) return;
+      var delta = e.clientX - pointerX;
+      pointerPhiOffset += delta * 0.005;
+      pointerX = e.clientX;
+    });
+
+    setInterval(function () { globe.update({ markers: updateLiveState() }); }, 30000);
+  }).catch(function () {
+    canvas.style.display = 'none';
+  });
 })();
 </script>
 
