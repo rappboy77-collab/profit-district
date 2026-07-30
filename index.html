@@ -599,6 +599,14 @@
       -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
     }
 
+    /* Scroll-linked parallax depth — fiecare strat se mișcă cu viteză proprie */
+    .hero-parallax-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      will-change: transform;
+    }
+
     .hero-inner {
       position: relative;
       z-index: 1;
@@ -932,12 +940,31 @@
       z-index: 2; box-shadow: 0 0 0 6px var(--bg-base), 0 0 24px rgba(201,168,76,0.28);
     }
     .proces-card {
+      position: relative;
+      overflow: hidden;
       width: calc(50% - 3.5rem);
       background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px;
       padding: 1.75rem 2rem; box-shadow: var(--shadow-card);
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.25s ease;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.25s ease, box-shadow 0.35s ease;
     }
-    .proces-card:hover { transform: translateY(-4px); border-color: var(--border-mid); }
+    .proces-card > * { position: relative; z-index: 1; }
+    .proces-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, var(--gold-glow-mid) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .proces-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+    }
+    .proces-card:hover::before { opacity: 1; }
     .proces-card h3 {
       font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem;
       color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.01em;
@@ -1468,22 +1495,60 @@
     .nav-links a.nav-active::after { transform: scaleX(1); }
 
     /* ─────────────────────────────────────────
-       SCROLL TO TOP
+       FIXED ACTIONS — CTA flotant + scroll-to-top
     ───────────────────────────────────────── */
-    #scroll-top {
+    .fixed-actions {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 44px;
-      height: 44px;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 800;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    /* CTA flotant — puls auriu continuu, mereu vizibil */
+    @keyframes cta-glow-pulse {
+      0%, 100% {
+        box-shadow: 0 4px 18px rgba(201,168,76,0.35), 0 2px 6px rgba(0,0,0,0.45), 0 0 0 0 rgba(201,168,76,0.35);
+      }
+      50% {
+        box-shadow: 0 4px 30px rgba(201,168,76,0.6), 0 2px 6px rgba(0,0,0,0.45), 0 0 0 10px rgba(201,168,76,0.10);
+      }
+    }
+    .floating-cta {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      color: var(--bg-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      animation: cta-glow-pulse 2.6s ease-in-out infinite;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), filter 0.25s ease;
+    }
+    .floating-cta:hover, .floating-cta:focus-visible {
+      transform: translateY(-3px) scale(1.06);
+      filter: brightness(1.08);
+    }
+    .floating-cta:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+    .floating-cta svg { width: 24px; height: 24px; }
+
+    /* Scroll to top — cu inel circular de progres al scroll-ului */
+    #scroll-top {
+      position: relative;
+      width: 46px;
+      height: 46px;
       background: var(--bg-elevated);
       border: 1px solid var(--border-mid);
-      border-radius: 8px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      z-index: 800;
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, border-color 0.2s ease;
@@ -1495,7 +1560,32 @@
       pointer-events: auto;
     }
     #scroll-top:hover { background: var(--bg-floating); border-color: var(--border-strong); }
-    #scroll-top svg { stroke: var(--gold); width: 18px; height: 18px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .scroll-ring {
+      position: absolute;
+      inset: 0;
+      transform: rotate(-90deg);
+    }
+    .scroll-ring-track { fill: none; stroke: var(--border-subtle); stroke-width: 2; }
+    .scroll-ring-progress {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 131.9;
+      stroke-dashoffset: 131.9;
+      transition: stroke-dashoffset 0.1s linear;
+    }
+    #scroll-top .scroll-top-arrow {
+      position: relative;
+      z-index: 1;
+      stroke: var(--gold);
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     /* ─────────────────────────────────────────
        SUBMIT SPINNER
@@ -2040,9 +2130,9 @@
      HERO — Form (prima secțiune)
 ════════════════════════════════════════ -->
 <section id="hero" aria-label="Hero — aplică pentru mentorat">
-  <div class="hero-glow-1" aria-hidden="true"></div>
-  <div class="hero-glow-2" aria-hidden="true"></div>
-  <div class="hero-grid-lines" aria-hidden="true"></div>
+  <div class="hero-parallax-layer" data-parallax="0.18" aria-hidden="true"><div class="hero-glow-1"></div></div>
+  <div class="hero-parallax-layer" data-parallax="0.32" aria-hidden="true"><div class="hero-glow-2"></div></div>
+  <div class="hero-parallax-layer" data-parallax="0.06" aria-hidden="true"><div class="hero-grid-lines"></div></div>
 
   <div class="hero-inner">
 
@@ -3049,10 +3139,19 @@
   </div>
 </footer>
 
-<!-- Scroll to top button -->
-<button id="scroll-top" aria-label="Înapoi sus" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
+<!-- CTA flotant + Scroll to top -->
+<div class="fixed-actions">
+  <a id="floating-cta" class="floating-cta" href="https://t.me/profitdistricthane" target="_blank" rel="noopener noreferrer" aria-label="Alătură-te pe Telegram">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.281c-.144.658-.537.818-1.083.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.033 13.39l-2.969-.924c-.643-.204-.656-.643.135-.953l11.572-4.461c.535-.194 1.004.131.835.953l-.044-.757z"/></svg>
+  </a>
+  <button id="scroll-top" aria-label="Înapoi sus" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg class="scroll-ring" width="46" height="46" viewBox="0 0 46 46" aria-hidden="true">
+      <circle class="scroll-ring-track" cx="23" cy="23" r="21"></circle>
+      <circle class="scroll-ring-progress" cx="23" cy="23" r="21"></circle>
+    </svg>
+    <svg class="scroll-top-arrow" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+</div>
 
 <!-- ═══════════════════════════════════════
      FORM VALIDATION + SUBMIT
@@ -3352,13 +3451,54 @@
 
   sections.forEach(function (s) { spyObserver.observe(s); });
 
-  /* ── Scroll to top visibility ── */
+  /* ── Scroll to top visibility + inel circular de progres ── */
   var scrollBtn = document.getElementById('scroll-top');
+  var scrollRing = document.querySelector('.scroll-ring-progress');
+  var RING_CIRCUMFERENCE = 2 * Math.PI * 21;
   if (scrollBtn) {
     window.addEventListener('scroll', function () {
       scrollBtn.classList.toggle('visible', window.scrollY > 400);
+      if (scrollRing) {
+        var scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = scrollableHeight > 0 ? Math.min(Math.max(window.scrollY / scrollableHeight, 0), 1) : 0;
+        scrollRing.style.strokeDashoffset = RING_CIRCUMFERENCE * (1 - pct);
+      }
     }, { passive: true });
   }
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     HERO PARALLAX — straturile de glow se mișcă
+     la viteze diferite în timpul scroll-ului
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var hero = document.getElementById('hero');
+  var layers = document.querySelectorAll('.hero-parallax-layer');
+  if (!hero || !layers.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ticking = false;
+
+  function update() {
+    var rect = hero.getBoundingClientRect();
+    var scrolled = Math.max(-rect.top, 0);
+    layers.forEach(function (layer) {
+      var speed = parseFloat(layer.getAttribute('data-parallax')) || 0;
+      layer.style.transform = 'translateY(' + (scrolled * speed) + 'px)';
+    });
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
 })();
 </script>
 
