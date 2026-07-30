@@ -1,28 +1,38 @@
 {
-  "lastUpdated": "2026-07-29T22:54:28.393Z",
+  "lastUpdated": "2026-07-30T08:23:29.619Z",
   "general": [
     {
       "rank": 1,
       "id": "p001",
       "name": "Silviu Fire",
-      "score": 1.49,
-      "profitPercent": 22.29,
+      "score": 1.45,
+      "profitPercent": 21.61,
       "maxDrawdown": 14.95,
-      "totalLots": 2.19,
+      "totalLots": 3.27,
       "activeDays": 19
     },
     {
       "rank": 2,
       "id": "p007",
       "name": "Diana Summer League",
-      "score": -0.32,
-      "profitPercent": -28.29,
-      "maxDrawdown": 88.78,
-      "totalLots": 3.4,
+      "score": -0.81,
+      "profitPercent": -75.28,
+      "maxDrawdown": 93.02,
+      "totalLots": 4.18,
       "activeDays": 21
     },
     {
       "rank": 3,
+      "id": "p008",
+      "name": "Iulia_99",
+      "score": -0.94,
+      "profitPercent": -13.8,
+      "maxDrawdown": 14.65,
+      "totalLots": 0.19,
+      "activeDays": 0
+    },
+    {
+      "rank": 4,
       "id": "p003",
       "name": "CrisL",
       "score": -0.95,
@@ -32,7 +42,7 @@
       "activeDays": 8
     },
     {
-      "rank": 4,
+      "rank": 5,
       "id": "p002",
       "name": "Ioana Cioban",
       "score": -1,
@@ -42,7 +52,7 @@
       "activeDays": 11
     },
     {
-      "rank": 5,
+      "rank": 6,
       "id": "p004",
       "name": "Florin1998",
       "score": -1,
@@ -52,7 +62,7 @@
       "activeDays": 4
     },
     {
-      "rank": 6,
+      "rank": 7,
       "id": "p005",
       "name": "AnaMariaB",
       "score": -1,
@@ -62,7 +72,7 @@
       "activeDays": 8
     },
     {
-      "rank": 7,
+      "rank": 8,
       "id": "p006",
       "name": "AdrianNewWave",
       "score": -1,
@@ -93,17 +103,17 @@
       "rank": 3,
       "id": "p007",
       "name": "Diana Summer League",
-      "totalLots": 3.4,
+      "totalLots": 4.18,
       "activeDays": 21,
-      "profitPercent": -28.29
+      "profitPercent": -75.28
     },
     {
       "rank": 4,
       "id": "p001",
       "name": "Silviu Fire",
-      "totalLots": 2.19,
+      "totalLots": 3.27,
       "activeDays": 19,
-      "profitPercent": 22.29
+      "profitPercent": 21.61
     },
     {
       "rank": 5,
@@ -123,6 +133,14 @@
     },
     {
       "rank": 7,
+      "id": "p008",
+      "name": "Iulia_99",
+      "totalLots": 0.19,
+      "activeDays": 0,
+      "profitPercent": -13.8
+    },
+    {
+      "rank": 8,
       "id": "p004",
       "name": "Florin1998",
       "totalLots": 0.15,

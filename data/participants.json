@@ -2,9 +2,9 @@
   {
     "id": "p001",
     "name": "Silviu Fire",
-    "profitPercent": 22.29,
+    "profitPercent": 21.61,
     "maxDrawdown": 14.95,
-    "totalLots": 2.19,
+    "totalLots": 3.27,
     "activeDays": 19,
     "registeredAt": "2026-06-01T00:00:00.000Z"
   },
@@ -56,10 +56,19 @@
   {
     "id": "p007",
     "name": "Diana Summer League",
-    "profitPercent": -28.29,
-    "maxDrawdown": 88.78,
-    "totalLots": 3.40,
+    "profitPercent": -75.28,
+    "maxDrawdown": 93.02,
+    "totalLots": 4.18,
     "activeDays": 21,
     "registeredAt": "2026-07-02T00:00:00.000Z"
+  },
+  {
+    "id": "p008",
+    "name": "Iulia_99",
+    "profitPercent": -13.80,
+    "maxDrawdown": 14.65,
+    "totalLots": 0.19,
+    "activeDays": 0,
+    "registeredAt": "2026-07-20T00:00:00.000Z"
   }
 ]
