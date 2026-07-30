@@ -26,13 +26,14 @@ function writeJSON(file, data) {
 }
 
 function round2(n) { return Math.round(n * 100) / 100; }
+function round4(n) { return Math.round(n * 10000) / 10000; }
 
 // ─── Formule scoruri ──────────────────────────────────────────────────────────
 
 function calcGeneral(p) {
   // Raport Profit% / MaxDrawdown% — recompensează profit bun cu risc mic
-  if (!p.maxDrawdown || p.maxDrawdown === 0) return round2(p.profitPercent > 0 ? p.profitPercent : 0);
-  return round2(p.profitPercent / p.maxDrawdown);
+  if (!p.maxDrawdown || p.maxDrawdown === 0) return round4(p.profitPercent > 0 ? p.profitPercent : 0);
+  return round4(p.profitPercent / p.maxDrawdown);
 }
 
 // ─── Main ────────────────────────────────────────────────────────────────────

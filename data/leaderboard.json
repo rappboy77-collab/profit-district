@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-07-30T08:23:29.619Z",
+  "lastUpdated": "2026-07-30T08:45:19.344Z",
   "general": [
     {
       "rank": 1,
       "id": "p001",
       "name": "Silviu Fire",
-      "score": 1.45,
+      "score": 1.4455,
       "profitPercent": 21.61,
       "maxDrawdown": 14.95,
       "totalLots": 3.27,
@@ -15,7 +15,7 @@
       "rank": 2,
       "id": "p007",
       "name": "Diana Summer League",
-      "score": -0.81,
+      "score": -0.8093,
       "profitPercent": -75.28,
       "maxDrawdown": 93.02,
       "totalLots": 4.18,
@@ -25,7 +25,7 @@
       "rank": 3,
       "id": "p008",
       "name": "Iulia_99",
-      "score": -0.94,
+      "score": -0.942,
       "profitPercent": -13.8,
       "maxDrawdown": 14.65,
       "totalLots": 0.19,
@@ -35,7 +35,7 @@
       "rank": 4,
       "id": "p003",
       "name": "CrisL",
-      "score": -0.95,
+      "score": -0.9537,
       "profitPercent": -91.99,
       "maxDrawdown": 96.46,
       "totalLots": 1.03,
@@ -43,16 +43,36 @@
     },
     {
       "rank": 5,
+      "id": "p006",
+      "name": "AdrianNewWave",
+      "score": -0.9973,
+      "profitPercent": -95.32,
+      "maxDrawdown": 95.58,
+      "totalLots": 7.16,
+      "activeDays": 5
+    },
+    {
+      "rank": 6,
+      "id": "p005",
+      "name": "AnaMariaB",
+      "score": -0.999,
+      "profitPercent": -99.89,
+      "maxDrawdown": 99.99,
+      "totalLots": 58.68,
+      "activeDays": 8
+    },
+    {
+      "rank": 7,
       "id": "p002",
       "name": "Ioana Cioban",
-      "score": -1,
+      "score": -0.9997,
       "profitPercent": -99.9,
       "maxDrawdown": 99.93,
       "totalLots": 0.9,
       "activeDays": 11
     },
     {
-      "rank": 6,
+      "rank": 8,
       "id": "p004",
       "name": "Florin1998",
       "score": -1,
@@ -60,26 +80,6 @@
       "maxDrawdown": 99.52,
       "totalLots": 0.15,
       "activeDays": 4
-    },
-    {
-      "rank": 7,
-      "id": "p005",
-      "name": "AnaMariaB",
-      "score": -1,
-      "profitPercent": -99.89,
-      "maxDrawdown": 99.99,
-      "totalLots": 58.68,
-      "activeDays": 8
-    },
-    {
-      "rank": 8,
-      "id": "p006",
-      "name": "AdrianNewWave",
-      "score": -1,
-      "profitPercent": -95.32,
-      "maxDrawdown": 95.58,
-      "totalLots": 7.16,
-      "activeDays": 5
     }
   ],
   "consistenta": [
