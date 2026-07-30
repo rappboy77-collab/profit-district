@@ -100,6 +100,39 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
+    body.is-loading { overflow: hidden; }
+
+    /* ─────────────────────────────────────────
+       PRELOADER — skyline-ul se desenează
+    ───────────────────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .loader-panel { position: absolute; left: 0; right: 0; height: 50.5%; background: var(--bg-base); }
+    .loader-panel.top { top: 0; }
+    .loader-panel.bottom { bottom: 0; }
+    .loader-core { position: relative; z-index: 2; text-align: center; width: min(420px, 80vw); }
+    .loader-word {
+      font-family: 'DM Mono', monospace; font-size: 0.66rem;
+      letter-spacing: 0.55em; text-indent: 0.55em;
+      text-transform: uppercase; color: rgba(240,236,224,0.45);
+    }
+    .loader-sky { margin: 1.6rem auto 0.4rem; display: block; width: 100%; height: auto; }
+    .loader-sky path {
+      stroke: var(--gold); stroke-width: 1.5; fill: none;
+      stroke-linecap: square;
+    }
+    .loader-meta {
+      display: flex; justify-content: center; align-items: baseline;
+      border-top: 1px solid var(--border-subtle); padding-top: 0.8rem; margin-top: 0.4rem;
+    }
+    .loader-count {
+      font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+      font-size: 2rem; line-height: 1; color: var(--text-primary);
+    }
+    .loader-count sup { font-size: 0.4em; font-style: normal; color: var(--gold); margin-left: 0.12em; }
 
     ::selection {
       background: var(--gold);
@@ -1726,7 +1759,25 @@
     }
   </style>
 </head>
-<body>
+<body class="is-loading">
+
+<!-- ═══════════════════════════════════════
+     PRELOADER — skyline-ul se desenează
+════════════════════════════════════════ -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-panel top"></div>
+  <div class="loader-panel bottom"></div>
+  <div class="loader-core">
+    <p class="loader-word">Profit District</p>
+    <svg class="loader-sky" viewBox="0 0 420 90" fill="none">
+      <path id="loader-path" d="M0 88 H28 V56 H46 V70 H72 V34 H82 V26 H104 V44 H118 V88 H150 V50 H166 V20 H198 V50 H214 V88 H244 V62 H262 V40 H288 V14 H298 V6 H310 V14 H320 V40 H342 V64 H360 V88 H388 V52 H406 V88 H420"/>
+    </svg>
+    <div class="loader-meta">
+      <p class="loader-count"><span id="loader-num">0</span><sup>%</sup></p>
+    </div>
+  </div>
+</div>
+<noscript><style>#loader{display:none}</style></noscript>
 
 <!-- ── Grain overlay ─────────────────────── -->
 <div id="grain" aria-hidden="true"></div>
@@ -3057,6 +3108,47 @@
     }
   });
 }());
+</script>
+
+<!-- ═══════════════════════════════════════
+     PRELOADER — logica de animație
+════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGsap = typeof window.gsap !== 'undefined';
+
+  function killLoader() {
+    var l = document.getElementById('loader');
+    if (l && l.parentNode) l.parentNode.removeChild(l);
+    document.body.classList.remove('is-loading');
+  }
+  setTimeout(function () { if (document.getElementById('loader')) killLoader(); }, 6000);
+
+  if (!hasGsap || reduced) { killLoader(); return; }
+
+  var num  = document.getElementById('loader-num');
+  var path = document.getElementById('loader-path');
+  var len  = path.getTotalLength();
+  path.style.strokeDasharray  = len;
+  path.style.strokeDashoffset = len;
+
+  var st = { v: 0 };
+  gsap.timeline({ onComplete: killLoader })
+    .to(st, {
+      v: 100, duration: 1.9, ease: 'power2.inOut',
+      onUpdate: function () {
+        num.textContent = Math.round(st.v);
+        path.style.strokeDashoffset = len * (1 - st.v / 100);
+      }
+    })
+    .to('.loader-core', { opacity: 0, y: -26, duration: 0.45, ease: 'power2.in' }, '+=0.2')
+    .to('.loader-panel.top',    { yPercent: -101, duration: 0.9, ease: 'power4.inOut' }, '-=0.1')
+    .to('.loader-panel.bottom', { yPercent: 101,  duration: 0.9, ease: 'power4.inOut' }, '<');
+})();
 </script>
 
 </body>
