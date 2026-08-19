@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19T09:08:53.940Z",
+  "lastUpdated": "2026-08-19T09:11:25.268Z",
   "general": [
     {
       "rank": 1,
@@ -8,8 +8,8 @@
       "score": 3.0063,
       "profitPercent": 33.61,
       "maxDrawdown": 11.18,
-      "totalLots": 3.51,
-      "activeDays": 0
+      "totalLots": 5.79,
+      "activeDays": 18
     },
     {
       "rank": 2,
@@ -111,6 +111,14 @@
     },
     {
       "rank": 3,
+      "id": "p009",
+      "name": "RaresB",
+      "totalLots": 5.79,
+      "activeDays": 18,
+      "profitPercent": 33.61
+    },
+    {
+      "rank": 4,
       "id": "p001",
       "name": "Silviu Fire",
       "totalLots": 4.68,
@@ -118,20 +126,12 @@
       "profitPercent": 39.85
     },
     {
-      "rank": 4,
+      "rank": 5,
       "id": "p007",
       "name": "Diana Summer League",
       "totalLots": 4.38,
       "activeDays": 21,
       "profitPercent": -97.49
-    },
-    {
-      "rank": 5,
-      "id": "p009",
-      "name": "RaresB",
-      "totalLots": 3.51,
-      "activeDays": 0,
-      "profitPercent": 33.61
     },
     {
       "rank": 6,
