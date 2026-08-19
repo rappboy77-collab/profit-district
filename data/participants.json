@@ -70,5 +70,14 @@
     "totalLots": 0.59,
     "activeDays": 0,
     "registeredAt": "2026-07-20T00:00:00.000Z"
+  },
+  {
+    "id": "p009",
+    "name": "Rares",
+    "profitPercent": 29,
+    "maxDrawdown": 7,
+    "totalLots": 3.51,
+    "activeDays": 0,
+    "registeredAt": "2026-08-19T00:00:00.000Z"
   }
 ]
