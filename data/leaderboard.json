@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-08-19T09:05:21.241Z",
+  "lastUpdated": "2026-08-19T09:08:53.940Z",
   "general": [
     {
       "rank": 1,
       "id": "p009",
-      "name": "Rares",
-      "score": 2.6827,
-      "profitPercent": 27.31,
-      "maxDrawdown": 10.18,
+      "name": "RaresB",
+      "score": 3.0063,
+      "profitPercent": 33.61,
+      "maxDrawdown": 11.18,
       "totalLots": 3.51,
       "activeDays": 0
     },
@@ -128,10 +128,10 @@
     {
       "rank": 5,
       "id": "p009",
-      "name": "Rares",
+      "name": "RaresB",
       "totalLots": 3.51,
       "activeDays": 0,
-      "profitPercent": 27.31
+      "profitPercent": 33.61
     },
     {
       "rank": 6,
