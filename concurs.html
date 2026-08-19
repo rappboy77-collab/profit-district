@@ -401,7 +401,7 @@
     <!-- Consistență -->
     <div class="lb-table-scroll" id="tab-activ" style="display:none;">
       <table class="lb-table">
-        <thead><tr><th>#</th><th>Trader</th><th>Lot</th><th>Zile Active</th><th>ROI %</th></tr></thead>
+        <thead><tr><th>#</th><th>Trader</th><th>Lot</th><th>Zile Active</th></tr></thead>
         <tbody id="tbody-activ"></tbody>
       </table>
     </div>
@@ -773,12 +773,10 @@
 
     /* Consistență */
     renderTable('tbody-activ', data.consistenta, 5, function (p) {
-      var roi = p.profitPercent >= 0 ? '+' + p.profitPercent : '' + p.profitPercent;
       return '<td>' + rkBadge(p.rank) + '</td>'
         + '<td class="td-name">' + p.name + '</td>'
         + '<td class="td-activity">' + p.totalLots + '</td>'
-        + '<td>' + p.activeDays + '</td>'
-        + '<td class="td-roi">' + roi + '%</td>';
+        + '<td>' + p.activeDays + '</td>';
     });
 
     /* Lucky Draw */
