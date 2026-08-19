@@ -74,8 +74,8 @@
   {
     "id": "p009",
     "name": "Rares",
-    "profitPercent": 29,
-    "maxDrawdown": 7,
+    "profitPercent": 27.31,
+    "maxDrawdown": 10.18,
     "totalLots": 3.51,
     "activeDays": 0,
     "registeredAt": "2026-08-19T00:00:00.000Z"
