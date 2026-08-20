@@ -2,9 +2,9 @@
   {
     "id": "p001",
     "name": "Silviu Fire",
-    "profitPercent": 39.85,
-    "maxDrawdown": 14.95,
-    "totalLots": 4.68,
+    "profitPercent": -43.95,
+    "maxDrawdown": 60.19,
+    "totalLots": 4.92,
     "activeDays": 37,
     "registeredAt": "2026-06-01T00:00:00.000Z"
   },

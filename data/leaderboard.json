@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19T09:11:25.268Z",
+  "lastUpdated": "2026-08-20T13:01:10.142Z",
   "general": [
     {
       "rank": 1,
@@ -15,10 +15,10 @@
       "rank": 2,
       "id": "p001",
       "name": "Silviu Fire",
-      "score": 2.6656,
-      "profitPercent": 39.85,
-      "maxDrawdown": 14.95,
-      "totalLots": 4.68,
+      "score": -0.7302,
+      "profitPercent": -43.95,
+      "maxDrawdown": 60.19,
+      "totalLots": 4.92,
       "activeDays": 37
     },
     {
@@ -121,9 +121,9 @@
       "rank": 4,
       "id": "p001",
       "name": "Silviu Fire",
-      "totalLots": 4.68,
+      "totalLots": 4.92,
       "activeDays": 37,
-      "profitPercent": 39.85
+      "profitPercent": -43.95
     },
     {
       "rank": 5,
