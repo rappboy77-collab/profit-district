@@ -1875,6 +1875,71 @@
       color: var(--text-secondary);
       line-height: 1.7;
     }
+
+    /* ═══════════════════════════════════════
+       VAULT FILM — deschidere cinematică (scroll-film), "Seiful"
+    ════════════════════════════════════════ */
+    #vault-film { position: relative; height: 340vh; background: var(--bg-base); }
+    .vf-stage { position: relative; height: 100vh; overflow: hidden; background: var(--bg-base); }
+
+    #vf-particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+    .vf-interior {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: flex-end; justify-content: center;
+      clip-path: circle(0% at 50% 50%);
+      padding-bottom: 8vh;
+    }
+    .vf-columns { display: flex; align-items: flex-end; gap: clamp(6px, 1.3vw, 15px); height: 58vh; transform-origin: 50% 100%; }
+    .vf-col {
+      width: clamp(7px, 1.6vw, 18px);
+      height: var(--h);
+      background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 55%, var(--gold-dim) 100%);
+      border-radius: 3px 3px 0 0;
+      box-shadow: 0 0 16px rgba(201,168,76,0.14);
+      opacity: 0;
+      transform: scaleY(0.35);
+      transform-origin: 50% 100%;
+    }
+
+    .vf-emblem-wrap { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: min(58vw, 480px); aspect-ratio: 1; z-index: 3; }
+    .vf-spark {
+      position: absolute; top: 50%; left: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+      border-radius: 50%; background: var(--gold-bright);
+      box-shadow: 0 0 26px 8px var(--gold-glow), 0 0 64px 22px var(--gold-glow-soft);
+      animation: vf-pulse 2.6s ease-in-out infinite; z-index: 2;
+    }
+    @keyframes vf-pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.4); opacity: 1; } }
+
+    .vf-emblem-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
+    .vf-e-circle-outer, .vf-e-circle-inner, .vf-e-line {
+      fill: none; stroke: var(--gold); stroke-width: 1.3;
+      stroke-dasharray: 1; stroke-dashoffset: 1;
+      filter: drop-shadow(0 0 5px var(--gold-glow-mid));
+    }
+    .vf-e-circle-inner { stroke: var(--gold-bright); stroke-width: 0.9; opacity: 0.72; }
+    .vf-e-trend { stroke: var(--gold-bright); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+    .vf-e-wick { stroke: var(--gold-dim); stroke-width: 1.6; stroke-linecap: round; }
+
+    .vf-dial-ring {
+      position: absolute; inset: 8%; border-radius: 50%; opacity: 0;
+      background: repeating-conic-gradient(from 0deg, var(--gold-dim) 0deg 1.1deg, transparent 1.1deg 9deg);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 13px), #000 calc(100% - 13px) calc(100% - 2px), transparent calc(100% - 2px));
+              mask: radial-gradient(farthest-side, transparent calc(100% - 13px), #000 calc(100% - 13px) calc(100% - 2px), transparent calc(100% - 2px));
+    }
+
+    .vf-hud { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem; pointer-events: none; }
+    .vf-hud-row { text-align: center; opacity: 0; transform: translateY(22px); }
+    .vf-hud-value { display: block; font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.2rem, 5.6vw, 3.75rem); letter-spacing: -0.03em; color: var(--text-primary); line-height: 1; }
+    .vf-hud-label { display: block; font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-top: 0.4rem; }
+
+    .vf-vignette { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: radial-gradient(ellipse 70% 62% at 50% 48%, transparent 40%, rgba(0,0,0,0.55) 100%); }
+    .vf-bottom-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, var(--bg-base)); opacity: 0; }
+
+    @media (max-width: 640px) {
+      #vault-film { height: 300vh; }
+      .vf-columns { height: 48vh; }
+    }
   </style>
 </head>
 <body class="is-loading">
@@ -1970,6 +2035,61 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- ═══════════════════════════════════════
+     SEIFUL — deschidere cinematică (scroll-film)
+════════════════════════════════════════ -->
+<section id="vault-film" aria-hidden="true">
+  <div class="vf-stage">
+    <canvas id="vf-particles"></canvas>
+
+    <div class="vf-interior">
+      <div class="vf-columns">
+        <span class="vf-col" style="--h:28%"></span>
+        <span class="vf-col" style="--h:42%"></span>
+        <span class="vf-col" style="--h:35%"></span>
+        <span class="vf-col" style="--h:50%"></span>
+        <span class="vf-col" style="--h:44%"></span>
+        <span class="vf-col" style="--h:58%"></span>
+        <span class="vf-col" style="--h:52%"></span>
+        <span class="vf-col" style="--h:66%"></span>
+        <span class="vf-col" style="--h:60%"></span>
+        <span class="vf-col" style="--h:74%"></span>
+        <span class="vf-col" style="--h:68%"></span>
+        <span class="vf-col" style="--h:82%"></span>
+        <span class="vf-col" style="--h:76%"></span>
+        <span class="vf-col" style="--h:90%"></span>
+      </div>
+    </div>
+
+    <div class="vf-emblem-wrap">
+      <div class="vf-dial-ring"></div>
+      <svg class="vf-emblem-svg" viewBox="0 0 400 400">
+        <g class="vf-emblem-draw">
+          <circle class="vf-e-circle-outer" cx="200" cy="200" r="150" pathLength="1"/>
+          <circle class="vf-e-circle-inner" cx="200" cy="200" r="112" pathLength="1"/>
+          <path class="vf-e-line vf-e-trend" d="M85 300 L115 255 L100 270 L145 220 L130 235 L180 180 L165 195 L215 165 L200 180 L255 130 L240 145 L300 105" pathLength="1"/>
+          <path class="vf-e-line vf-e-wick" d="M115 243 L115 267" pathLength="1"/>
+          <path class="vf-e-line vf-e-wick" d="M145 208 L145 232" pathLength="1"/>
+          <path class="vf-e-line vf-e-wick" d="M180 168 L180 192" pathLength="1"/>
+          <path class="vf-e-line vf-e-wick" d="M215 153 L215 177" pathLength="1"/>
+          <path class="vf-e-line vf-e-wick" d="M255 118 L255 142" pathLength="1"/>
+          <path class="vf-e-line vf-e-wick" d="M300 93 L300 117" pathLength="1"/>
+        </g>
+      </svg>
+      <div class="vf-spark"></div>
+    </div>
+
+    <div class="vf-hud">
+      <div class="vf-hud-row"><span class="vf-hud-value" data-count="13">0</span><span class="vf-hud-label">Sisteme Verificate</span></div>
+      <div class="vf-hud-row"><span class="vf-hud-value" data-count="100" data-suffix="%">0</span><span class="vf-hud-label">Istoric Public</span></div>
+      <div class="vf-hud-row"><span class="vf-hud-value" data-count="30" data-suffix=" zile">0</span><span class="vf-hud-label">Mentorat Gratuit</span></div>
+    </div>
+
+    <div class="vf-vignette"></div>
+    <div class="vf-bottom-fade"></div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════
      HERO — Form (prima secțiune)
@@ -3144,6 +3264,7 @@
      PRELOADER — logica de animație
 ════════════════════════════════════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -3289,6 +3410,164 @@
   }).catch(function () {
     canvas.style.display = 'none';
   });
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     VAULT FILM — logica scroll-film ("Seiful")
+════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+  var driver = document.getElementById('vault-film');
+  if (!driver || typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') {
+    if (driver) driver.style.display = 'none';
+    window.__ready = true;
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage   = driver.querySelector('.vf-stage');
+  var canvas  = document.getElementById('vf-particles');
+
+  /* ── Particule ambientale (aur, plutind) ── */
+  if (!reduced && canvas) {
+    (function initParticles() {
+      var ctx = canvas.getContext('2d');
+      var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+      var W, H, particles = [];
+
+      var sprite = document.createElement('canvas');
+      sprite.width = sprite.height = 32;
+      var sctx = sprite.getContext('2d');
+      var grad = sctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      grad.addColorStop(0,   'rgba(226,191,106,0.9)');
+      grad.addColorStop(0.4, 'rgba(201,168,76,0.5)');
+      grad.addColorStop(1,   'rgba(201,168,76,0)');
+      sctx.fillStyle = grad;
+      sctx.fillRect(0, 0, 32, 32);
+
+      function resize() {
+        W = stage.clientWidth; H = stage.clientHeight;
+        canvas.width = W * DPR; canvas.height = H * DPR;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      var N = 42;
+      for (var i = 0; i < N; i++) {
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          s: 6 + Math.random() * 13,
+          vy: -(0.05 + Math.random() * 0.12),
+          vx: (Math.random() - 0.5) * 0.04,
+          a: 0.22 + Math.random() * 0.5,
+          tw: Math.random() * Math.PI * 2
+        });
+      }
+
+      function tick() {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.y < -20) { p.y = H + 20; p.x = Math.random() * W; }
+          p.tw += 0.02;
+          ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.tw));
+          ctx.drawImage(sprite, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  } else if (canvas) {
+    canvas.style.display = 'none';
+  }
+
+  /* ── Timeline master — un singur scrub continuu (Seiful) ── */
+  var drawEls = driver.querySelectorAll('.vf-e-circle-outer, .vf-e-circle-inner, .vf-e-line');
+  var colEls  = driver.querySelectorAll('.vf-col');
+  var hudRows = driver.querySelectorAll('.vf-hud-row');
+  var hudVals = driver.querySelectorAll('.vf-hud-value');
+
+  var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: driver,
+      start: 'top top',
+      end: 'bottom bottom',
+      pin: stage,
+      scrub: 0.3,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+  tl
+    .to(canvas,            { opacity: 0, duration: 0.06, ease: 'power1.in' }, 0)
+    .to('.vf-spark',       { scale: 1.6, opacity: 0, duration: 0.08, ease: 'power1.in' }, 0.05)
+    .to(drawEls,           { strokeDashoffset: 0, duration: 0.20, ease: 'power2.out', stagger: 0.018 }, 0.06)
+    .to('.vf-dial-ring',   { opacity: 1, duration: 0.10 }, 0.20)
+    .to('.vf-emblem-draw', { rotate: 32, duration: 0.24, ease: 'none', transformOrigin: '50% 50%' }, 0.30)
+    .to('.vf-dial-ring',   { rotate: -46, duration: 0.24, ease: 'none', transformOrigin: '50% 50%' }, 0.30)
+    .to('.vf-emblem-wrap', { scale: 1.1, duration: 0.24, ease: 'power1.inOut' }, 0.30)
+    .to('.vf-emblem-wrap', { filter: 'brightness(1.8)', duration: 0.03 }, 0.54)
+    .to('.vf-emblem-wrap', { opacity: 0, scale: 1.35, filter: 'brightness(1)', duration: 0.10, ease: 'power2.in' }, 0.57)
+    .to('.vf-interior',    { clipPath: 'circle(150% at 50% 50%)', duration: 0.30, ease: 'power2.inOut' }, 0.52)
+    .to(colEls,            { scaleY: 1, opacity: 1, duration: 0.18, stagger: 0.008, ease: 'power2.out' }, 0.56)
+    .to('.vf-columns',     { scale: 1.2, y: -28, duration: 0.30, ease: 'none' }, 0.58)
+    .to('.vf-columns',     { opacity: 0, duration: 0.12 }, 0.78)
+    .to(hudRows,           { y: 0, opacity: 1, duration: 0.14, stagger: 0.03, ease: 'power2.out' }, 0.80)
+    .to('.vf-bottom-fade', { opacity: 1, duration: 0.10 }, 0.90);
+
+  hudVals.forEach(function (el, i) {
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    var proxy = { v: 0 };
+    tl.to(proxy, {
+      v: target, duration: 0.16, ease: 'power1.out',
+      onUpdate: function () { el.textContent = Math.round(proxy.v) + suffix; }
+    }, 0.80 + i * 0.02);
+  });
+
+  /* ── Contract de verificare (?jump=, __ready) ──
+     __ready trebuie să însemne "totul, inclusiv preloader-ul, s-a așezat" —
+     altfel un screenshot de verificare prinde ecranul de încărcare, nu filmul. */
+  var JUMP = new URLSearchParams(location.search).get('jump');
+  if (JUMP !== null) history.scrollRestoration = 'manual';
+
+  function whenLoaderGone(cb) {
+    if (!document.getElementById('loader')) { cb(); return; }
+    var obs = new MutationObserver(function () {
+      if (!document.getElementById('loader')) { obs.disconnect(); cb(); }
+    });
+    obs.observe(document.body, { childList: true });
+    setTimeout(function () { obs.disconnect(); cb(); }, 6500);
+  }
+
+  whenLoaderGone(function () {
+    ScrollTrigger.refresh();
+    if (JUMP !== null) {
+      window.scrollTo(0, +JUMP || 0);
+      ScrollTrigger.update();
+    }
+    window.__ready = true;
+  });
+
+  /* ── Jank meter (consolă, doar pentru verificare) ── */
+  var lastT = performance.now(), maxDelta = 0;
+  function jankTick(t) {
+    var d = t - lastT; lastT = t;
+    if (d > maxDelta) maxDelta = d;
+    try { requestAnimationFrame(jankTick); } catch (e) {}
+  }
+  requestAnimationFrame(jankTick);
+  setInterval(function () {
+    if (maxDelta > 0) console.log('[vault-film] jank max/2s:', maxDelta.toFixed(1) + 'ms');
+    maxDelta = 0;
+  }, 2000);
 })();
 </script>
 
