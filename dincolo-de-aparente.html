@@ -212,7 +212,8 @@
       content: ''; position: absolute; top: -35%; right: -15%; width: 320px; height: 320px;
       background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none;
     }
-    .eh-ticket-top, .eh-ticket-price, .eh-ticket-sub, .eh-ticket-check, .eh-ticket-btn, .eh-ticket-note { position: relative; z-index: 1; }
+    .eh-ticket-card { scroll-margin-top: 110px; }
+    .eh-ticket-top, .eh-ticket-price, .eh-ticket-sub, .eh-ticket-check, .eh-consent, .eh-ticket-btn, .eh-ticket-note { position: relative; z-index: 1; }
     .eh-ticket-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.6rem; }
     .eh-ticket-top span { font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-tertiary); }
     .eh-ticket-price { display: flex; align-items: flex-start; gap: 0.3rem; margin-bottom: 0.3rem; }
@@ -229,6 +230,37 @@
       transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.22s ease;
     }
     .eh-ticket-btn:hover { background: var(--gold-bright); transform: translateY(-2px); }
+    .eh-ticket-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .eh-ticket-btn:active { transform: translateY(0) scale(0.98); }
+    .eh-ticket-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+    .eh-ticket-btn[aria-disabled="true"]:hover { background: var(--gold); transform: none; }
+
+    /* CONSIMȚĂMÂNT (filmare + GDPR) */
+    .eh-consent {
+      display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.2rem; padding: 0.875rem 1rem;
+      background: rgba(201,168,76,0.04); border: 1px solid var(--border-subtle); border-radius: 6px; cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .eh-consent:hover { border-color: var(--border-mid); }
+    .eh-consent.eh-error { border-color: rgba(255,92,92,0.55); background: rgba(255,92,92,0.04); }
+    .eh-consent.eh-shake { animation: eh-shake 0.4s cubic-bezier(0.36,0.07,0.19,0.97); }
+    @keyframes eh-shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+    .eh-consent-box {
+      appearance: none; -webkit-appearance: none; flex-shrink: 0; position: relative;
+      width: 18px; height: 18px; min-width: 18px; margin-top: 2px;
+      border: 1.5px solid var(--border-mid); border-radius: 4px; background: var(--bg-elevated); cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .eh-consent-box:checked { background: var(--gold); border-color: var(--gold); }
+    .eh-consent-box:checked::after {
+      content: ''; position: absolute; top: 2px; left: 5px; width: 5px; height: 9px;
+      border: 2px solid var(--bg-base); border-top: none; border-left: none; transform: rotate(45deg);
+    }
+    .eh-consent-box:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .eh-consent-label { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.775rem; line-height: 1.65; color: var(--text-secondary); }
+    .eh-consent-label a { color: var(--gold); text-decoration: none; }
+    .eh-consent-label a:hover { text-decoration: underline; }
+    .eh-consent-label a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
     .eh-ticket-note { display: block; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.76rem; color: var(--text-tertiary); line-height: 1.6; text-align: center; }
 
     /* FAQ */
@@ -268,7 +300,7 @@
   </a>
   <div class="nav-right">
     <a href="#experienta" class="nav-link">Experiența</a>
-    <a href="https://buy.stripe.com/9B6eVeckheoFafE78s24004" target="_blank" rel="noopener noreferrer" class="nav-ticket">Acces · 10 € <span class="eh-arrow">↗</span></a>
+    <a href="#bilet" class="nav-ticket">Acces · 10 € <span class="eh-arrow">↗</span></a>
   </div>
 </nav>
 
@@ -285,7 +317,7 @@
       <p class="eh-subhead">Pune-ți banii la treabă.</p>
       <p class="eh-meta">29 Noiembrie 2026 <span class="dot">·</span> Cluj <span class="dot">·</span> Copy Trading</p>
       <p class="eh-venue">Grand Hotel Napoca</p>
-      <a href="https://buy.stripe.com/9B6eVeckheoFafE78s24004" target="_blank" rel="noopener noreferrer" class="eh-cta">Rezervă-ți locul <span class="eh-arrow">↗</span></a>
+      <a href="#bilet" class="eh-cta">Rezervă-ți locul <span class="eh-arrow">↗</span></a>
       <p class="eh-tagline">O întâlnire live. Întrebări reale. Perspective noi.</p>
     </div>
     <div class="eh-emblem" data-reveal aria-hidden="true">
@@ -343,7 +375,7 @@
           <p>Ora de începere va fi anunțată.</p>
         </div>
       </div>
-      <div class="eh-ticket-card">
+      <div class="eh-ticket-card" id="bilet">
         <div class="eh-ticket-top">
           <span>Acces la eveniment</span>
           <span>29.11.2026</span>
@@ -356,7 +388,15 @@
           <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Networking cu participanții</div>
           <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Coffee break și gustări</div>
         </div>
-        <a href="https://buy.stripe.com/9B6eVeckheoFafE78s24004" target="_blank" rel="noopener noreferrer" class="eh-ticket-btn">Rezervă-ți locul <span class="eh-arrow">↗</span></a>
+        <label class="eh-consent" id="eh-consent-wrap">
+          <input type="checkbox" class="eh-consent-box" id="eh-consent">
+          <span class="eh-consent-label">
+            Sunt de acord cu prelucrarea datelor mele personale conform
+            <a href="politica-confidentialitate.html" target="_blank">Politicii de Confidențialitate</a>
+            și sunt de acord să fiu filmat(ă) și fotografiat(ă) în timpul evenimentului, iar materialele să fie folosite de Profit District în scop promoțional.
+          </span>
+        </label>
+        <a href="https://buy.stripe.com/9B6eVeckheoFafE78s24004" target="_blank" rel="noopener noreferrer" class="eh-ticket-btn" id="eh-pay-btn" aria-disabled="true" aria-describedby="eh-consent-wrap">Rezervă-ți locul <span class="eh-arrow">↗</span></a>
         <p class="eh-ticket-note">Locuri limitate. Accesul se confirmă în urma plății.</p>
       </div>
     </div>
@@ -394,7 +434,7 @@
   <p class="eh-foot-disclaimer">Evenimentul are scop informativ și educațional. Copy tradingul implică riscuri, inclusiv pierderea capitalului. Rezultatele anterioare nu garantează rezultate viitoare. Deciziile de investiție îți aparțin.</p>
   <div class="eh-foot-bottom">
     <span>29 Noiembrie · Cluj · Grand Hotel Napoca · 10 €</span>
-    <a href="https://buy.stripe.com/9B6eVeckheoFafE78s24004" target="_blank" rel="noopener noreferrer">Vezi biletul <span class="eh-arrow">↗</span></a>
+    <a href="#bilet">Vezi biletul <span class="eh-arrow">↗</span></a>
   </div>
 </footer>
 
@@ -405,6 +445,24 @@
     if (window.scrollY > 40) navbar.classList.add('scrolled');
     else navbar.classList.remove('scrolled');
   }, { passive: true });
+
+  /* Consimțământ înainte de plată */
+  var consent = document.getElementById('eh-consent');
+  var consentWrap = document.getElementById('eh-consent-wrap');
+  var payBtn = document.getElementById('eh-pay-btn');
+  consent.addEventListener('change', function () {
+    payBtn.setAttribute('aria-disabled', consent.checked ? 'false' : 'true');
+    if (consent.checked) consentWrap.classList.remove('eh-error');
+  });
+  payBtn.addEventListener('click', function (e) {
+    if (consent.checked) return;
+    e.preventDefault();
+    consentWrap.classList.add('eh-error');
+    consentWrap.classList.remove('eh-shake');
+    void consentWrap.offsetWidth;
+    consentWrap.classList.add('eh-shake');
+    consent.focus();
+  });
 
   /* FAQ accordion */
   document.querySelectorAll('.eh-faq-item').forEach(function (item) {
