@@ -2,6 +2,7 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
+  <script src="cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Profit District — Comunitate Elite de Trading. Program de Mentorat Gratuit 30 de Zile. Educație și sisteme de copytrading. Locuri limitate disponibile lunar.">
   <meta property="og:title" content="Profit District — Comunitate Elite de Trading & Mentorat">
@@ -1584,147 +1585,6 @@
     .webinar-gdpr-gate { border-top: 1px solid var(--border-subtle); margin-top: 0.25rem; }
 
     /* ─────────────────────────────────────────
-       COOKIE BANNER
-    ───────────────────────────────────────── */
-    #cookie-banner {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 9000;
-      background: rgba(17,17,19,0.97);
-      border-top: 1px solid var(--border-mid);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: 1.1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      transform: translateY(110%);
-      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
-    }
-    #cookie-banner.visible { transform: translateY(0); }
-    .cookie-text {
-      flex: 1;
-      min-width: 200px;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 300;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-    .cookie-text a { color: var(--gold); text-decoration: none; }
-    .cookie-text a:hover { text-decoration: underline; }
-    .cookie-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; flex-shrink: 0; }
-    .cookie-btn {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 500;
-      padding: 0.48rem 0.95rem;
-      border-radius: 4px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-      white-space: nowrap;
-    }
-    .cookie-btn-accept { background: var(--gold); color: var(--bg-base); }
-    .cookie-btn-accept:hover { background: var(--gold-bright); }
-    .cookie-btn-refuse { background: transparent; color: var(--text-secondary); border-color: var(--border-mid); }
-    .cookie-btn-refuse:hover { color: var(--text-primary); border-color: var(--border-strong); }
-    .cookie-btn-customize { background: transparent; color: var(--text-tertiary); border-color: transparent; text-decoration: underline; font-weight: 300; }
-    .cookie-btn-customize:hover { color: var(--text-secondary); }
-
-    /* Cookie Modal */
-    #cookie-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9100;
-      background: rgba(0,0,0,0.72);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-    #cookie-modal.open { display: flex; }
-    .cookie-modal-box {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-mid);
-      border-radius: 10px;
-      padding: 2rem;
-      max-width: 460px;
-      width: 100%;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.65);
-    }
-    .cookie-modal-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-    .cookie-modal-sub {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 300;
-      font-size: 0.8rem;
-      color: var(--text-tertiary);
-      margin-bottom: 1.25rem;
-      line-height: 1.6;
-    }
-    .cookie-toggle-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.875rem 0;
-      border-top: 1px solid var(--border-subtle);
-      gap: 1rem;
-    }
-    .cookie-toggle-info h4 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 500;
-      font-size: 0.85rem;
-      color: var(--text-primary);
-      margin-bottom: 0.15rem;
-    }
-    .cookie-toggle-info p {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 300;
-      font-size: 0.73rem;
-      color: var(--text-tertiary);
-      line-height: 1.5;
-    }
-    .cookie-toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
-    .cookie-toggle input { display: none; }
-    .cookie-toggle-slider {
-      position: absolute;
-      inset: 0;
-      background: var(--bg-floating);
-      border: 1px solid var(--border-mid);
-      border-radius: 11px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .cookie-toggle-slider::after {
-      content: '';
-      position: absolute;
-      top: 3px; left: 3px;
-      width: 14px; height: 14px;
-      background: var(--text-tertiary);
-      border-radius: 50%;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-    .cookie-toggle input:checked + .cookie-toggle-slider { background: var(--gold); border-color: var(--gold); }
-    .cookie-toggle input:checked + .cookie-toggle-slider::after { transform: translateX(18px); background: var(--bg-base); }
-    .cookie-toggle input:disabled + .cookie-toggle-slider { opacity: 0.55; cursor: not-allowed; }
-    .cookie-modal-actions {
-      display: flex;
-      gap: 0.6rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    /* ─────────────────────────────────────────
        FOOTER LEGAL GRID
     ───────────────────────────────────────── */
     .footer-legal-grid {
@@ -1879,6 +1739,10 @@
   </style>
 </head>
 <body class="is-loading">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- ═══════════════════════════════════════
      PRELOADER — skyline-ul se desenează
@@ -1902,52 +1766,6 @@
 <!-- ── Grain overlay ─────────────────────── -->
 <div id="grain" aria-hidden="true"></div>
 
-<!-- ═══════════════════════════════════════
-     COOKIE BANNER
-════════════════════════════════════════ -->
-<div id="cookie-banner" role="region" aria-label="Consimțământ cookies">
-  <p class="cookie-text">
-    Folosim cookies esențiale pentru funcționarea site-ului. Cu acordul tău, putem activa și cookies analitice.
-    <a href="politica-cookies.html">Politica Cookies</a> &nbsp;·&nbsp; <a href="politica-confidentialitate.html">Confidențialitate</a>
-  </p>
-  <div class="cookie-actions">
-    <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Accept toate</button>
-    <button class="cookie-btn cookie-btn-refuse" id="cookie-refuse">Refuz</button>
-    <button class="cookie-btn cookie-btn-customize" id="cookie-customize">Personalizează</button>
-  </div>
-</div>
-
-<!-- Cookie Modal -->
-<div id="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title">
-  <div class="cookie-modal-box">
-    <p class="cookie-modal-title" id="cookie-modal-title">Setări Cookies</p>
-    <p class="cookie-modal-sub">Alege ce categorii de cookies accepți. Cookies esențiale nu pot fi dezactivate — sunt necesare pentru funcționarea site-ului.</p>
-    <div class="cookie-toggle-row">
-      <div class="cookie-toggle-info">
-        <h4>Esențiale</h4>
-        <p>Necesare pentru funcționarea site-ului. Nu pot fi dezactivate.</p>
-      </div>
-      <label class="cookie-toggle">
-        <input type="checkbox" checked disabled>
-        <span class="cookie-toggle-slider"></span>
-      </label>
-    </div>
-    <div class="cookie-toggle-row">
-      <div class="cookie-toggle-info">
-        <h4>Analitice</h4>
-        <p>Ne ajută să înțelegem cum este utilizat site-ul (ex: Google Analytics).</p>
-      </div>
-      <label class="cookie-toggle">
-        <input type="checkbox" id="cookie-analytics">
-        <span class="cookie-toggle-slider"></span>
-      </label>
-    </div>
-    <div class="cookie-modal-actions">
-      <button class="cookie-btn cookie-btn-accept" id="cookie-save-pref">Salvează preferințele</button>
-      <button class="cookie-btn cookie-btn-refuse" id="cookie-modal-close">Închide</button>
-    </div>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════
      NAVBAR
@@ -3076,52 +2894,6 @@
 <!-- ═══════════════════════════════════════
      TALLY EMBED — inițializare + confirmare nativă
 ════════════════════════════════════════ -->
-<!-- ═══════════════════════════════════════
-     COOKIE BANNER JS
-════════════════════════════════════════ -->
-<script>
-(function () {
-  var CONSENT_KEY = 'pd_cookie_consent';
-  var banner  = document.getElementById('cookie-banner');
-  var modal   = document.getElementById('cookie-modal');
-
-  function saveConsent(analytics) {
-    localStorage.setItem(CONSENT_KEY, JSON.stringify({
-      analytics: !!analytics,
-      ts: new Date().toISOString()
-    }));
-    hideBanner();
-  }
-
-  function hideBanner() {
-    if (banner) { banner.classList.remove('visible'); }
-  }
-
-  /* Show banner if no consent stored */
-  if (!localStorage.getItem(CONSENT_KEY)) {
-    setTimeout(function () {
-      if (banner) banner.classList.add('visible');
-    }, 900);
-  }
-
-  document.getElementById('cookie-accept') && document.getElementById('cookie-accept').addEventListener('click', function () { saveConsent(true); });
-  document.getElementById('cookie-refuse') && document.getElementById('cookie-refuse').addEventListener('click', function () { saveConsent(false); });
-  document.getElementById('cookie-customize') && document.getElementById('cookie-customize').addEventListener('click', function () {
-    if (modal) modal.classList.add('open');
-  });
-  document.getElementById('cookie-save-pref') && document.getElementById('cookie-save-pref').addEventListener('click', function () {
-    var analytics = document.getElementById('cookie-analytics');
-    saveConsent(analytics && analytics.checked);
-    if (modal) modal.classList.remove('open');
-  });
-  document.getElementById('cookie-modal-close') && document.getElementById('cookie-modal-close').addEventListener('click', function () {
-    if (modal) modal.classList.remove('open');
-  });
-  modal && modal.addEventListener('click', function (e) {
-    if (e.target === modal) modal.classList.remove('open');
-  });
-})();
-</script>
 
 
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>

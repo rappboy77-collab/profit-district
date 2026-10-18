@@ -2,6 +2,7 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
+  <script src="cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
   <title>Politica Cookies — Profit District</title>
@@ -44,10 +45,13 @@
     .badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px; }
     .badge-essential { background: rgba(201,168,76,0.12); color: var(--gold); }
     .badge-analytics { background: var(--green-dim); color: var(--green); }
+    .badge-marketing { background: rgba(120,140,255,0.12); color: #9fb0ff; }
 
     /* Manage btn */
     .manage-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-elevated); border: 1px solid var(--border-mid); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 500; padding: 0.6rem 1.25rem; border-radius: 5px; cursor: pointer; text-decoration: none; margin-top: 0.5rem; transition: background 0.2s ease, border-color 0.2s ease; }
     .manage-btn:hover { background: var(--bg-floating); border-color: var(--border-strong); text-decoration: none; }
+    .manage-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .manage-btn:active { transform: scale(0.98); }
 
     footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 2rem 1.5rem; text-align: center; }
     footer p { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-tertiary); letter-spacing: 0.05em; }
@@ -56,6 +60,10 @@
   </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <nav>
   <a href="index.html" class="nav-logo">
@@ -68,7 +76,7 @@
 <div class="page-wrap">
   <span class="page-label">Legal</span>
   <h1>Politica Cookies</h1>
-  <p class="page-meta">Ultima actualizare: 27 mai 2026 &nbsp;·&nbsp; Versiunea 1.0</p>
+  <p class="page-meta">Ultima actualizare: 18 octombrie 2026 &nbsp;·&nbsp; Versiunea 1.1</p>
 
   <h2>Ce sunt cookies?</h2>
   <p>Cookies sunt fișiere text mici stocate în browserul tău când vizitezi un site. Ele permit site-ului să îți memoreze preferințele și să funcționeze corect între vizite.</p>
@@ -103,22 +111,30 @@
         <td>Google Analytics — urmărește comportamentul vizitatorilor (pagini, timp petrecut)</td>
         <td>2 ani</td>
       </tr>
+      <tr>
+        <td><strong>_fbp, _fbc</strong></td>
+        <td><span class="badge badge-marketing">Marketing</span></td>
+        <td>Meta Pixel (Facebook, Instagram) — măsoară eficiența reclamelor și ce acțiuni fac vizitatorii veniți din ele</td>
+        <td>până la 90 de zile</td>
+      </tr>
     </tbody>
   </table>
 
-  <p><strong>Notă:</strong> Cookies analitice sunt activate <strong>doar dacă ai acceptat</strong> prin bannerul de consimțământ. Cookies esențiale funcționează fără consimțământ deoarece sunt strict necesare.</p>
+  <p><strong>Notă:</strong> Cookies analitice și de marketing sunt activate <strong>doar dacă ai acceptat</strong> prin bannerul de consimțământ. Instrumentele de marketing (Meta Pixel) sunt încărcate prin Google Tag Manager, care pornește doar după acordul pentru cookies de marketing. Cookies esențiale funcționează fără consimțământ deoarece sunt strict necesare.</p>
 
   <h2>Gestionează preferințele</h2>
-  <p>Poți modifica preferințele oricând apăsând butonul de mai jos, care va șterge consimțământul salvat și va redeschide opțiunile:</p>
-  <a href="index.html#" class="manage-btn" onclick="localStorage.removeItem('pd_cookie_consent'); window.location='index.html'; return false;">
-    Resetează preferințele cookies
-  </a>
+  <p>Poți modifica preferințele oricând apăsând butonul de mai jos:</p>
+  <button type="button" class="manage-btn" onclick="window.pdOpenCookieSettings &amp;&amp; window.pdOpenCookieSettings()">
+    Modifică preferințele cookies
+  </button>
 
   <h2>Cookies terți</h2>
   <p>Serviciile integrate pot seta propriile cookies:</p>
   <ul style="list-style:none;padding:0;">
     <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Tally.so</strong> — formularul de webinar. <a href="https://tally.so/help/privacy-policy" target="_blank" rel="noopener">Politica Tally</a></li>
     <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Google Analytics</strong> — analiza traficului (dacă este activat). <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politica Google</a></li>
+    <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Google Tag Manager</strong> — încarcă instrumentele de marketing (doar cu acordul tău). <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politica Google</a></li>
+    <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Meta Pixel</strong> — măsurarea reclamelor de pe Facebook și Instagram (doar cu acordul tău). <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Politica Meta</a></li>
     <li style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem;">— <strong>Google Fonts</strong> — fonturile site-ului (poate înregistra IP-ul, fără cookies persistente)</li>
   </ul>
 
