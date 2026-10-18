@@ -32,6 +32,8 @@
     marketingLoaded = true;
     loadGTM();
     loadMetaPixel();
+    /* Paginile pot asculta acest semnal ca să trimită evenimente după acord (ex: Purchase pe multumim.html). */
+    try { window.dispatchEvent(new Event('pd:marketing-ready')); } catch (e) {}
   }
 
   function loadGTM() {

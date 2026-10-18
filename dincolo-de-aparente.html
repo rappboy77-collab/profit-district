@@ -460,7 +460,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (consent.checked) consentWrap.classList.remove('eh-error');
   });
   payBtn.addEventListener('click', function (e) {
-    if (consent.checked) return;
+    if (consent.checked) {
+      /* Meta Pixel — există doar dacă vizitatorul a acceptat cookies de marketing */
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'InitiateCheckout', { value: 10, currency: 'EUR', content_name: 'Dincolo de aparențe', num_items: 1 });
+      }
+      return;
+    }
     e.preventDefault();
     consentWrap.classList.add('eh-error');
     consentWrap.classList.remove('eh-shake');

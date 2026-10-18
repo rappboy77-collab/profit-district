@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <script src="cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Locul tău e rezervat — Dincolo de aparențe</title>
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-base: #0a0a0b; --bg-surface: #111113; --bg-elevated: #18181b;
+      --gold: #c9a84c; --gold-bright: #e2bf6a; --gold-dim: #8a6e2f;
+      --text-primary: #f0ece0; --text-secondary: #a09880; --text-tertiary: #5c5848;
+      --border-subtle: rgba(201,168,76,0.10); --border-mid: rgba(201,168,76,0.22); --border-strong: rgba(201,168,76,0.45);
+      --shadow-card: 0 2px 4px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.07);
+      --shadow-button: 0 4px 16px rgba(201,168,76,0.28), 0 1px 3px rgba(0,0,0,0.6);
+    }
+    body { background: var(--bg-base); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+    ::selection { background: var(--gold); color: var(--bg-base); }
+    em { font-style: italic; color: var(--gold); }
+
+    /* NAV */
+    #navbar {
+      display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 2.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-logo-text { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 0.74rem; letter-spacing: 0.2em; color: var(--text-primary); text-decoration: none; }
+    .nav-logo-text:hover { color: var(--gold); }
+    .nav-logo-text:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    @media (max-width: 620px) { #navbar { padding: 1.2rem 1.5rem; } }
+
+    /* CONFIRMARE */
+    .ty { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; padding: 5rem 1.5rem 6rem; overflow: hidden; }
+    .ty-glow { position: absolute; top: -20%; left: 50%; width: 900px; height: 900px; transform: translateX(-50%); background: radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 60%); pointer-events: none; }
+    .ty-inner { position: relative; max-width: 620px; width: 100%; text-align: center; }
+    .ty-check {
+      display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin-bottom: 1.8rem;
+      border-radius: 50%; border: 1px solid var(--border-strong); color: var(--gold);
+      background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+      opacity: 0; transform: scale(0.6); animation: ty-pop 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.15s forwards;
+    }
+    @keyframes ty-pop { to { opacity: 1; transform: scale(1); } }
+    .ty-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .ty-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(2.5rem, 7vw, 4.4rem); line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.3rem; }
+    .ty-lead { font-size: 1rem; color: var(--text-secondary); line-height: 1.75; max-width: 500px; margin: 0 auto 2.6rem; }
+
+    .ty-card {
+      position: relative; overflow: hidden; text-align: left;
+      background: linear-gradient(165deg, var(--bg-elevated) 0%, var(--bg-surface) 55%, var(--bg-base) 100%);
+      border: 1px solid var(--border-mid); border-radius: 14px; padding: 2rem 2.25rem; margin-bottom: 2.4rem;
+      box-shadow: var(--shadow-card), 0 0 80px rgba(201,168,76,0.06);
+    }
+    .ty-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent); }
+    .ty-card-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 1.7rem; line-height: 1.1; margin-bottom: 1.3rem; }
+    .ty-row { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-top: 1px solid var(--border-subtle); }
+    .ty-row span:first-child { flex-shrink: 0; width: 5.5rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-tertiary); }
+    .ty-row span:last-child { font-size: 0.95rem; color: var(--text-primary); }
+
+    .ty-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+    .ty-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.7rem; border-radius: 4px;
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+    }
+    .ty-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .ty-btn:active { transform: scale(0.98); }
+    .ty-btn-primary { background: var(--gold); color: var(--bg-base); box-shadow: var(--shadow-button); }
+    .ty-btn-primary:hover { background: var(--gold-bright); transform: translateY(-2px); }
+    .ty-btn-ghost { color: var(--text-secondary); border: 1px solid var(--border-mid); }
+    .ty-btn-ghost:hover { color: var(--text-primary); border-color: var(--border-strong); transform: translateY(-2px); }
+
+    footer { border-top: 1px solid var(--border-subtle); padding: 1.8rem 1.5rem; text-align: center; }
+    footer p { font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
+
+    @media (max-width: 560px) {
+      .ty-card { padding: 1.6rem 1.4rem; }
+      .ty-row { flex-direction: column; gap: 0.15rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .ty-check { animation: none; opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo-text" aria-label="Profit District - acasă">PROFIT DISTRICT</a>
+</nav>
+
+<main class="ty">
+  <div class="ty-glow" aria-hidden="true"></div>
+  <div class="ty-inner">
+    <div class="ty-check" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <p class="ty-eyebrow">Plată confirmată</p>
+    <h1 class="ty-title">Locul tău e <em>rezervat.</em></h1>
+    <p class="ty-lead">Mulțumim! Plata pentru biletul tău a fost înregistrată. Ne vedem în Cluj — ora de începere și programul complet vor fi anunțate în curând.</p>
+
+    <div class="ty-card">
+      <p class="ty-card-name">Dincolo de aparențe</p>
+      <div class="ty-row"><span>Data</span><span>29 noiembrie 2026</span></div>
+      <div class="ty-row"><span>Locația</span><span>Grand Hotel Napoca · Cluj</span></div>
+      <div class="ty-row"><span>Ora</span><span>Va fi anunțată</span></div>
+    </div>
+
+    <div class="ty-actions">
+      <a href="dincolo-de-aparente.html" class="ty-btn ty-btn-primary">Detaliile evenimentului</a>
+      <a href="index.html" class="ty-btn ty-btn-ghost">Înapoi la site</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Profit District · 29 Noiembrie · Cluj</p>
+</footer>
+
+<script>
+/* Meta Pixel — Purchase, trimis o singură dată pentru fiecare plată Stripe (session_id).
+   fbq există doar dacă vizitatorul a acceptat cookies de marketing; dacă acceptă abia
+   pe această pagină, trimitem evenimentul la semnalul pd:marketing-ready. */
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var sessionId = params.get('session_id') || '';
+  if (!/^cs_[A-Za-z0-9_]+$/.test(sessionId)) return;
+  var sentKey = 'pd_purchase_' + sessionId;
+
+  function alreadySent() { try { return !!localStorage.getItem(sentKey); } catch (e) { return false; } }
+
+  function sendPurchase() {
+    if (typeof window.fbq !== 'function' || alreadySent()) return;
+    window.fbq('track', 'Purchase',
+      { value: 10, currency: 'EUR', content_name: 'Dincolo de aparențe', num_items: 1 },
+      { eventID: sessionId });
+    try { localStorage.setItem(sentKey, '1'); } catch (e) {}
+  }
+
+  sendPurchase();
+  window.addEventListener('pd:marketing-ready', sendPurchase);
+})();
+</script>
+
+</body>
+</html>
