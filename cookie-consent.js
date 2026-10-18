@@ -1,13 +1,14 @@
 /* ═══════════════════════════════════════
-   COOKIE CONSENT + GOOGLE TAG MANAGER
+   COOKIE CONSENT + GOOGLE TAG MANAGER + META PIXEL
    Încărcat sus în <head> pe toate paginile.
-   GTM (și pixelul Meta configurat în el) pornește
-   doar după acordul pentru cookies de marketing.
+   GTM și pixelul Meta pornesc doar după acordul
+   pentru cookies de marketing.
 ════════════════════════════════════════ */
 (function () {
   var CONSENT_KEY = 'pd_cookie_consent';
   var GTM_ID = 'GTM-56C8N9K7';
-  var gtmLoaded = false;
+  var META_PIXEL_ID = '1137498052083068';
+  var marketingLoaded = false;
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
@@ -23,12 +24,17 @@
       ad_user_data: c.marketing ? 'granted' : 'denied',
       ad_personalization: c.marketing ? 'granted' : 'denied'
     });
-    if (c.marketing) loadGTM();
+    if (c.marketing) loadMarketing();
+  }
+
+  function loadMarketing() {
+    if (marketingLoaded) return;
+    marketingLoaded = true;
+    loadGTM();
+    loadMetaPixel();
   }
 
   function loadGTM() {
-    if (gtmLoaded) return;
-    gtmLoaded = true;
     /* Google Tag Manager */
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -36,6 +42,21 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer',GTM_ID);
     /* End Google Tag Manager */
+  }
+
+  function loadMetaPixel() {
+    /* Meta Pixel Code */
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
+    /* End Meta Pixel Code */
   }
 
   gtag('consent', 'default', {
@@ -102,7 +123,7 @@
           '<label class="cookie-toggle"><input type="checkbox" checked disabled aria-label="Cookies esențiale"><span class="cookie-toggle-slider"></span></label></div>' +
         '<div class="cookie-toggle-row"><div class="cookie-toggle-info"><h4>Analitice</h4><p>Ne ajută să înțelegem cum este utilizat site-ul (ex: Google Analytics).</p></div>' +
           '<label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" aria-label="Cookies analitice"><span class="cookie-toggle-slider"></span></label></div>' +
-        '<div class="cookie-toggle-row"><div class="cookie-toggle-info"><h4>Marketing</h4><p>Măsoară eficiența reclamelor noastre pe Facebook și Instagram (Meta Pixel, prin Google Tag Manager).</p></div>' +
+        '<div class="cookie-toggle-row"><div class="cookie-toggle-info"><h4>Marketing</h4><p>Măsoară eficiența reclamelor noastre pe Facebook și Instagram (Meta Pixel, Google Tag Manager).</p></div>' +
           '<label class="cookie-toggle"><input type="checkbox" id="cookie-marketing" aria-label="Cookies de marketing"><span class="cookie-toggle-slider"></span></label></div>' +
         '<div class="cookie-modal-actions">' +
           '<button type="button" class="cookie-btn cookie-btn-accept" id="cookie-save-pref">Salvează preferințele</button>' +
@@ -127,8 +148,8 @@
     function saveConsent(analytics, marketing) {
       var c = { analytics: !!analytics, marketing: !!marketing, ts: new Date().toISOString() };
       try { localStorage.setItem(CONSENT_KEY, JSON.stringify(c)); } catch (e) {}
-      /* GTM nu poate fi descărcat din pagină — la retragerea acordului reîncărcăm pagina fără el. */
-      if (gtmLoaded && !c.marketing) { window.location.reload(); return; }
+      /* GTM și pixelul nu pot fi descărcate din pagină — la retragerea acordului reîncărcăm pagina fără ele. */
+      if (marketingLoaded && !c.marketing) { window.location.reload(); return; }
       applyConsent(c);
       banner.classList.remove('visible');
       modal.classList.remove('open');
