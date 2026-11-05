@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="cookie-consent.js"></script>
+  <script>(function(){var d=document.documentElement;try{var c=document.createElement('canvas');if(c.getContext('webgl2')||c.getContext('webgl'))d.classList.add('home3d');}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Profit District — Comunitate Elite de Trading. Program de Mentorat Gratuit 30 de Zile. Educație și sisteme de copytrading. Locuri limitate disponibile lunar.">
   <meta property="og:title" content="Profit District — Comunitate Elite de Trading & Mentorat">
@@ -1737,6 +1738,7 @@
     }
 
   </style>
+  <link rel="stylesheet" href="home3d/home.css">
 </head>
 <body class="is-loading">
 <!-- Google Tag Manager (noscript) -->
@@ -1765,6 +1767,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ── Grain overlay ─────────────────────── -->
 <div id="grain" aria-hidden="true"></div>
+<canvas id="home-scene" aria-hidden="true"></canvas>
 
 
 <!-- ═══════════════════════════════════════
@@ -1882,6 +1885,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════
      SOCIAL PROOF
 ════════════════════════════════════════ -->
+<div class="home-fly" aria-hidden="true"></div>
 <section id="social-proof" aria-label="Feedback membri">
   <div class="section-inner">
 
@@ -2121,6 +2125,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════
      SESIUNI FOREX — glob 3D
 ════════════════════════════════════════ -->
+<div class="home-fly" aria-hidden="true"></div>
 <section id="educatie" aria-label="Sesiunile pieței Forex">
   <div class="section-inner">
 
@@ -2204,6 +2209,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════
      WEBINAR
 ════════════════════════════════════════ -->
+<div class="home-fly" aria-hidden="true"></div>
 <section id="webinar" aria-label="Webinar Live — Înscrie-te">
   <div class="section-inner">
 
@@ -2401,6 +2407,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════
      FINAL CTA
 ════════════════════════════════════════ -->
+<div class="home-fly" aria-hidden="true"></div>
 <section id="final-cta" aria-label="Aplică acum">
   <div class="cta-glow" aria-hidden="true"></div>
 
@@ -2661,7 +2668,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 (function () {
   var hero = document.getElementById('hero');
-  if (!hero) return;
+  if (!hero || document.documentElement.classList.contains('home3d')) return;
 
   var NS  = 'http://www.w3.org/2000/svg';
   var svg = document.createElementNS(NS, 'svg');
@@ -3036,13 +3043,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       arcHeight: 0.32
     });
 
-    var rafId;
+    var rafId = null;
+    var globeOnScreen = true;
     function frame() {
+      if (!globeOnScreen) { rafId = null; return; }
       if (!pointerDown) phi += 0.0035;
       globe.update({ phi: phi + pointerPhiOffset, width: width * 2, height: width * 2 });
       rafId = requestAnimationFrame(frame);
     }
     rafId = requestAnimationFrame(frame);
+    new IntersectionObserver(function (entries) {
+      globeOnScreen = entries[0].isIntersecting;
+      if (globeOnScreen && rafId === null) rafId = requestAnimationFrame(frame);
+    }, { rootMargin: '100px' }).observe(canvas);
 
     canvas.addEventListener('pointerdown', function (e) {
       pointerDown = true;
@@ -3068,5 +3081,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 
+<script type="module" src="home3d/scene.js" onerror="document.documentElement.classList.remove('home3d')"></script>
 </body>
 </html>

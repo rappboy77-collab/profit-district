@@ -1,0 +1,54 @@
+/* Orașul de lumânări stă în spatele paginii. Fără WebGL, clasa lipsește și pagina rămâne cea originală. */
+#home-scene { display: none; }
+.home-fly { display: none; }
+
+.home3d { --bg-surface: rgba(17, 17, 19, 0.84); background: #070706; }
+.home3d body { background: transparent; }
+.home3d #home-scene { display: block; position: fixed; inset: 0; z-index: 0; width: 100%; height: 100lvh; pointer-events: none; }
+.home3d .home-fly { display: block; height: 52vh; pointer-events: none; }
+
+/* secțiunile devin transparente: textul stă direct în scenă, cu un voal discret pentru lizibilitate */
+.home3d #hero, .home3d #social-proof, .home3d #proces, .home3d #educatie, .home3d #systems, .home3d #webinar, .home3d #community, .home3d #final-cta { position: relative; z-index: 1; }
+.home3d #hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to right, rgba(7, 7, 6, 0.82), rgba(7, 7, 6, 0.46) 34%, rgba(7, 7, 6, 0.06) 58%); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
+.home3d #social-proof, .home3d #educatie, .home3d #webinar, .home3d #systems, .home3d #community { background: linear-gradient(to bottom, transparent 0, rgba(7, 7, 6, 0.74) 11rem, rgba(7, 7, 6, 0.74) calc(100% - 11rem), transparent 100%); }
+.home3d #proces { background: linear-gradient(to bottom, transparent 0, rgba(7, 7, 6, 0.5) 11rem, rgba(7, 7, 6, 0.5) calc(100% - 11rem), transparent 100%); }
+.home3d #final-cta { background: radial-gradient(ellipse 82% 50% at 50% 50%, rgba(7, 7, 6, 0.82), rgba(7, 7, 6, 0.6) 62%, transparent 100%); }
+.home3d .cta-trust { color: var(--text-secondary); }
+.home3d #systems::before { display: none; }
+.home3d footer { position: relative; z-index: 1; background: #111113; }
+
+.home3d .copytrading-teaser { background: rgba(9, 9, 10, 0.8); }
+/* fără cutie: două fire de lumină care se sting spre margini și un voal care nu are margini */
+.home3d .proces-bar { position: relative; border-top: 0; column-gap: 0.95rem; padding: 1.9rem 0; background: radial-gradient(closest-side, rgba(7, 7, 6, 0.62), transparent); }
+.home3d .proces-bar::before, .home3d .proces-bar::after { content: ''; position: absolute; left: 6%; right: 6%; height: 1px; pointer-events: none; background: linear-gradient(to right, transparent, rgba(226, 191, 106, 0.75) 50%, transparent); }
+.home3d .proces-bar::before { top: 0; }
+.home3d .proces-bar::after { bottom: 0; }
+.home3d .proces-bar span { font-size: 0.7rem; letter-spacing: 0.045em; color: var(--text-primary); text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95); }
+.home3d .proces-bar span:first-child { color: var(--gold-bright); }
+@media (min-width: 1240px) {
+  .home3d .proces-bar { flex-wrap: nowrap; white-space: nowrap; max-width: 100%; }
+  .home3d .proces-bar span + span::before { content: ''; display: inline-block; width: 4px; height: 4px; margin-right: 0.95rem; border-radius: 50%; vertical-align: 0.14em; background: var(--gold); box-shadow: 0 0 8px rgba(226, 191, 106, 0.9); }
+}
+/* blurul peste o scenă în mișcare se recalculează la fiecare cadru; meniul rămâne la fel de lizibil și fără el */
+.home3d #navbar { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(10, 10, 11, 0.94); }
+
+/* aceleași pulsuri, cu opacitate și transform: umbrele animate ar redesena ecranul la fiecare cadru */
+.home3d .floating-cta { position: relative; animation: none; box-shadow: 0 4px 18px rgba(201, 168, 76, 0.35), 0 2px 6px rgba(0, 0, 0, 0.45); }
+.home3d .floating-cta::before { content: ''; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; box-shadow: 0 4px 30px rgba(201, 168, 76, 0.6), 0 0 0 10px rgba(201, 168, 76, 0.1); opacity: 0; will-change: opacity; animation: home-cta-glow 2.6s ease-in-out infinite; }
+@keyframes home-cta-glow { 50% { opacity: 1; } }
+.home3d .pulse-dot, .home3d .session-item.is-live .session-dot { animation-name: home-dot; will-change: transform, opacity; }
+@keyframes home-dot { 50% { transform: scale(1.2); opacity: 0.75; } }
+
+/* decorul vechi din hero e înlocuit de scenă */
+.home3d #hero > svg, .home3d #hero .hero-parallax-layer, .home3d .proces-blob-wrap { display: none; }
+
+.home3d .section-header { will-change: translate; }
+.home3d .section-header h2, .home3d .hero-h1 { text-shadow: 0 2px 34px rgba(0, 0, 0, 0.75); }
+.home3d .hero-sub { color: var(--text-primary); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.9); }
+.home3d .section-header p { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85); }
+.home3d #apply-form { background: rgba(13, 13, 15, 0.9); }
+
+@media (max-width: 760px) {
+  .home3d .home-fly { height: 34vh; }
+  .home3d #hero::before { background: linear-gradient(to bottom, rgba(7, 7, 6, 0.58), rgba(7, 7, 6, 0.72)); -webkit-mask-image: linear-gradient(to bottom, #000 94%, transparent); mask-image: linear-gradient(to bottom, #000 94%, transparent); }
+}
