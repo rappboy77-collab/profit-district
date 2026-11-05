@@ -23,9 +23,10 @@ let seed = 90210;
 const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
 
 const nativeDpr = window.devicePixelRatio || 1;
-let moveDpr = lowEnd ? Math.min(nativeDpr, 1.25) : Math.min(Math.max(nativeDpr, 1.25), 1.5);
-let stillDpr = lowEnd ? Math.min(nativeDpr, 1.5) : Math.min(Math.max(nativeDpr, 1.5), 2);
-let dpr = moveDpr;
+/* o singură rezoluție, fără comutări la scroll; coboară doar dacă GPU-ul nu ține pasul */
+const topDpr = Math.max(1, Math.min(nativeDpr, lowEnd ? 1.25 : 1.5));
+const minDpr = 0.8;
+let dpr = topDpr;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(46, 1, 0.5, 900);
@@ -252,7 +253,7 @@ function buildCity(mirror) {
 }
 if (!lowEnd && !small) {
   const mirrorCity = buildCity(true);
-  mirrorCity.renderOrder = -5;
+  mirrorCity.renderOrder = -20;
   scene.add(mirrorCity);
 }
 
@@ -296,6 +297,8 @@ floor.renderOrder = -4;
 scene.add(floor);
 
 const city = buildCity(false);
+/* clădirile se desenează primele, ca cerul și reflexia să nu mai calculeze pixeli pe care îi acoperă oricum */
+city.renderOrder = -30;
 scene.add(city);
 
 /* ---------- linia prețului: se desenează în fața camerei ---------- */
@@ -619,9 +622,11 @@ function render(T, time) {
 }
 
 /* ---------- buclă ---------- */
-let curT = 0, dirty = true, running = false, visible = true, lastTime = 0, clockT = 0, flip = false, slowSum = 0, slowCount = 0, skip = 0, stillSince = 0;
+let curT = 0, dirty = true, running = false, visible = true, lastTime = 0, clockT = 0, slowSum = 0, slowCount = 0, settleUntil = performance.now() + 1500;
 const animated = () => !reduced.matches;
-let idleStride = lowEnd ? 3 : 2, idleCount = 0;
+/* la fiecare cadru; o dată din două doar ca ultimă soluție, după ce rezoluția a coborât la minim */
+let idleStride = 1, idleCount = 0;
+let goodRuns = 0, raisedAt = -1e9, canRaise = true;
 function kick() { if (!running && visible) { running = true; lastTime = performance.now(); requestAnimationFrame(tick); } }
 function setScale(v) {
   if (v === dpr) return;
@@ -630,7 +635,7 @@ function setScale(v) {
   renderer.setSize(W, H, false);
   flares.material.uniforms.uPx.value = v;
   dirty = true;
-  skip = 3;
+  settleUntil = performance.now() + 200;
 }
 /* o eroare într-un cadru nu are voie să oprească animația */
 function tick(now) {
@@ -658,26 +663,30 @@ function step(now) {
   }
   const moved = before !== curT;
   const moving = Math.abs(target - curT) > 0.002;
-  if (moving) { stillSince = 0; setScale(moveDpr); }
-  else {
-    if (!stillSince) stillSince = now;
-    if (now - stillSince > 180) setScale(stillDpr);
-  }
   idleCount++;
   if (dirty || moved || (animated() && idleCount % idleStride === 0)) {
     render(curT, clockT);
     dirty = false;
   }
-  if (skip > 0) skip--;
-  else if (raw < 250 && (moving || animated())) {
+  /* sub ~52 de cadre pe secundă coboară rezoluția; după 8 s bune urcă înapoi, dar renunță dacă urcarea nu ține */
+  if (now < settleUntil) { slowSum = 0; slowCount = 0; }
+  else if (raw < 1000 && (moving || animated())) {
     slowSum += raw;
-    if (++slowCount === 40) {
-      if (slowSum / 40 > (moving ? 24 : 30)) {
-        if (moving) moveDpr = Math.max(1, moveDpr * 0.85);
-        else if (idleStride < 4) idleStride++;
-        else stillDpr = Math.max(1, stillDpr * 0.85);
-        setScale(moving ? moveDpr : stillDpr);
-      }
+    if (++slowCount === 60 || slowSum > 1000) {
+      const avg = slowSum / slowCount;
+      if (avg > 19) {
+        goodRuns = 0;
+        if (now - raisedAt < 4000) canRaise = false;
+        if (dpr > minDpr) setScale(Math.max(minDpr, dpr * 0.85));
+        else idleStride = 2;
+      } else if (avg < 17.6 && canRaise && (dpr < topDpr || idleStride > 1)) {
+        if (++goodRuns >= 8) {
+          goodRuns = 0;
+          raisedAt = now;
+          if (idleStride > 1) idleStride = 1;
+          else setScale(Math.min(topDpr, dpr / 0.85));
+        }
+      } else goodRuns = 0;
       slowSum = 0;
       slowCount = 0;
     }

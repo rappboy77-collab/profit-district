@@ -40,9 +40,10 @@ renderer.autoClear = false;
 renderer.setScissorTest(true);
 
 const nativeDpr = window.devicePixelRatio || 1;
-let moveDpr = lowEnd ? Math.min(nativeDpr, 1.25) : Math.min(Math.max(nativeDpr, 1.25), 1.5);
-let stillDpr = lowEnd ? Math.min(nativeDpr, 1.5) : Math.min(Math.max(nativeDpr, 1.5), 2);
-let dpr = moveDpr;
+/* o singură rezoluție, puțin peste cea a ecranului ca personajele să fie clare; fără comutări la scroll, coboară doar dacă GPU-ul nu ține pasul */
+const topDpr = lowEnd ? Math.max(1, Math.min(nativeDpr, 1.25)) : 1.5;
+const minDpr = 0.85;
+let dpr = topDpr;
 
 /* ---------- ajutoare de geometrie ---------- */
 const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.62, metalness: 0.02, ...o });
@@ -1052,7 +1053,9 @@ function render(T, time, both) {
 }
 
 /* ---------- buclă ---------- */
-let idleFlip = false, curT = 0, dirty = true, running = false, visible = true, lastTime = 0, slowSum = 0, slowCount = 0, skip = 0, clockT = 0;
+let curT = 0, dirty = true, running = false, visible = true, lastTime = 0, slowSum = 0, slowCount = 0, settleUntil = performance.now() + 1500, clockT = 0;
+/* la fiecare cadru; o dată din două doar ca ultimă soluție, după ce rezoluția a coborât la minim */
+let idleStride = 1, idleCount = 0, goodRuns = 0, raisedAt = -1e9, canRaise = true;
 const animated = () => !reduced.matches && !lowEnd;
 invalidate = () => { dirty = true; kick(); };
 function kick() { if (!running && visible) { running = true; lastTime = performance.now(); requestAnimationFrame(tick); } }
@@ -1063,15 +1066,8 @@ function setScale(v) {
   renderer.setPixelRatio(v);
   renderer.setSize(W, H, false);
   dirty = true;
-  skip = 3;
+  settleUntil = performance.now() + 200;
 }
-/* în mișcare și în repaus calitatea se adaptează separat, niciodată sub rezoluția de bază */
-function degrade(moving) {
-  if (moving) moveDpr = Math.max(1, moveDpr * 0.85);
-  else stillDpr = Math.max(1, stillDpr * 0.85);
-  setScale(moving ? moveDpr : stillDpr);
-}
-let stillSince = 0, sharpenTimer = 0;
 function tick(now) {
   const raw = now - lastTime;
   lastTime = now;
@@ -1087,35 +1083,36 @@ function tick(now) {
   }
   const moved = before !== curT;
   const moving = Math.abs(target - curT) > 0.003;
-  if (moving) {
-    stillSince = 0;
-    setScale(moveDpr);
-  } else {
-    if (!stillSince) stillSince = now;
-    if (now - stillSince > 180) setScale(stillDpr);
-  }
-  idleFlip = !idleFlip;
-  if (dirty || moved || (animated() && idleFlip && !covered())) {
+  idleCount++;
+  if (dirty || moved || (animated() && idleCount % idleStride === 0 && !covered())) {
     render(curT, clockT, dirty || curT === target);
     dirty = false;
   }
-  if (skip > 0) skip--;
-  else if (raw < 250 && (moving || animated())) {
+  /* sub ~52 de cadre pe secundă coboară rezoluția; după 8 s bune urcă înapoi, dar renunță dacă urcarea nu ține */
+  if (now < settleUntil) { slowSum = 0; slowCount = 0; }
+  else if (raw < 1000 && (moving || (animated() && !covered()))) {
     slowSum += raw;
-    if (++slowCount === 40) {
-      /* în repaus se desenează un cadru din două, deci pragul e mai permisiv */
-      if (slowSum / 40 > (moving ? 24 : 30)) degrade(moving);
+    if (++slowCount === 60 || slowSum > 1000) {
+      const avg = slowSum / slowCount;
+      if (avg > 19) {
+        goodRuns = 0;
+        if (now - raisedAt < 4000) canRaise = false;
+        if (dpr > minDpr) setScale(Math.max(minDpr, dpr * 0.85));
+        else idleStride = 2;
+      } else if (avg < 17.6 && canRaise && (dpr < topDpr || idleStride > 1)) {
+        if (++goodRuns >= 8) {
+          goodRuns = 0;
+          raisedAt = now;
+          if (idleStride > 1) idleStride = 1;
+          else setScale(Math.min(topDpr, dpr / 0.85));
+        }
+      } else goodRuns = 0;
       slowSum = 0;
       slowCount = 0;
     }
   }
   if (visible && (animated() || curT !== target)) requestAnimationFrame(tick);
-  else {
-    running = false;
-    clearTimeout(sharpenTimer);
-    /* fără animație continuă, un singur cadru clar după oprire */
-    sharpenTimer = setTimeout(() => { if (visible && !running) { setScale(stillDpr); kick(); } }, 200);
-  }
+  else running = false;
 }
 
 const seen = new Set();
