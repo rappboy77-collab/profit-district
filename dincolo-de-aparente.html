@@ -3,510 +3,413 @@
 <head>
   <meta charset="UTF-8">
   <script src="cookie-consent.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function(){var d=document.documentElement;try{var c=document.createElement('canvas');if(c.getContext('webgl2')||c.getContext('webgl'))d.classList.add('has3d');}catch(e){}})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="robots" content="noindex, follow">
   <title>Dincolo de aparențe — Profit District, Cluj</title>
-  <meta name="description" content="29 noiembrie 2026, Grand Hotel Napoca, Cluj. O întâlnire live despre copytrading — explicații practice, întrebări fără ocolișuri, conversații față în față.">
+  <meta name="description" content="Vrei să investești, dar nu știi de unde să începi? Duminică, 29 noiembrie 2026, 10:00–15:15, Grand Hotel Napoca, Cluj-Napoca. O conferință Profit District.">
   <link rel="icon" type="image/png" href="logo/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dda/shared.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg-base: #0a0a0b; --bg-surface: #111113; --bg-elevated: #18181b;
-      --gold: #c9a84c; --gold-bright: #e2bf6a; --gold-dim: #8a6e2f;
-      --text-primary: #f0ece0; --text-secondary: #a09880; --text-tertiary: #5c5848;
-      --border-subtle: rgba(201,168,76,0.10); --border-mid: rgba(201,168,76,0.22); --border-strong: rgba(201,168,76,0.45);
-      --shadow-card: 0 2px 4px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.07);
-      --shadow-button: 0 4px 16px rgba(201,168,76,0.28), 0 1px 3px rgba(0,0,0,0.6);
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg-base); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
-    ::selection { background: var(--gold); color: var(--bg-base); }
-    em { font-style: italic; color: var(--gold); }
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    /* FUNDAL + SCENĂ: titlul stă între fundal și personaje */
+    .backdrop { display: none; }
+    .has3d .backdrop { display: block; position: fixed; z-index: 0; inset: 0 var(--reserved) 0 0; overflow: hidden; background: #050506; }
+    .bd { position: absolute; top: 0; bottom: 0; width: 50%; will-change: transform; }
+    .bd-a { left: 0; background: radial-gradient(ellipse 90% 66% at 62% 46%, #39465a 0%, #161a21 55%, #060709 100%); }
+    .bd-b { right: 0; background: radial-gradient(ellipse 90% 66% at 38% 46%, #b98f50 0%, #57401f 50%, #120d07 100%); }
+    .bd i { position: absolute; inset: 0; opacity: 0; }
+    #bd-dusk { background: radial-gradient(ellipse 80% 55% at 64% 34%, rgba(176,104,52,0.5), transparent 70%); }
+    #bd-night { background: radial-gradient(ellipse 85% 60% at 60% 40%, #111c36 0%, #070b15 62%, #030408 100%); }
+    #bd-dawn { background: radial-gradient(ellipse 85% 60% at 60% 36%, rgba(146,170,194,0.46), transparent 72%); }
+    .bd-h { position: absolute; inset: 0; clip-path: inset(0 50%); background: radial-gradient(ellipse 72% 58% at 50% 38%, #4a3819 0%, #1b1409 52%, #070503 100%); }
+    .stack .bd { width: 100%; left: 0; right: 0; height: 50%; }
+    .stack .bd-a { top: 0; bottom: auto; }
+    .stack .bd-b { top: 50%; bottom: 0; }
+    .stage { display: none; }
+    .has3d .stage { display: block; position: fixed; z-index: 2; inset: 0 var(--reserved) 0 0; height: 100lvh; overflow: hidden; pointer-events: none; }
+    .stage canvas { display: block; width: 100%; height: 100%; }
+    .stage::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--bg), transparent 26px, transparent calc(100% - 26px), var(--bg)); }
+    .seam { position: absolute; z-index: 1; top: 0; bottom: 0; left: 50%; width: 1px; opacity: 0; background: linear-gradient(to bottom, transparent, rgba(226,191,106,0.75) 18%, rgba(226,191,106,0.75) 82%, transparent); }
+    .stack .seam { top: 50%; bottom: auto; left: 0; right: 0; width: auto; height: 1px; background: linear-gradient(to right, transparent, rgba(226,191,106,0.75) 18%, rgba(226,191,106,0.75) 82%, transparent); }
+    .scrim { position: absolute; z-index: 1; inset: auto 0 0 0; height: 44%; opacity: 0; background: linear-gradient(to bottom, transparent, rgba(5,5,6,0.86) 58%, rgba(5,5,6,0.96)); }
+    .rail { display: none; }
+    .has3d .rail { display: block; position: fixed; z-index: 6; top: calc(var(--nav-h) + 12px); left: clamp(1.25rem, 4vw, 2.5rem); right: calc(var(--reserved) + clamp(1.25rem, 4vw, 2.5rem)); height: 2px; background: rgba(240,236,224,0.2); opacity: 0; pointer-events: none; }
+    .rail-fill { position: absolute; inset: 0; background: var(--gold-bright); transform: scaleX(0); transform-origin: left center; }
+    .rail i { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #3a3730; transition: background 0.2s ease; }
+    .rail i.on { background: var(--gold-bright); }
 
-    /* NAV */
-    #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.4rem 2.5rem;
-      background: rgba(10,10,11,0.7); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-subtle);
-      transition: background 0.3s ease;
+    /* HERO: tot ce trebuie știut, din primul ecran */
+    .hero { position: relative; z-index: 3; min-height: 100svh; padding: calc(var(--nav-h) + clamp(1rem, 3.5svh, 2.25rem)) clamp(1.25rem, 4vw, 3rem) calc(var(--bar-h) + 1.25rem); }
+    .has3d .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,11,0.82) 0, rgba(10,10,11,0.78) 45%, transparent 72%); }
+    .has3d.stack .hero::before { background: linear-gradient(to bottom, var(--bg) 0, var(--bg) 66%, transparent 88%); }
+    .hero-copy { position: relative; max-width: 860px; margin: 0 auto; text-align: center; }
+    .hero-eyebrow { font-family: var(--mono); font-size: 0.64rem; font-weight: 500; letter-spacing: 0.16em; color: var(--gold); }
+    .hero-pre { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--muted); margin-top: 0.5rem; }
+    .title { font-family: var(--serif); font-weight: 500; font-size: clamp(2.5rem, min(6vw, 9.5vh), 4.6rem); line-height: 1; letter-spacing: -0.015em; }
+    .hero-slogan { font-weight: 500; font-size: 0.95rem; margin-top: 0.3rem; }
+    .hero-lead { margin-top: 0.9rem; font-size: clamp(1.15rem, 2vw, 1.55rem); font-weight: 500; line-height: 1.25; color: var(--gold-bright); }
+    .hero-text { max-width: 620px; margin: 0.5rem auto 0; font-size: clamp(0.94rem, 1.25vw, 1.05rem); font-weight: 400; line-height: 1.45; color: var(--cream); }
+    .facts { display: flex; justify-content: center; margin-top: 1.1rem; list-style: none; }
+    .facts li { padding: 0.15rem clamp(1.25rem, 3vw, 2.75rem); }
+    .facts li + li { border-left: 1px solid var(--line-mid); }
+    .facts span { display: block; margin-bottom: 0.3rem; font-family: var(--mono); font-size: 0.6rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-bright); }
+    .facts b { display: block; font-family: var(--serif); font-weight: 500; font-size: clamp(1.3rem, 2.1vw, 1.75rem); line-height: 1.12; color: var(--cream); }
+    .facts i { display: block; margin-top: 0.2rem; font-style: normal; font-size: 0.86rem; letter-spacing: 0.08em; color: var(--muted); }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.65rem; margin-top: 1rem; }
+    .btn-ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.6rem 1.7rem; font-weight: 500; font-size: 0.92rem; color: var(--cream); text-decoration: none; background: rgba(13,13,15,0.6); border: 1px solid var(--line-mid); border-radius: 4px; transition: border-color 0.2s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); }
+    .btn-ghost:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .btn-ghost:active { transform: none; }
+    @media (max-width: 720px) {
+      .facts li { flex: 1; padding: 0.1rem 0.7rem; }
+      .facts b { font-size: 1.12rem; }
+      .facts i { font-size: 0.78rem; }
+      .btn-ghost { flex: 1; padding-inline: 0.8rem; min-width: 130px; }
+      .hero-eyebrow { font-size: 0.54rem; letter-spacing: 0.1em; }
+      .title { font-size: clamp(2.4rem, 12vw, 3.6rem); }
+      .hero-actions .btn { display: none; }
     }
-    #navbar.scrolled { background: rgba(10,10,11,0.94); }
-    .nav-logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-    .nav-logo-text { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 0.74rem; letter-spacing: 0.2em; color: var(--text-primary); }
-    .nav-right { display: flex; align-items: center; gap: 2rem; }
-    .nav-link { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 0.88rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; }
-    .nav-link:hover { color: var(--gold); }
-    .nav-ticket {
-      position: relative; overflow: hidden;
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.01em;
-      color: var(--bg-base); background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 65%, var(--gold-dim) 100%);
-      border: 1px solid rgba(226,191,106,0.5); padding: 0.6rem 1.3rem; border-radius: 100px;
-      text-decoration: none; box-shadow: var(--shadow-button);
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
-    }
-    .nav-ticket::before {
-      content: ''; position: absolute; top: 0; left: -60%; width: 35%; height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
-      transform: skewX(-20deg); animation: nav-ticket-shine 3.6s ease-in-out infinite;
-    }
-    @keyframes nav-ticket-shine { 0%, 15% { left: -60%; } 55%, 100% { left: 140%; } }
-    .nav-ticket:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,168,76,0.42), 0 1px 3px rgba(0,0,0,0.6); }
-    @media (max-width: 620px) { .nav-link { display: none; } #navbar { padding: 1.2rem 1.5rem; } }
-
-    /* SHARED */
-    .eh-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-    .eh-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-    .eh-arrow { display: inline-block; transition: transform 0.2s ease; }
-    a:hover .eh-arrow { transform: translate(2px, -2px); }
-
-    /* HERO */
-    .eh-hero { position: relative; padding: 10.5rem 0 6rem; overflow: hidden; }
-    .eh-hero-glow { position: absolute; top: -10%; left: 30%; width: 900px; height: 900px; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 60%); pointer-events: none; }
-    .eh-hero-beam {
-      position: absolute; top: -20%; left: 36%; width: 240px; height: 170%;
-      background: linear-gradient(90deg, transparent 0%, rgba(226,191,106,0.04) 22%, rgba(226,191,106,0.13) 50%, rgba(226,191,106,0.04) 78%, transparent 100%);
-      transform: rotate(-21deg); transform-origin: top center;
-      filter: blur(16px); mix-blend-mode: screen; pointer-events: none;
-    }
-    @media (max-width: 979px) { .eh-hero-beam { left: 10%; width: 180px; } }
-    .eh-hero-grid { position: relative; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: center; }
-    @media (min-width: 980px) { .eh-hero-grid { grid-template-columns: 1.15fr 0.85fr; } }
-    .eh-pretitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 1.3rem; color: var(--text-secondary); margin: 1.1rem 0 0.2rem; }
-    .eh-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(2.6rem, 6.4vw, 5.2rem);
-      line-height: 1.04; letter-spacing: -0.01em; color: var(--text-primary); margin-bottom: 1.4rem;
-    }
-    .eh-title em { font-style: italic; font-weight: 500; }
-    .eh-subhead { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 1.05rem; color: var(--text-primary); margin-bottom: 1.6rem; }
-    .eh-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.4rem; }
-    .eh-meta .dot { color: var(--gold-dim); margin: 0 0.35rem; }
-    .eh-venue { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.95rem; color: var(--gold); margin-bottom: 2.2rem; }
-    .eh-cta {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: var(--gold); color: var(--bg-base); font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.92rem;
-      padding: 0.95rem 1.9rem; border-radius: 4px; text-decoration: none; box-shadow: var(--shadow-button);
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.22s ease, box-shadow 0.22s ease;
-    }
-    .eh-cta:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.4); }
-    .eh-tagline { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.85rem; color: var(--text-tertiary); margin-top: 1.6rem; }
-
-    /* EMBLEM */
-    .eh-emblem {
-      position: relative; width: 100%; max-width: 420px; aspect-ratio: 1; margin: 0 auto;
-      display: flex; align-items: center; justify-content: center; perspective: 1000px;
-    }
-    .eh-emblem-sphere { position: absolute; inset: 0; transform-style: preserve-3d; }
-    .eh-ring {
-      position: absolute; border-radius: 50%; border: 1px solid rgba(201,168,76,0.32);
-      backface-visibility: visible;
-    }
-    .eh-ring-1 { inset: 0%;    animation: eh-orbit-a 5s linear infinite; }
-    .eh-ring-2 { inset: 8.5%;  border-color: rgba(201,168,76,0.22); animation: eh-orbit-b 7s linear infinite reverse; }
-    .eh-ring-3 { inset: 17%;   border-color: rgba(201,168,76,0.14); animation: eh-orbit-c 3.5s linear infinite; }
-    @keyframes eh-orbit-a {
-      from { transform: rotateZ(18deg) rotateY(0deg); }
-      to   { transform: rotateZ(18deg) rotateY(360deg); }
-    }
-    @keyframes eh-orbit-b {
-      from { transform: rotateZ(-28deg) rotateX(0deg); }
-      to   { transform: rotateZ(-28deg) rotateX(360deg); }
-    }
-    @keyframes eh-orbit-c {
-      from { transform: rotateZ(42deg) rotateX(0deg) rotateY(0deg); }
-      to   { transform: rotateZ(42deg) rotateX(360deg) rotateY(360deg); }
-    }
-    .eh-emblem-center { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-    .eh-emblem-num {
-      font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(5rem, 11vw, 7.5rem); line-height: 1;
-      display: inline-block; position: relative;
-      background: linear-gradient(100deg, var(--gold-dim) 0%, var(--gold-dim) 35%, var(--gold-bright) 50%, var(--gold-dim) 65%, var(--gold-dim) 100%);
-      background-size: 280% 100%;
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-      filter: drop-shadow(0 0 22px rgba(201,168,76,0.3));
-      animation: eh-num-shimmer 4.5s ease-in-out infinite;
-    }
-    @keyframes eh-num-shimmer {
-      0%   { background-position: 200% 0; }
-      50%  { background-position: 0% 0; }
-      100% { background-position: -200% 0; }
-    }
-    .eh-emblem-sub { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 0.6rem; }
-    .eh-hero-vertical {
-      position: absolute; right: 1.75rem; top: 50%; transform: translateY(-50%);
-      writing-mode: vertical-rl; text-orientation: mixed;
-      font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--text-tertiary); white-space: nowrap; pointer-events: none;
-    }
-    @media (max-width: 1180px) { .eh-hero-vertical { display: none; } }
-    @media (max-width: 560px) { .eh-emblem { max-width: 280px; } }
-
-    /* NUMBERED SECTION (shared 01/02/03) */
-    .eh-section { padding: 6.5rem 0; }
-    .eh-section.on-surface { background: var(--bg-surface); }
-    .eh-sec-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: start; }
-    @media (min-width: 860px) { .eh-sec-grid { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; } }
-    .eh-sec-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-    .eh-sec-heading { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.15; color: var(--text-primary); }
-    .eh-sec-heading em { font-weight: 500; }
-    .eh-sec-body p { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.98rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.1rem; }
-    .eh-sec-body p:last-child { margin-bottom: 0; }
-
-    /* PROGRAM CARD (01) */
-    .eh-program-card {
-      position: relative; max-width: 760px; margin: 3rem auto 0; padding: 3.25rem 2.5rem;
-      background: var(--bg-base); border: 1px solid var(--border-mid); border-radius: 14px; text-align: center;
-    }
-    .eh-program-card .eh-sec-heading { margin-bottom: 0.7rem; }
-    .eh-program-note { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 2.25rem; }
-    .eh-program-includes { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: 2.5rem; }
-    .eh-program-includes span {
-      font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--text-secondary); border: 1px solid var(--border-subtle); border-radius: 100px; padding: 0.5rem 1.1rem;
-    }
-    .eh-program-lock-wrap {
-      position: relative; padding: 2.75rem 0 0.5rem; margin-top: 2.25rem; border-top: 1px solid var(--border-subtle);
-      display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 120px;
-    }
-    .eh-program-lock-bg {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -54%);
-      font-family: 'Cormorant Garamond', serif; font-weight: 600; font-style: italic;
-      font-size: clamp(3.2rem, 10vw, 5.5rem); line-height: 1; color: rgba(201,168,76,0.07);
-      white-space: nowrap; pointer-events: none; user-select: none;
-    }
-    .eh-program-lock {
-      position: relative; z-index: 1;
-      display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px;
-      border-radius: 50%; background: var(--bg-base); border: 1px solid var(--border-subtle);
-      color: var(--gold-dim); animation: eh-lock-pulse 2.6s ease-in-out infinite;
-    }
-    @keyframes eh-lock-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.18); border-color: var(--border-subtle); }
-      50%      { box-shadow: 0 0 0 10px rgba(201,168,76,0); border-color: var(--border-mid); }
+    @media (max-width: 720px) and (max-height: 700px) {
+      .hero-eyebrow, .hero-pre, .hero-slogan { display: none; }
+      .title { font-size: 2.15rem; }
+      .hero-lead { margin-top: 0.4rem; font-size: 1rem; }
+      .hero-text { font-size: 0.82rem; line-height: 1.35; }
+      .facts { margin-top: 0.6rem; }
+      .facts b { font-size: 1rem; }
+      .hero-actions { margin-top: 0.7rem; }
     }
 
-    /* SECTION 03 + TICKET */
-    .eh-event-detail { border-left: 2px solid var(--gold-dim); padding-left: 1.2rem; margin-top: 2rem; }
-    .eh-event-detail p { font-family: 'Outfit', sans-serif; font-size: 0.92rem; line-height: 1.85; }
-    .eh-event-detail p:first-child { font-weight: 500; color: var(--text-primary); }
-    .eh-event-detail p:not(:first-child) { color: var(--text-secondary); }
+    /* SECȚIUNI SIMPLE */
+    #programul, #pentru-cine, #speakeri, #eveniment { scroll-margin-top: var(--nav-h); }
+    /* Rubricile apar peste scena oprită, ca parte din animație */
+    .rubric { position: relative; z-index: 3; background: var(--bg); }
+    .has3d .rubric { background: rgba(10,10,11,0.94); }
+    .has3d .rubric::before, .has3d .rubric::after { content: ''; position: absolute; left: 0; right: 0; height: 150px; pointer-events: none; }
+    .has3d .rubric::before { bottom: 100%; background: linear-gradient(to bottom, transparent, rgba(10,10,11,0.94)); }
+    .has3d .rubric::after { top: 100%; background: linear-gradient(to top, transparent, rgba(10,10,11,0.94)); }
+    .has3d .rubric > .inner { opacity: 0; transform: translateY(26px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .has3d .rubric.is-in > .inner { opacity: 1; transform: none; }
+    .lead-heading { margin-bottom: 1.5rem; font-family: var(--serif); font-weight: 500; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; letter-spacing: -0.01em; }
+    .simple { font-size: clamp(1rem, 1.5vw, 1.12rem); font-weight: 400; line-height: 1.5; }
+    .fit { display: grid; gap: 1.5rem; }
+    @media (min-width: 760px) { .fit { grid-template-columns: 1.35fr 1fr; align-items: start; gap: 2.5rem; } }
+    .ticks { list-style: none; display: grid; gap: 0.8rem; }
+    .ticks li { display: flex; gap: 0.7rem; align-items: baseline; }
+    .ticks li::before { content: ''; flex: none; width: 11px; height: 6px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg) translateY(-3px); }
+    .note { padding: 1.1rem 1.2rem; border: 1px solid var(--line-mid); border-radius: 8px; background: rgba(201,168,76,0.05); }
+    .note + .note { margin-top: 0.8rem; }
+    .note strong { display: block; margin-bottom: 0.25rem; font-weight: 600; color: var(--gold-bright); }
+    .faq { max-width: 760px; }
+    .faq details { border-bottom: 1px solid var(--line-mid); }
+    .faq summary { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; cursor: pointer; list-style: none; font-weight: 500; font-size: 1.03rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: '+'; flex: none; font-size: 1.3rem; line-height: 1; color: var(--gold); }
+    .faq details[open] summary::after { content: '−'; }
+    .faq summary:hover { color: var(--gold-bright); }
+    .faq details p { padding-bottom: 1rem; color: var(--muted); }
 
-    .eh-ticket-card {
-      position: relative; overflow: hidden;
-      background: linear-gradient(165deg, var(--bg-elevated) 0%, var(--bg-surface) 55%, var(--bg-base) 100%);
-      border: 1px solid var(--border-mid); border-radius: 14px; padding: 2.5rem;
-      box-shadow: var(--shadow-card), 0 0 80px rgba(201,168,76,0.06);
-    }
-    .eh-ticket-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
-    }
-    .eh-ticket-card::after {
-      content: ''; position: absolute; top: -35%; right: -15%; width: 320px; height: 320px;
-      background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none;
-    }
-    .eh-ticket-card { scroll-margin-top: 110px; }
-    .eh-ticket-top, .eh-ticket-price, .eh-ticket-sub, .eh-ticket-check, .eh-consent, .eh-ticket-btn, .eh-ticket-note { position: relative; z-index: 1; }
-    .eh-ticket-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.6rem; }
-    .eh-ticket-top span { font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-tertiary); }
-    .eh-ticket-price { display: flex; align-items: flex-start; gap: 0.3rem; margin-bottom: 0.3rem; }
-    .eh-ticket-price strong { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 3.6rem; line-height: 1; color: var(--text-primary); letter-spacing: -0.02em; }
-    .eh-ticket-price span { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 1.4rem; color: var(--gold); margin-top: 0.4rem; }
-    .eh-ticket-sub { font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1.6rem; padding-bottom: 1.6rem; border-bottom: 1px solid var(--border-subtle); }
-    .eh-ticket-check { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.8rem; }
-    .eh-ticket-check div { display: flex; align-items: center; gap: 0.7rem; font-family: 'Outfit', sans-serif; font-size: 0.88rem; color: var(--text-primary); }
-    .eh-ticket-check svg { flex-shrink: 0; color: var(--gold); }
-    .eh-ticket-btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%;
-      background: var(--gold); color: var(--bg-base); font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.9rem;
-      padding: 0.95rem; border-radius: 4px; text-decoration: none; box-shadow: var(--shadow-button); margin-bottom: 0.9rem;
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.22s ease;
-    }
-    .eh-ticket-btn:hover { background: var(--gold-bright); transform: translateY(-2px); }
-    .eh-ticket-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-    .eh-ticket-btn:active { transform: translateY(0) scale(0.98); }
-    .eh-ticket-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
-    .eh-ticket-btn[aria-disabled="true"]:hover { background: var(--gold); transform: none; }
+    /* SECVENȚE: textul stă lângă personaje, în decor */
+    .beat { position: relative; z-index: 3; padding: 3rem 0; }
+    .beat-text { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+    .has3d .beat { min-height: 165svh; padding: 0; pointer-events: none; }
+    .has3d .beat.short { min-height: 130svh; }
+    .has3d .beat.long { min-height: 210svh; }
+    .has3d .beat-text { position: sticky; top: 0; height: 100svh; max-width: none; margin: 0; padding: 0; opacity: 0; will-change: transform, opacity; }
+    .say { display: block; margin-bottom: 1.5rem; }
+    .has3d .say { position: absolute; margin: 0; pointer-events: auto; text-shadow: 0 1px 14px rgba(0,0,0,0.7); }
+    .has3d .say.a { left: clamp(1.25rem, 3.4vw, 3rem); top: var(--ya, 42%); width: 21%; min-width: 180px; }
+    .has3d .say.b { right: clamp(1.25rem, 3.4vw, 3rem); top: var(--yb, 42%); width: 21%; min-width: 180px; text-align: right; }
+    .has3d .say.c { left: 50%; bottom: calc(var(--bar-h) + clamp(1.5rem, 7svh, 4rem)); width: min(82%, 900px); text-align: center; transform: translateX(-50%); }
+    .has3d .say.sub { left: 50%; bottom: calc(var(--bar-h) + clamp(1rem, 3.5svh, 2rem)); width: min(70%, 620px); text-align: center; transform: translateX(-50%); }
+    .tag { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 0.5rem; }
+    .tag.b { color: #f4e2bb; }
+    .beat-line { font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 2.75vw, 2.9rem); line-height: 1.04; letter-spacing: -0.01em; }
+    .beat-center { font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 3.3vw, 3.1rem); line-height: 1.08; }
+    [data-beat="1"] .beat-center + .beat-center { color: var(--gold-bright); font-style: italic; }
+    .beat-sub { font-size: clamp(0.84rem, 1.2vw, 0.98rem); font-weight: 400; color: var(--cream); }
+    .beat-tags { display: flex; justify-content: center; gap: 2.5rem; margin-top: 0.8rem; }
+    .beat-tags .tag { margin: 0; }
+    .has3d.stack .say.a { left: 1rem; top: calc(var(--nav-h) + 1.9rem); width: 44%; min-width: 0; }
+    .has3d.stack .say.b { right: 1rem; left: auto; top: auto; bottom: calc(var(--bar-h) + 0.9rem); width: 44%; min-width: 0; }
+    .has3d.stack .say.c { bottom: calc(var(--bar-h) + 1rem); width: calc(100% - 2rem); }
+    .has3d.stack .say.sub { display: block; left: 1rem; bottom: auto; top: 50%; width: calc(100% - 2rem); text-align: left; transform: translateY(calc(-100% - 8px)); font-size: 0.74rem; line-height: 1.35; }
+    .has3d.stack .beat-line { font-size: clamp(1.28rem, 6vw, 1.8rem); }
+    .has3d.stack .beat-center { font-size: clamp(1.4rem, 6.4vw, 2rem); }
 
-    /* CONSIMȚĂMÂNT (filmare + GDPR) */
-    .eh-consent {
-      display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.2rem; padding: 0.875rem 1rem;
-      background: rgba(201,168,76,0.04); border: 1px solid var(--border-subtle); border-radius: 6px; cursor: pointer;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .eh-consent:hover { border-color: var(--border-mid); }
-    .eh-consent.eh-error { border-color: rgba(255,92,92,0.55); background: rgba(255,92,92,0.04); }
-    .eh-consent.eh-shake { animation: eh-shake 0.4s cubic-bezier(0.36,0.07,0.19,0.97); }
-    @keyframes eh-shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
-    .eh-consent-box {
-      appearance: none; -webkit-appearance: none; flex-shrink: 0; position: relative;
-      width: 18px; height: 18px; min-width: 18px; margin-top: 2px;
-      border: 1.5px solid var(--border-mid); border-radius: 4px; background: var(--bg-elevated); cursor: pointer;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .eh-consent-box:checked { background: var(--gold); border-color: var(--gold); }
-    .eh-consent-box:checked::after {
-      content: ''; position: absolute; top: 2px; left: 5px; width: 5px; height: 9px;
-      border: 2px solid var(--bg-base); border-top: none; border-left: none; transform: rotate(45deg);
-    }
-    .eh-consent-box:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-    .eh-consent-label { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.775rem; line-height: 1.65; color: var(--text-secondary); }
-    .eh-consent-label a { color: var(--gold); text-decoration: none; }
-    .eh-consent-label a:hover { text-decoration: underline; }
-    .eh-consent-label a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
-    .eh-ticket-note { display: block; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.76rem; color: var(--text-tertiary); line-height: 1.6; text-align: center; }
+    /* 02 */
+    .event-grid { display: grid; gap: clamp(2.5rem, 6vw, 4.5rem); }
+    @media (min-width: 860px) { .event-grid { grid-template-columns: 1.05fr 0.95fr; } }
+    .event-body { margin-top: 1.4rem; color: var(--muted); font-size: 1.02rem; }
+    .event-facts { margin-top: 1.7rem; padding-left: 1.1rem; border-left: 2px solid var(--gold-dim); }
+    .event-facts p:first-child { font-weight: 500; }
+    .event-facts p:not(:first-child) { color: var(--muted); }
+    .perspectives { list-style: none; counter-reset: p; display: grid; gap: 1.2rem; align-content: start; }
+    .perspectives li { counter-increment: p; display: grid; grid-template-columns: 2.6rem 1fr; align-items: baseline; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.65rem); line-height: 1.2; }
+    .perspectives li::before { content: counter(p) '.'; font-style: italic; color: var(--gold); }
 
-    /* FAQ */
-    .eh-faq-item { border-bottom: 1px solid var(--border-subtle); }
-    .eh-faq-item:first-child { border-top: 1px solid var(--border-subtle); }
-    .eh-faq-q {
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%;
-      background: none; border: none; text-align: left; cursor: pointer; padding: 1.3rem 0;
-      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.98rem; color: var(--text-primary);
+    /* PROGRAM */
+    .program-title { margin-bottom: 0.3rem; letter-spacing: 0.01em; }
+    .program-kicker { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: var(--gold-bright); }
+    .program-where { margin: 0.2rem 0 1.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--muted); }
+    .program-start { font-weight: 600; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.2; color: var(--gold-bright); }
+    .program-note { margin-top: 0.25rem; color: var(--muted); }
+    .schedule { width: 100%; border-collapse: collapse; text-align: left; }
+    .schedule th { padding: 0 1rem 0.6rem 0; font-family: var(--mono); font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line-mid); }
+    .schedule td { padding: 1rem 1rem 1rem 0; vertical-align: top; border-bottom: 1px solid var(--line); }
+    .schedule-time { width: 8.2rem; font-family: var(--mono); font-size: 0.86rem; white-space: nowrap; color: var(--gold-bright); }
+    .schedule-guest { width: 24%; }
+    .schedule-guest strong { display: block; font-weight: 600; }
+    .schedule-guest span { display: block; font-size: 0.84rem; color: var(--muted); }
+    .schedule-session strong { display: block; margin-bottom: 0.15rem; font-family: var(--serif); font-weight: 600; font-size: 1.22rem; line-height: 1.2; }
+    .schedule-session span { display: block; color: var(--muted); font-size: 0.95rem; line-height: 1.45; }
+    .schedule tr.is-pause td { background: rgba(201,168,76,0.06); }
+    .schedule tr.is-pause .schedule-time { padding-left: 0.6rem; }
+    @media (max-width: 720px) {
+      .schedule thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+      .schedule, .schedule tbody, .schedule tr, .schedule td { display: block; width: auto; }
+      .schedule tr { padding: 0.95rem 0; border-bottom: 1px solid var(--line-mid); }
+      .schedule td { padding: 0; border: 0; }
+      .schedule-time { margin-bottom: 0.3rem; }
+      .schedule-guest { margin-bottom: 0.35rem; }
+      .schedule tr.is-pause { padding-inline: 0.7rem; background: rgba(201,168,76,0.06); }
+      .schedule tr.is-pause td { background: none; }
+      .schedule tr.is-pause .schedule-time { padding-left: 0; }
     }
-    .eh-faq-q-plus { flex-shrink: 0; width: 20px; height: 20px; position: relative; }
-    .eh-faq-q-plus::before, .eh-faq-q-plus::after { content: ''; position: absolute; background: var(--gold); transition: transform 0.25s ease; }
-    .eh-faq-q-plus::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
-    .eh-faq-q-plus::after { left: 50%; top: 0; width: 1px; height: 100%; transform: translateX(-50%); }
-    .eh-faq-item.open .eh-faq-q-plus::after { transform: translateX(-50%) rotate(90deg); opacity: 0; }
-    .eh-faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .eh-faq-a p { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; padding-bottom: 1.4rem; max-width: 640px; }
 
-    /* FOOTER */
-    footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 3.5rem 1.5rem 2.5rem; text-align: center; }
-    .eh-foot-brand { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.2em; color: var(--text-primary); margin-bottom: 1.3rem; }
-    .eh-foot-disclaimer { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.8rem; color: var(--text-tertiary); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
-    .eh-foot-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.2rem; padding-top: 1.8rem; border-top: 1px solid var(--border-subtle); max-width: 560px; margin: 0 auto; }
-    .eh-foot-bottom span { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
-    .eh-foot-bottom a { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; }
-    .eh-foot-bottom a:hover { color: var(--gold-bright); }
+    /* SPEAKERI */
+    .previews { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2.5vw, 1.75rem); margin: 0.5rem 0 2.25rem; }
+    @media (max-width: 860px) { .previews { grid-template-columns: repeat(2, 1fr); } }
+    .preview { text-align: center; }
+    .preview-photo { width: 92px; height: 92px; margin: 0 auto 0.75rem; border-radius: 50%; }
+    .preview-photo .portrait-empty { font-size: 1.5rem; }
+    .preview-name { font-weight: 600; font-size: 1.02rem; line-height: 1.25; }
+    .preview-role { margin-top: 0.15rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; line-height: 1.4; color: var(--gold-bright); }
+    .preview-topic { margin-top: 0.5rem; font-family: var(--serif); font-weight: 600; font-size: 1.08rem; line-height: 1.2; }
+    .preview-bio { margin-top: 0.25rem; font-size: 0.86rem; line-height: 1.4; color: var(--muted); }
+    .link-btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0.6rem 1.6rem; font-weight: 500; color: var(--gold-bright); text-decoration: none; border: 1px solid var(--line-mid); border-radius: 100px; transition: border-color 0.2s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease; }
+    .link-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.07); transform: translateY(-2px); }
+    .link-btn:active { transform: none; }
 
-    [data-reveal] { opacity: 0; transform: translateY(26px); }
-    [data-reveal].is-visible { opacity: 1; transform: translateY(0); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    /* FINAL */
+    .final { position: relative; z-index: 3; min-height: 100svh; display: flex; align-items: center; padding: calc(var(--nav-h) + 2rem) clamp(1.25rem, 4vw, 3rem) calc(var(--bar-h) + 2rem); }
+    .final-grid { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-shadow: 0 1px 14px rgba(0,0,0,0.7); }
+    .final-lines { width: 24%; min-width: 170px; font-family: var(--serif); font-style: italic; font-size: clamp(1.5rem, 2.7vw, 2.5rem); line-height: 1.1; color: var(--cream); }
+    .final-main { width: 24%; min-width: 210px; text-align: right; }
+    .final-title { margin-bottom: 0.8rem; font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 2.9vw, 2.9rem); line-height: 1; }
+    .final-title span { display: block; font-style: italic; font-size: 0.56em; color: var(--muted); margin-bottom: 0.2rem; }
+    .final-title em { font-style: italic; color: var(--gold-bright); }
+    .final-meta { font-family: var(--mono); font-size: 0.66rem; line-height: 1.6; letter-spacing: 0.06em; color: var(--cream); margin-bottom: 1.2rem; }
+    .final .btn { margin-left: auto; }
+    .stack .final { align-items: flex-end; text-align: center; }
+    .stack .final-grid { display: block; }
+    .stack .final-lines { width: auto; margin-bottom: 0.6rem; }
+    .stack .final-main { width: auto; text-align: center; }
+    .stack .final .btn { margin: 0 auto; }
+    :root:not(.has3d) .final-grid { display: block; }
   </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<nav id="navbar">
-  <a href="index.html" class="nav-logo" aria-label="Profit District - acasă">
-    <span class="nav-logo-text">PROFIT DISTRICT</span>
-  </a>
-  <div class="nav-right">
-    <a href="#experienta" class="nav-link">Experiența</a>
-    <a href="#bilet" class="nav-ticket">Acces · 10 € <span class="eh-arrow">↗</span></a>
-  </div>
+<nav class="nav" aria-label="Eveniment">
+  <a href="index.html" class="nav-logo">PROFIT DISTRICT</a>
+  <ul class="nav-links">
+    <li><a href="dincolo-de-aparente.html" aria-current="page">Eveniment</a></li>
+    <li class="nav-optional"><a href="#programul">Programul</a></li>
+    <li><a href="speakeri-dincolo-de-aparente.html">Speakeri confirmați</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<section class="eh-hero">
-  <div class="eh-hero-glow" aria-hidden="true"></div>
-  <div class="eh-hero-beam" aria-hidden="true"></div>
-  <span class="eh-hero-vertical" aria-hidden="true">Dincolo de aparențe / Profit District</span>
-  <div class="eh-hero-grid">
-    <div data-reveal>
-      <p class="eh-eyebrow">Un eveniment Profit District · Cluj 2026</p>
-      <p class="eh-pretitle">ne întâlnim</p>
-      <h1 class="eh-title">Dincolo de <em>aparențe.</em></h1>
-      <p class="eh-subhead">Pune-ți banii la treabă.</p>
-      <p class="eh-meta">29 Noiembrie 2026 <span class="dot">·</span> Cluj <span class="dot">·</span> Copy Trading</p>
-      <p class="eh-venue">Grand Hotel Napoca</p>
-      <a href="#bilet" class="eh-cta">Rezervă-ți locul <span class="eh-arrow">↗</span></a>
-      <p class="eh-tagline">O întâlnire live. Întrebări reale. Perspective noi.</p>
-    </div>
-    <div class="eh-emblem" data-reveal aria-hidden="true">
-      <div class="eh-emblem-sphere">
-        <div class="eh-ring eh-ring-1"></div>
-        <div class="eh-ring eh-ring-2"></div>
-        <div class="eh-ring eh-ring-3"></div>
-      </div>
-      <div class="eh-emblem-center">
-        <span class="eh-emblem-num">29</span>
-        <span class="eh-emblem-sub">Noiembrie · Cluj</span>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="backdrop" aria-hidden="true">
+  <div class="bd bd-a" id="bd-a"><i id="bd-dusk"></i><i id="bd-night"></i><i id="bd-dawn"></i></div>
+  <div class="bd bd-b" id="bd-b"></div>
+  <div class="bd-h" id="bd-h"></div>
+</div>
+<div class="stage" id="stage" aria-hidden="true">
+  <canvas id="scene"></canvas>
+  <div class="scrim" id="scrim"></div>
+  <div class="seam" id="seam"></div>
+</div>
+<div class="rail" id="rail" aria-hidden="true"><span class="rail-fill"></span><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i><i style="left:100%"></i></div>
 
-<!-- 01 / DINCOLO DE PROMISIUNI — PROGRAM -->
-<section class="eh-section" id="experienta">
-  <div class="eh-inner">
-    <div data-reveal style="text-align:center;">
-      <p class="eh-sec-label">01 / Dincolo de promisiuni</p>
-    </div>
-    <div class="eh-program-card" data-reveal>
-      <h2 class="eh-sec-heading">Agenda se conturează.</h2>
-      <p class="eh-program-note"><em>Programul complet și invitațiile se dezvăluie în curând.</em></p>
-      <div class="eh-program-includes">
-        <span>Prezentări</span>
-        <span>Sesiuni interactive</span>
-        <span>Coffee break</span>
-        <span>Networking</span>
+<div class="shell">
+<main>
+  <section class="hero" id="hero">
+    <div class="hero-copy" id="hero-copy">
+      <p class="hero-eyebrow">UN EVENIMENT PROFIT DISTRICT · CLUJ 2026</p>
+      <p class="hero-pre">ne întâlnim</p>
+      <h1 class="title">Dincolo de <em>aparențe.</em></h1>
+      <p class="hero-slogan">Pune-ți banii la treabă.</p>
+      <p class="hero-lead">Vrei să investești, dar nu știi de unde să începi?</p>
+      <p class="hero-text">Într-o singură zi afli de la zero: ce platforme să folosești, cum să începi de la zero, ce riscuri îți asumi și cum ajungi la cele mai bune rezultate când vine vorba de piețele financiare.</p>
+      <ul class="facts">
+        <li><span>Când</span><b>Duminică, 29 noiembrie 2026</b><i>10:00 – 15:15</i></li>
+        <li><span>Unde</span><b>Grand Hotel Napoca</b><i>Cluj-Napoca</i></li>
+      </ul>
+      <div class="hero-actions">
+        <button type="button" class="btn inline" data-open-book>Rezervă-ți locul</button>
+        <a class="btn-ghost" href="#programul">Vezi programul</a>
+        <a class="btn-ghost" href="#speakeri">Vezi speakerii</a>
       </div>
-      <div class="eh-program-lock-wrap" aria-hidden="true">
-        <span class="eh-program-lock-bg">Curând</span>
-        <div class="eh-program-lock">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </div>
+  </section>
+
+  <section class="beat" data-beat="1">
+    <div class="beat-text">
+      <p class="sr-only">Două persoane, fiecare în lumea ei, privesc informații despre piețele financiare.</p>
+      <div class="say c">
+        <h2 class="beat-center">Aceeași curiozitate.</h2>
+        <p class="beat-center">Două moduri de a participa.</p>
+        <div class="beat-tags"><span class="tag">Tranzacționezi tu</span><span class="tag b">Copiezi un trader</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="beat" data-beat="2">
+    <div class="beat-text" style="--ya:18%;--yb:68%">
+      <p class="sr-only">Prima persoană deschide materiale de studiu, scrie în caiet și analizează un grafic. A doua consultă profilul unei strategii: istoricul, perioadele de pierdere, riscul și costurile.</p>
+      <div class="say a"><span class="tag">Tranzacționezi tu</span><h2 class="beat-line">Înveți să iei fiecare decizie.</h2></div>
+      <div class="say b"><span class="tag b">Copiezi un trader</span><h2 class="beat-line">Alegi ale cui tranzacții să le urmărești.</h2></div>
+    </div>
+  </section>
+
+  <section class="rubric section" data-hold="2.4" id="programul" aria-labelledby="program-title">
+    <div class="inner">
+      <p class="label">Programul evenimentului</p>
+      <h2 class="lead-heading program-title" id="program-title">DINCOLO DE APARENȚE</h2>
+      <p class="program-kicker">O conferință Profit District</p>
+      <p class="program-where">29 noiembrie 2026 · Grand Hotel Napoca · Cluj-Napoca</p>
+      <div id="program"></div>
+    </div>
+  </section>
+
+  <section class="beat long" data-beat="3">
+    <div class="beat-text" style="--ya:64%;--yb:18%">
+      <p class="sr-only">Ceasul avansează, iar prima persoană studiază, testează și își revizuiește notițele. A doua stabilește suma alocată, activează copierea, pune telefonul deoparte și petrece timp cu cineva apropiat.</p>
+      <div class="say a"><span class="tag">Tranzacționezi tu</span><h2 class="beat-line">Construiești propria experiență.</h2></div>
+      <div class="say b"><span class="tag b">Copiezi un trader</span><h2 class="beat-line">Integrezi experiența altcuiva în propriile alegeri.</h2></div>
+    </div>
+  </section>
+
+  <section class="rubric section" data-hold="3.6" id="pentru-cine" aria-labelledby="fit-title">
+    <div class="inner">
+      <p class="label">Pentru cine este</p>
+      <h2 class="lead-heading" id="fit-title">E pentru tine dacă:</h2>
+      <div class="fit simple">
+        <ul class="ticks">
+          <li>Vrei să investești, dar nu știi de unde să începi.</li>
+          <li>Cauți surse de venit pasiv online, dar vrei să vezi cu ochii tăi ce presupune.</li>
+          <li>Ai auzit de trading sau copy trading și vrei să înțelegi ce înseamnă.</li>
+          <li>Vrei să pui întrebări unor oameni, față în față, nu să cauți răspunsuri pe internet.</li>
+        </ul>
+        <div>
+          <p class="note"><strong>Nu ai nevoie de experiență</strong>Nu trebuie să știi nimic despre trading sau investiții.</p>
+          <p class="note"><strong>Nu e pentru tine dacă</strong>Cauți bani rapizi sau câștiguri garantate. Aici nu promitem așa ceva.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 03 / NE VEDEM ÎN CLUJ -->
-<section class="eh-section">
-  <div class="eh-inner">
-    <div class="eh-sec-grid" data-reveal>
+  <section class="beat" data-beat="4">
+    <div class="beat-text" style="--ya:16%;--yb:18%">
+      <p class="sr-only">Prima persoană analizează și execută manual o tranzacție. A doua vede o tranzacție executată în contul traderului și reprodusă în contul conectat.</p>
+      <div class="say a"><span class="tag">Tranzacționezi tu</span><h2 class="beat-line">Tu analizezi. Tu execuți.</h2></div>
+      <div class="say b"><span class="tag b">Copiezi un trader</span><h2 class="beat-line">Traderul execută. Contul tău copiază.</h2></div>
+      <p class="say sub beat-sub">Copierea este automată. Alegerea strategiei și monitorizarea rămân responsabilitatea ta.</p>
+    </div>
+  </section>
+
+  <section class="beat short" data-beat="5">
+    <div class="beat-text">
+      <p class="sr-only">Piața scade în ambele lumi. Prima persoană consultă regulile de risc și jurnalul. A doua verifică evoluția strategiei și expunerea contului.</p>
+      <div class="say c"><h2 class="beat-center">Indiferent de drum, riscul face parte din poveste.</h2></div>
+    </div>
+  </section>
+
+  <section class="rubric section" data-hold="5.25" id="speakeri" aria-labelledby="sp-title">
+    <div class="inner">
+      <p class="label">Speakeri confirmați</p>
+      <h2 class="lead-heading" id="sp-title">Cine vorbește</h2>
+      <ul class="previews" id="speaker-preview"></ul>
+      <a class="link-btn" href="speakeri-dincolo-de-aparente.html">Descoperă speakerii</a>
+    </div>
+  </section>
+
+  <section class="beat" data-beat="6">
+    <div class="beat-text">
+      <p class="sr-only">Cele două lumi se apropie și devin o singură sală de eveniment, unde ajung ambele persoane.</p>
+      <div class="say c">
+        <p class="beat-center">Poți veni să înveți.</p>
+        <p class="beat-center">Poți veni să înțelegi cum funcționează copierea.</p>
+        <p class="beat-center">Poți veni cu întrebările tale.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rubric section" data-hold="6.3" id="eveniment">
+    <div class="inner event-grid">
       <div>
-        <p class="eh-sec-label">02 / Ne vedem în Cluj</p>
-        <h2 class="eh-sec-heading">O zi, trei perspective.</h2>
-        <div class="eh-sec-body" style="margin-top: 1.5rem;">
-          <p>O întâlnire despre bani, alegeri și oamenii din spatele rezultatelor. Experiențe reale, întrebări puse direct și perspective care te ajută să privești diferit propriile decizii financiare.</p>
-        </div>
-        <div class="eh-event-detail">
+        <p class="label">Ne vedem în Cluj</p>
+        <h2 class="heading">O zi, trei perspective.</h2>
+        <p class="event-body">O întâlnire despre bani, alegeri și oamenii din spatele rezultatelor. Experiențe reale, întrebări puse direct și perspective care te ajută să privești diferit propriile decizii financiare.</p>
+        <div class="event-facts">
           <p>29 noiembrie 2026 · Cluj</p>
           <p>Grand Hotel Napoca</p>
-          <p>Ora de începere va fi anunțată.</p>
+          <p>Ora de începere: 10:00</p>
         </div>
       </div>
-      <div class="eh-ticket-card" id="bilet">
-        <div class="eh-ticket-top">
-          <span>Acces la eveniment</span>
-          <span>29.11.2026</span>
-        </div>
-        <div class="eh-ticket-price"><strong>10</strong><span>€</span></div>
-        <p class="eh-ticket-sub">Preț / persoană</p>
-        <div class="eh-ticket-check">
-          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Acces la prezentările evenimentului</div>
-          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sesiuni de întrebări și răspunsuri</div>
-          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Networking cu participanții</div>
-          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Coffee break și gustări</div>
-        </div>
-        <label class="eh-consent" id="eh-consent-wrap">
-          <input type="checkbox" class="eh-consent-box" id="eh-consent">
-          <span class="eh-consent-label">
-            Sunt de acord cu prelucrarea datelor mele personale conform
-            <a href="politica-confidentialitate.html" target="_blank">Politicii de Confidențialitate</a>
-            și sunt de acord să fiu filmat(ă) și fotografiat(ă) în timpul evenimentului, iar materialele să fie folosite de Profit District în scop promoțional.
-          </span>
-        </label>
-        <a href="https://buy.stripe.com/9B6eVeckheoFafE78s24004" target="_blank" rel="noopener noreferrer" class="eh-ticket-btn" id="eh-pay-btn" aria-disabled="true" aria-describedby="eh-consent-wrap">Rezervă-ți locul <span class="eh-arrow">↗</span></a>
-        <p class="eh-ticket-note">Locuri limitate. Accesul se confirmă în urma plății.</p>
+      <ol class="perspectives">
+        <li>Relația cu banii și deciziile personale.</li>
+        <li>Tradingul și oamenii din spatele strategiilor.</li>
+        <li>Copy tradingul și perspectiva celui care copiază.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="final" id="final">
+    <div class="final-grid">
+      <p class="final-lines">Două drumuri.<br>Aceeași întâlnire.</p>
+      <div class="final-main">
+        <h2 class="final-title"><span>ne întâlnim</span>Dincolo de <em>aparențe.</em></h2>
+        <p class="final-meta">29 noiembrie 2026 · Grand Hotel Napoca · Cluj</p>
+        <button type="button" class="btn inline" data-open-book>Rezervă-ți locul</button>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="eh-section on-surface">
-  <div class="eh-inner">
-    <div class="eh-sec-grid" data-reveal>
-      <div>
-        <p class="eh-sec-label">Bine de știut</p>
-        <h2 class="eh-sec-heading">Întrebările de început.</h2>
-      </div>
-      <div>
-        <div class="eh-faq-item">
-          <button class="eh-faq-q"><span>Trebuie să am experiență în trading?</span><span class="eh-faq-q-plus"></span></button>
-          <div class="eh-faq-a"><p>Nu trebuie să ai experiență în trading sau investiții pentru a participa.</p></div>
-        </div>
-        <div class="eh-faq-item">
-          <button class="eh-faq-q"><span>Unde are loc evenimentul?</span><span class="eh-faq-q-plus"></span></button>
-          <div class="eh-faq-a"><p>La Grand Hotel Napoca, în Cluj, pe 29 noiembrie 2026. Ora de începere și programul complet vor fi publicate ulterior.</p></div>
-        </div>
-        <div class="eh-faq-item">
-          <button class="eh-faq-q"><span>Ce include biletul de 10 €?</span><span class="eh-faq-q-plus"></span></button>
-          <div class="eh-faq-a"><p>Acces la prezentări, sesiuni de întrebări și răspunsuri, coffee break și gustări, și networking. Un program detaliat va urma.</p></div>
-        </div>
+  </section>
+  <section class="solid alt section" id="intrebari" aria-labelledby="faq-title">
+    <div class="inner simple">
+      <p class="label">Întrebări</p>
+      <h2 class="lead-heading" id="faq-title">Întrebări simple, răspunsuri simple</h2>
+      <div class="faq">
+        <details><summary>Trebuie să știu trading?</summary><p>Nu. Nu ai nevoie de experiență în trading sau investiții ca să participi.</p></details>
+        <details><summary>Ce include biletul de 10 €?</summary><p>Acces la prezentări, sesiuni de întrebări și răspunsuri, networking cu participanții, coffee break și gustări.</p></details>
+        <details><summary>Pot pierde bani cu copy trading?</summary><p>Da. Copierea e automată, dar pierderile sunt posibile. Performanțele trecute nu garantează rezultate viitoare.</p></details>
+        <details><summary>Unde și când are loc?</summary><p>Duminică, 29 noiembrie 2026, de la ora 10:00, la Grand Hotel Napoca, în Cluj.</p></details>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer role="contentinfo">
-  <p class="eh-foot-brand">PROFIT DISTRICT</p>
-  <p class="eh-foot-disclaimer">Evenimentul are scop informativ și educațional. Copy tradingul implică riscuri, inclusiv pierderea capitalului. Rezultatele anterioare nu garantează rezultate viitoare. Deciziile de investiție îți aparțin.</p>
-  <div class="eh-foot-bottom">
-    <span>29 Noiembrie · Cluj · Grand Hotel Napoca · 10 €</span>
-    <a href="#bilet">Vezi biletul <span class="eh-arrow">↗</span></a>
-  </div>
+</main>
+
+<footer class="foot">
+  <p class="foot-brand">PROFIT DISTRICT</p>
+  <p class="foot-risk">Copy tradingul implică risc de pierdere a capitalului. Performanțele trecute nu garantează rezultate viitoare.</p>
 </footer>
+</div>
 
-<script>
-(function () {
-  var navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 40) navbar.classList.add('scrolled');
-    else navbar.classList.remove('scrolled');
-  }, { passive: true });
+<aside class="book" id="book" aria-label="Acces la eveniment" tabindex="-1">
+  <noscript><p>10 € / persoană. Pentru rezervare este necesar JavaScript.</p></noscript>
+</aside>
+<div class="book-backdrop" id="book-backdrop"></div>
+<div class="book-bar">
+  <span>10 € / persoană</span>
+  <button type="button" class="btn" data-open-book>Rezervă-ți locul</button>
+</div>
 
-  /* Consimțământ înainte de plată */
-  var consent = document.getElementById('eh-consent');
-  var consentWrap = document.getElementById('eh-consent-wrap');
-  var payBtn = document.getElementById('eh-pay-btn');
-  consent.addEventListener('change', function () {
-    payBtn.setAttribute('aria-disabled', consent.checked ? 'false' : 'true');
-    if (consent.checked) consentWrap.classList.remove('eh-error');
-  });
-  payBtn.addEventListener('click', function (e) {
-    if (consent.checked) {
-      /* Meta Pixel — există doar dacă vizitatorul a acceptat cookies de marketing */
-      if (typeof window.fbq === 'function') {
-        window.fbq('track', 'InitiateCheckout', { value: 10, currency: 'EUR', content_name: 'Dincolo de aparențe', num_items: 1 });
-      }
-      return;
-    }
-    e.preventDefault();
-    consentWrap.classList.add('eh-error');
-    consentWrap.classList.remove('eh-shake');
-    void consentWrap.offsetWidth;
-    consentWrap.classList.add('eh-shake');
-    consent.focus();
-  });
-
-  /* FAQ accordion */
-  document.querySelectorAll('.eh-faq-item').forEach(function (item) {
-    var btn = item.querySelector('.eh-faq-q');
-    var answer = item.querySelector('.eh-faq-a');
-    btn.addEventListener('click', function () {
-      var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.eh-faq-item.open').forEach(function (openItem) {
-        if (openItem !== item) {
-          openItem.classList.remove('open');
-          openItem.querySelector('.eh-faq-a').style.maxHeight = null;
-        }
-      });
-      item.classList.toggle('open', !isOpen);
-      answer.style.maxHeight = !isOpen ? answer.scrollHeight + 'px' : null;
-    });
-  });
-
-  /* Reveal on scroll */
-  var revealEls = document.querySelectorAll('[data-reveal]');
-  if (revealEls.length) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    revealEls.forEach(function (el) { observer.observe(el); });
-  }
-})();
-</script>
-
+<script src="dda/content.js"></script>
+<script src="dda/shared.js"></script>
+<script type="module" src="dda/story.js" onerror="document.documentElement.classList.remove('has3d')"></script>
 </body>
 </html>
