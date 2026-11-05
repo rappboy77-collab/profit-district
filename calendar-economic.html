@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="cookie-consent.js"></script>
+  <script>(function(){var d=document.documentElement;try{var c=document.createElement('canvas');if(c.getContext('webgl2')||c.getContext('webgl'))d.classList.add('home3d');}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
   <title>Calendar Economic — Profit District</title>
@@ -144,8 +145,11 @@
     .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.67rem; color: var(--text-tertiary); margin-bottom: 1rem; }
     .footer-disclaimer { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.75rem; color: var(--text-tertiary); max-width: 620px; margin: 0 auto; line-height: 1.65; }
   </style>
+  <link rel="stylesheet" href="home3d/home.css">
+  <link rel="stylesheet" href="home3d/pages.css">
 </head>
 <body>
+<canvas id="home-scene" data-route="1,2.2" aria-hidden="true"></canvas>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -159,11 +163,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html#community">Despre Noi</a></li>
     <li><a href="copytrading.html">Copytrading</a></li>
-    <li><a href="index.html#mentori">Mentori</a></li>
     <li><a href="index.html#educatie">Educație</a></li>
     <li><a href="index.html#webinar">Webinar</a></li>
     <li><a href="evenimente.html">Evenimente</a></li>
-    <li><a href="concurs.html">Concurs</a></li>
     <li><a href="resurse.html" class="nav-active">Resurse</a></li>
     <li><a href="index.html#apply-form" class="nav-cta">Aplică Acum</a></li>
   </ul>
@@ -269,5 +271,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<script type="module" src="home3d/scene.js" onerror="document.documentElement.classList.remove('home3d')"></script>
 </body>
 </html>

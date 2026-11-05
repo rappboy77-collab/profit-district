@@ -1,0 +1,13 @@
+/* Paginile secundare: orașul stă în spate, secțiunile devin voaluri care lasă scena să se vadă între ele. */
+.home3d section, .home3d main { position: relative; z-index: 1; }
+.home3d .hero { background: radial-gradient(ellipse 72% 62% at 50% 52%, rgba(7, 7, 6, 0.72), rgba(7, 7, 6, 0.3) 66%, transparent 100%); }
+.home3d .hero-glow { display: none; }
+.home3d #intro, .home3d #steps, .home3d #systems-section, .home3d #telegram, .home3d #admin-support, .home3d #community-cta {
+  background: linear-gradient(to bottom, rgba(7, 7, 6, 0.08) 0, rgba(7, 7, 6, 0.56) 6rem, rgba(7, 7, 6, 0.56) calc(100% - 6rem), rgba(7, 7, 6, 0.08) 100%);
+}
+.home3d .page-wrap { background: radial-gradient(ellipse 64% 26% at 50% 19%, rgba(7, 7, 6, 0.74), transparent 100%); }
+.home3d .page-title, .home3d .page-subtitle, .home3d .section-label, .home3d .back-link, .home3d .hero h1, .home3d .hero p { text-shadow: 0 1px 16px rgba(0, 0, 0, 0.92); }
+.home3d .page-subtitle { color: var(--text-primary); }
+.home3d #intro p, .home3d #steps p, .home3d #steps h3, .home3d #telegram p, .home3d #admin-support p, .home3d #community-cta p, .home3d #intro h2, .home3d #steps h2, .home3d #systems-section h2, .home3d #systems-section > div > p, .home3d #telegram h2, .home3d #admin-support h2, .home3d #community-cta h2 { text-shadow: 0 1px 14px rgba(0, 0, 0, 0.95), 0 0 3px rgba(0, 0, 0, 0.6); }
+.home3d .calc-card { background: rgba(14, 14, 16, 0.92); }
+.home3d .calc-disclaimer { color: var(--text-secondary); text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95); }

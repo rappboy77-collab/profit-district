@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="cookie-consent.js"></script>
+  <script>(function(){var d=document.documentElement;try{var c=document.createElement('canvas');if(c.getContext('webgl2')||c.getContext('webgl'))d.classList.add('home3d');}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
   <title>Copytrading — Profit District</title>
@@ -304,8 +305,11 @@
     [data-reveal] { opacity: 0; transform: translateY(28px); }
     [data-reveal].is-visible { opacity: 1; transform: translateY(0); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
   </style>
+  <link rel="stylesheet" href="home3d/home.css">
+  <link rel="stylesheet" href="home3d/pages.css">
 </head>
 <body>
+<canvas id="home-scene" data-route="0,13" aria-hidden="true"></canvas>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -319,11 +323,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html#community">Despre Noi</a></li>
     <li><a href="copytrading.html" class="nav-active">Copytrading</a></li>
-    <li><a href="index.html#mentori">Mentori</a></li>
     <li><a href="index.html#educatie">Educație</a></li>
     <li><a href="index.html#webinar">Webinar</a></li>
     <li><a href="evenimente.html">Evenimente</a></li>
-    <li><a href="concurs.html">Concurs</a></li>
     <li><a href="resurse.html">Resurse</a></li>
     <li><a href="index.html#apply-form" class="nav-cta">Aplică Acum</a></li>
   </ul>
@@ -870,5 +872,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<script type="module" src="home3d/scene.js" onerror="document.documentElement.classList.remove('home3d')"></script>
 </body>
 </html>

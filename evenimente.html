@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="cookie-consent.js"></script>
+  <script>(function(){var d=document.documentElement;try{var c=document.createElement('canvas');if(c.getContext('webgl2')||c.getContext('webgl'))d.classList.add('home3d');}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
   <title>Evenimente — Profit District</title>
@@ -131,9 +132,18 @@
     .footer-legal-col a:hover { color: var(--gold); }
     .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.67rem; color: var(--text-tertiary); margin-bottom: 1rem; }
     .footer-disclaimer { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 0.75rem; color: var(--text-tertiary); max-width: 620px; margin: 0 auto; line-height: 1.65; }
+    .ic-locked { position: relative; max-width: 720px; margin: 2rem auto 0; }
+    .ic-lock { position: absolute; z-index: 2; top: 4.6rem; right: 3.25rem; width: 68px; height: 68px; display: grid; place-items: center; border-radius: 50%; color: #e2bf6a; background: radial-gradient(circle at 35% 28%, #241d0e, #0c0b08 72%); border: 1px solid rgba(201, 168, 76, 0.6); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.07); }
+    .ic-lock::after { content: ''; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid rgba(201, 168, 76, 0.7); animation: ic-lock-pulse 2.6s ease-out infinite; will-change: transform, opacity; }
+    @keyframes ic-lock-pulse { 0% { transform: scale(1); opacity: 0.7; } 70%, 100% { transform: scale(1.42); opacity: 0; } }
+    @media (max-width: 620px) { .ic-lock { top: 5.2rem; right: 1.25rem; width: 54px; height: 54px; } .ic-lock svg { width: 22px; height: 22px; } }
+    @media (prefers-reduced-motion: reduce) { .ic-lock::after { animation: none; opacity: 0; } }
   </style>
+  <link rel="stylesheet" href="home3d/home.css">
+  <link rel="stylesheet" href="home3d/pages.css">
 </head>
 <body>
+<canvas id="home-scene" data-route="6,7.3" aria-hidden="true"></canvas>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56C8N9K7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -147,11 +157,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html#community">Despre Noi</a></li>
     <li><a href="copytrading.html">Copytrading</a></li>
-    <li><a href="index.html#mentori">Mentori</a></li>
     <li><a href="index.html#educatie">Educație</a></li>
     <li><a href="index.html#webinar">Webinar</a></li>
     <li><a href="evenimente.html" class="nav-active">Evenimente</a></li>
-    <li><a href="concurs.html">Concurs</a></li>
     <li><a href="resurse.html">Resurse</a></li>
     <li><a href="index.html#apply-form" class="nav-cta">Aplică Acum</a></li>
   </ul>
@@ -195,7 +203,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </a>
 
   <!-- INNER CIRCLE CARD (coming soon — not yet open) -->
-  <a href="inner-circle.html" style="position:relative;display:block;max-width:720px;margin:2rem auto 0;background:#111113;border:1px solid rgba(201,168,76,0.16);border-radius:12px;overflow:hidden;text-decoration:none;filter:grayscale(0.55) brightness(0.82);transition:border-color .25s,transform .2s,box-shadow .2s,filter .25s;box-shadow:0 4px 32px rgba(0,0,0,0.4)" onmouseover="this.style.borderColor='rgba(201,168,76,0.35)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 48px rgba(0,0,0,0.5)';this.style.filter='grayscale(0.3) brightness(0.9)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.16)';this.style.transform='none';this.style.boxShadow='0 4px 32px rgba(0,0,0,0.4)';this.style.filter='grayscale(0.55) brightness(0.82)'">
+  <div class="ic-locked">
+    <div class="ic-lock" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15v2"/></svg>
+    </div>
+  <div style="position:relative;display:block;margin:0;background:#111113;border:1px solid rgba(201,168,76,0.16);border-radius:12px;overflow:hidden;filter:grayscale(0.55) brightness(0.82);box-shadow:0 4px 32px rgba(0,0,0,0.4);cursor:not-allowed">
     <!-- Coming soon ribbon -->
     <div style="position:absolute;top:14px;right:-38px;transform:rotate(40deg);background:rgba(10,10,11,0.9);border-top:1px solid rgba(201,168,76,0.4);border-bottom:1px solid rgba(201,168,76,0.4);padding:.3rem 2.75rem;font-family:'DM Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#c9a84c;z-index:1">Înscrieri închise</div>
     <!-- Gold header bar -->
@@ -208,13 +220,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <!-- Details -->
     <div style="padding:1.75rem 2.5rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between">
-      <span style="font-family:'Outfit',sans-serif;font-weight:300;font-size:.82rem;color:#5c5848">Următoarea ediție nu are încă dată, locație sau înscrieri deschise.</span>
-      <div style="display:flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#8a6e2f">
-        Vezi mai multe
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </div>
+      <span style="font-family:'Outfit',sans-serif;font-weight:300;font-size:.82rem;color:#b5ad96">Următoarea ediție nu are încă dată, locație sau înscrieri deschise.</span>
     </div>
-  </a>
+  </div>
+  </div>
 </main>
 
 <footer role="contentinfo">
@@ -285,5 +294,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<script type="module" src="home3d/scene.js" onerror="document.documentElement.classList.remove('home3d')"></script>
 </body>
 </html>

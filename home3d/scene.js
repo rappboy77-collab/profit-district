@@ -514,11 +514,18 @@ if (!lowEnd) {
 /* ---------- legarea de scroll ---------- */
 const SECTION_IDS = ['hero', 'social-proof', 'proces', 'educatie', 'systems', 'webinar', 'community', 'final-cta'];
 const sections = SECTION_IDS.map((id) => document.getElementById(id));
+/* paginile fără secțiunile primei pagini își parcurg propriul traseu: data-route="start,final" */
+const route = canvas.dataset.route ? canvas.dataset.route.split(',').map(Number) : null;
 const headers = [...document.querySelectorAll('.section-header')];
 let anchors = [], vh = 1, W = 1, H = 1, lastW = 0, lastH = 0, headerBoxes = [];
 function computeAnchors() {
   vh = window.innerHeight;
   const sc = window.scrollY;
+  headerBoxes = headers.map((h) => { const r = h.getBoundingClientRect(); return { el: h, top: r.top + sc, h: r.height }; });
+  if (route) {
+    anchors = [[0, route[0]], [Math.max(document.documentElement.scrollHeight - vh, 1), route[1]]];
+    return;
+  }
   const ys = [];
   sections.forEach((s) => {
     const r = s.getBoundingClientRect();
@@ -526,11 +533,10 @@ function computeAnchors() {
     ys.push(Math.max(top - vh * 0.15, 0), Math.max(top + r.height - vh * 0.85, top - vh * 0.14));
   });
   anchors = ys.map((y, i) => [i === 0 ? 0 : Math.max(y, ys[i - 1] + 1), i]);
-  headerBoxes = headers.map((h) => { const r = h.getBoundingClientRect(); return { el: h, top: r.top + sc, h: r.height }; });
 }
 function targetT() {
   const y = window.scrollY;
-  if (y <= anchors[0][0]) return 0;
+  if (y <= anchors[0][0]) return anchors[0][1];
   for (let i = 0; i < anchors.length - 1; i++) {
     if (y <= anchors[i + 1][0]) return lerp(anchors[i][1], anchors[i + 1][1], clamp((y - anchors[i][0]) / (anchors[i + 1][0] - anchors[i][0])));
   }
