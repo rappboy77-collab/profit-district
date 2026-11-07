@@ -23,7 +23,7 @@ window.DDA = {
 
   /* photo: cale către imagine, ex. 'images/dincolo-de-aparente/panos.jpg'. Câmpurile goale nu se afișează. */
   speakers: [
-    { name: 'Ana Maria', photo: null, photoAlt: '', role: 'Coach & terapeut', topic: '', bio: 'Relația dintre emoții, convingeri și bani.' },
+    { name: 'Ana Maria', photo: 'images/dincolo-de-aparente/ana-maria.jpg', photoAlt: 'Ana Maria', role: 'Coach & terapeut', topic: '', bio: 'Relația dintre emoții, convingeri și bani.' },
     { name: 'Mihai Tiepac', photo: 'images/dincolo-de-aparente/mihai-tiepac.jpg', photoAlt: 'Mihai Tiepac', role: 'Senior Trader', topic: '', bio: 'După 14 ani în piețele financiare, Mihai vine să ne prezinte rolul fricii în deciziile pe care le luăm despre bani.' },
     { name: 'Panos Markopoulos', photo: 'images/dincolo-de-aparente/panos-markopoulos.jpg', photoAlt: 'Panos Markopoulos', role: '6 figures investor', topic: '', bio: 'Cu un portofoliu ajuns la +900.000$, Panos vine să ne vorbească despre alegerea și diversificarea inteligentă a investițiilor pentru a ajunge la rezultate optime.' },
     { name: 'Andreea Dolin (Hane)', photo: 'images/dincolo-de-aparente/andreea-dolin.jpg', photoAlt: 'Andreea Dolin', role: 'Trader, Mentor, Fondator Profit District', topic: '', bio: 'Fondatoarea Profit District, Andreea aduce perspectiva omului care construiește la intersecția dintre trading, educație și comunitate.' }
