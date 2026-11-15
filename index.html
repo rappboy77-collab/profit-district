@@ -24,7 +24,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -54,6 +54,7 @@
       --gold:             #c9a84c;
       --gold-bright:      #e2bf6a;
       --gold-dim:         #8a6e2f;
+      --gold-muted:       #a48844;
       --gold-glow:        rgba(201,168,76,0.18);
       --gold-glow-soft:   rgba(201,168,76,0.07);
       --gold-glow-mid:    rgba(201,168,76,0.12);
@@ -64,7 +65,7 @@
 
       --text-primary:     #f0ece0;
       --text-secondary:   #a09880;
-      --text-tertiary:    #5c5848;
+      --text-tertiary:    #857f6b;
 
       --border-subtle:    rgba(201,168,76,0.10);
       --border-mid:       rgba(201,168,76,0.22);
@@ -343,7 +344,7 @@
       font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      color: var(--gold-dim);
+      color: var(--gold-muted);
     }
     .field-group input {
       background: var(--bg-elevated);
@@ -394,7 +395,6 @@
     .section-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1.5rem;
     }
     .section-header {
       text-align: center;
@@ -644,6 +644,9 @@
       gap: 0.75rem;
       margin-top: 1.5rem;
     }
+    @media (max-width: 480px) {
+      .hero-community-btns > a { flex: 1 1 100%; }
+    }
 
     .hero-h1 {
       font-family: 'Playfair Display', serif;
@@ -863,23 +866,21 @@
     /* Stats row */
     .stats-row {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
+      justify-content: center;
       padding-top: 3.5rem;
       border-top: 1px solid var(--border-subtle);
-    }
-    @media (min-width: 640px) {
-      .stats-row { flex-direction: row; justify-content: center; gap: 0; }
     }
 
     .stat-item {
       text-align: center;
       padding: 0 3rem;
+      border-right: 1px solid var(--border-subtle);
     }
-    @media (min-width: 640px) {
-      .stat-item { border-right: 1px solid var(--border-subtle); }
-      .stat-item:last-child { border-right: none; }
+    .stat-item:last-child { border-right: none; }
+    @media (max-width: 639px) {
+      .stat-item { flex: 1 1 0; min-width: 0; padding: 0 0.4rem; }
+      .stat-item .stat-number { font-size: 1.7rem; }
+      .stat-item .stat-label { font-size: 0.6rem; letter-spacing: 0.08em; line-height: 1.5; }
     }
     .stat-number {
       display: block;
@@ -1006,6 +1007,7 @@
     }
     @media (min-width: 700px) { .proces-panels { grid-template-columns: 1fr 1fr; } }
     .proces-panel {
+      display: flex; flex-direction: column;
       background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px;
       padding: 2rem; box-shadow: var(--shadow-card);
     }
@@ -1015,6 +1017,11 @@
     }
     .proces-check-2col { display: grid; grid-template-columns: 1fr; gap: 0.65rem; }
     @media (min-width: 480px) { .proces-check-2col { grid-template-columns: 1fr 1fr; } }
+    /* lângă panoul de principii, lista ocupă toată înălțimea cardului */
+    @media (min-width: 700px) {
+      .proces-check-2col { grid-template-columns: 1fr; flex: 1; align-content: space-between; }
+      .proces-check-2col li { font-size: 0.88rem; }
+    }
 
     .proces-principles { display: flex; flex-direction: column; gap: 0.85rem; }
     .proces-principle {
@@ -1233,19 +1240,6 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      font-family: 'Inter', sans-serif;
-    }
-    /* Override all text in CTA to use Inter */
-    #final-cta .section-label,
-    #final-cta h2,
-    #final-cta .urgency-badge,
-    #final-cta .btn-primary,
-    #final-cta .cta-trust {
-      font-family: 'Inter', sans-serif;
-    }
-    #final-cta h2 {
-      letter-spacing: -0.03em;
-      font-weight: 700;
     }
 
     /* ── PulseBeams ── */
@@ -1379,6 +1373,13 @@
       flex-direction: column-reverse;
       align-items: center;
       gap: 0.85rem;
+    }
+    .scroll-ring { width: 100%; height: 100%; }
+    @media (max-width: 640px) {
+      .fixed-actions { bottom: 1rem; right: 1rem; gap: 0.6rem; }
+      .fixed-actions .floating-cta { width: 48px; height: 48px; }
+      .fixed-actions .floating-cta svg { width: 21px; height: 21px; }
+      .fixed-actions #scroll-top { width: 42px; height: 42px; }
     }
 
     /* CTA flotant — puls auriu continuu, mereu vizibil */
@@ -1583,7 +1584,7 @@
       font-size: 0.62rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--gold-muted);
       margin-bottom: 0.2rem;
     }
     .webinar-gdpr-gate { border-top: 1px solid var(--border-subtle); margin-top: 0.25rem; }
@@ -1605,7 +1606,7 @@
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--gold-muted);
       margin-bottom: 0.55rem;
     }
     .footer-legal-col a,
@@ -2991,11 +2992,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function updateLiveState() {
     var now  = new Date();
     var hour = (now.getUTCHours() + UTC_OFFSET) % 24;
+    /* piața Forex e închisă sâmbătă și duminică (ora României); se redeschide luni dimineață cu Tokyo */
+    var day = new Date(now.getTime() + UTC_OFFSET * 3600000).getUTCDay();
+    var weekend = day === 6 || day === 0;
     var clock = document.getElementById('utc-clock');
     if (clock) clock.textContent = String(hour).padStart(2, '0') + ':' + String(now.getUTCMinutes()).padStart(2, '0');
 
     return SESSIONS.map(function (s) {
-      var live = isOpen(s, hour);
+      var live = !weekend && isOpen(s, hour);
       var item = document.querySelector('.session-item[data-session="' + s.id + '"]');
       if (item) {
         item.classList.toggle('is-live', live);
@@ -3084,6 +3088,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 
-<script type="module" src="home3d/scene.js" onerror="document.documentElement.classList.remove('home3d')"></script>
+<script type="module">
+  /* scena nouă e cea implicită; ?scena=veche o arată pe cea dinainte, pentru comparație */
+  const veche = new URLSearchParams(location.search).get('scena') === 'veche';
+  import(veche ? './home3d/scene.js' : './home3d/scene2.js').catch((e) => { console.error(e); document.documentElement.classList.remove('home3d'); });
+</script>
 </body>
 </html>

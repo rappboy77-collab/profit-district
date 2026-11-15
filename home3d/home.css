@@ -12,8 +12,12 @@
 .home3d #hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to right, rgba(7, 7, 6, 0.82), rgba(7, 7, 6, 0.46) 34%, rgba(7, 7, 6, 0.06) 58%); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
 .home3d #social-proof, .home3d #educatie, .home3d #webinar, .home3d #systems, .home3d #community { background: linear-gradient(to bottom, transparent 0, rgba(7, 7, 6, 0.74) 11rem, rgba(7, 7, 6, 0.74) calc(100% - 11rem), transparent 100%); }
 .home3d #proces { background: linear-gradient(to bottom, transparent 0, rgba(7, 7, 6, 0.5) 11rem, rgba(7, 7, 6, 0.5) calc(100% - 11rem), transparent 100%); }
-.home3d #final-cta { background: radial-gradient(ellipse 82% 50% at 50% 50%, rgba(7, 7, 6, 0.82), rgba(7, 7, 6, 0.6) 62%, transparent 100%); }
-.home3d .cta-trust { color: var(--text-secondary); }
+/* finalul paginii stă peste partea cea mai luminoasă a scenei: voalul ține până sub ultimul rând de text */
+.home3d #community { background: linear-gradient(to bottom, transparent 0, rgba(7, 7, 6, 0.8) 11rem, rgba(7, 7, 6, 0.8) calc(100% - 5rem), transparent 100%); }
+.home3d .community-desc, .home3d .benefit-item h3, .home3d .benefit-item p { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85); }
+.home3d #final-cta { background: radial-gradient(ellipse 82% 56% at 50% 50%, rgba(7, 7, 6, 0.86), rgba(7, 7, 6, 0.7) 62%, transparent 100%); }
+.home3d .cta-trust { color: var(--text-secondary); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9); }
+.home3d #final-cta .section-label { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9); }
 .home3d #systems::before { display: none; }
 .home3d footer { position: relative; z-index: 1; background: #111113; }
 
@@ -29,8 +33,8 @@
   .home3d .proces-bar { flex-wrap: nowrap; white-space: nowrap; max-width: 100%; }
   .home3d .proces-bar span + span::before { content: ''; display: inline-block; width: 4px; height: 4px; margin-right: 0.95rem; border-radius: 50%; vertical-align: 0.14em; background: var(--gold); box-shadow: 0 0 8px rgba(226, 191, 106, 0.9); }
 }
-/* blurul peste o scenă în mișcare se recalculează la fiecare cadru; meniul rămâne la fel de lizibil și fără el */
-.home3d #navbar { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(10, 10, 11, 0.94); }
+/* blurul peste o scenă în mișcare se recalculează la fiecare cadru; fără el, fundalul trebuie să fie opac, altfel titlurile se văd prin meniu */
+.home3d #navbar { -webkit-backdrop-filter: none; backdrop-filter: none; background: #0a0a0b; }
 
 /* aceleași pulsuri, cu opacitate și transform: umbrele animate ar redesena ecranul la fiecare cadru */
 .home3d .floating-cta { position: relative; animation: none; box-shadow: 0 4px 18px rgba(201, 168, 76, 0.35), 0 2px 6px rgba(0, 0, 0, 0.45); }
