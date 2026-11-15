@@ -2909,6 +2909,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script async src="https://tally.so/widgets/embed.js" onload="if(window.Tally)window.Tally.loadEmbeds();"></script>
 <script>
+/* formularul se încarcă într-un moment liniștit după pornirea paginii, nu în mijlocul scroll-ului, unde producea sacadări */
+window.addEventListener('load', function () {
+  var go = function () {
+    document.querySelectorAll('iframe[data-tally-src][loading="lazy"]').forEach(function (f) { f.loading = 'eager'; });
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 5000 }); else setTimeout(go, 3000);
+});
 (function () {
   window.addEventListener('message', function (e) {
     var data;

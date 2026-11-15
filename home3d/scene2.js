@@ -34,7 +34,7 @@ const minDpr = 0.8;
 let dpr = topDpr;
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(46, 1, 0.3, 1200);
+const camera = new THREE.PerspectiveCamera(46, 1, 0.3, 460); // dincolo de 400 ceața acoperă deja tot
 const uniforms = {
   uTime: { value: 0 },
   uGlow: { value: 0 },
@@ -182,24 +182,30 @@ function boxes(mat, items, reflect = true) {
     mesh.setMatrixAt(i, _M);
   });
   geo.setAttribute('aSize', new THREE.InstancedBufferAttribute(size, 3));
-  mesh.frustumCulled = false;
+  /* mărimea vine din shader, așa că sfera de încadrare se calculează aici; ce iese din cadru nu se mai desenează */
+  const box = new THREE.Box3(), v = V3(0, 0, 0);
+  items.forEach((it) => { const r = Math.hypot(it.sx, it.sy, it.sz) / 2; box.expandByPoint(v.set(it.x - r, it.y - r, it.z - r)).expandByPoint(v.set(it.x + r, it.y + r, it.z + r)); });
+  const sphere = box.getBoundingSphere(new THREE.Sphere());
+  mesh.boundingSphere = sphere;
   solids.add(mesh);
   if (reflect && !lite) {
     const r = new THREE.InstancedMesh(geo, mirrorOf(mat), items.length);
     r.instanceMatrix = mesh.instanceMatrix;
-    r.frustumCulled = false;
+    r.boundingSphere = sphere.clone();
     mirror.add(r);
   }
   return mesh;
 }
+/* graficul e lung: pe bucăți, ca să se deseneze doar porțiunea din fața camerei */
+function boxChunks(mat, items, per = 24) {
+  for (let i = 0; i < items.length; i += per) boxes(mat, items.slice(i, i + per));
+}
 function solid(mesh, reflect = true) {
-  mesh.frustumCulled = false;
   solids.add(mesh);
   if (reflect && !lite) {
     const r = mesh.isInstancedMesh ? new THREE.InstancedMesh(mesh.geometry, mirrorOf(mesh.material), mesh.count) : new THREE.Mesh(mesh.geometry, mirrorOf(mesh.material));
     if (mesh.isInstancedMesh) r.instanceMatrix = mesh.instanceMatrix;
     r.position.copy(mesh.position); r.quaternion.copy(mesh.quaternion); r.scale.copy(mesh.scale);
-    r.frustumCulled = false;
     mirror.add(r);
   }
   return mesh;
@@ -221,7 +227,6 @@ function quads(mat, matrices, attrs) {
   Object.entries(attrs).forEach(([name, [arr, n]]) => geo.setAttribute(name, new THREE.InstancedBufferAttribute(new Float32Array(arr), n)));
   const mesh = new THREE.InstancedMesh(geo, mat, matrices.length);
   matrices.forEach((m, i) => mesh.setMatrixAt(i, m));
-  mesh.frustumCulled = false;
   scene.add(mesh);
   return mesh;
 }
@@ -229,7 +234,7 @@ const stripVert = (decl, assign) => `${decl} varying vec2 vUv; varying float vSe
   void main(){ vUv = uv; ${assign} vec4 mv = modelViewMatrix * instanceMatrix * vec4(position, 1.0); vSee = pdSee(mv.z); gl_Position = projectionMatrix * mv; }`;
 
 /* ---------- cerul sălii ---------- */
-const sky = new THREE.Mesh(new THREE.SphereGeometry(700, 32, 20), new THREE.ShaderMaterial({
+const sky = new THREE.Mesh(new THREE.SphereGeometry(440, 32, 20), new THREE.ShaderMaterial({
   side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false, uniforms,
   vertexShader: 'varying vec3 vDir; void main(){ vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
   fragmentShader: `
@@ -293,9 +298,9 @@ const bars = [];
     list.push({ x: CH.x, y: (b.hi + b.lo) / 2, z: b.z, sx: 0.1, sy: b.hi - b.lo, sz: 0.1 });
     v.push({ x: CH.x, y: b.vol * 0.35, z: b.z, sx: CH.d * 0.7, sy: b.vol * 0.7, sz: CH.w });
   });
-  boxes(goldBox, g);
-  boxes(steelBox, s);
-  boxes(bronzeBox, v);
+  boxChunks(goldBox, g);
+  boxChunks(steelBox, s);
+  boxChunks(bronzeBox, v);
 }
 
 /* mediile mobile și norul dintre ele */
@@ -316,7 +321,6 @@ const slowCurve = new THREE.CatmullRomCurve3(bars.map((b, i) => V3(maX - 0.05, m
 {
   const a = new THREE.Mesh(new THREE.TubeGeometry(fastCurve, CH.n * 4, 0.034, 6, false), tubeMat('1.0', '0.68', '0.26', '1.15'));
   const b = new THREE.Mesh(new THREE.TubeGeometry(slowCurve, CH.n * 4, 0.028, 6, false), tubeMat('1.0', '0.86', '0.62', '0.8'));
-  a.frustumCulled = b.frustumCulled = false;
   scene.add(a, b);
   const n = CH.n * 3, pos = new Float32Array((n + 1) * 6), idx = [];
   for (let i = 0; i <= n; i++) {
@@ -330,7 +334,6 @@ const slowCurve = new THREE.CatmullRomCurve3(bars.map((b, i) => V3(maX - 0.05, m
   const cloud = new THREE.Mesh(geo, lightMat(`varying float vSee; void main(){ gl_FragColor = vec4(${GOLD_GLSL}, 0.085 * vSee); }`, {
     vertexShader: `varying float vSee; ${FOG_GLSL} void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vSee = pdSee(mv.z); gl_Position = projectionMatrix * mv; }`
   }));
-  cloud.frustumCulled = false;
   scene.add(cloud);
 }
 
@@ -396,7 +399,6 @@ const stripMat = lightMat(`varying vec2 vUv; varying float vSee; varying vec4 vA
   wall.scale.set(380, 40, 1);
   wall.rotation.y = -Math.PI / 2;
   wall.position.set(CH.x + CH.d / 2 + 0.7, 20, -166);
-  wall.frustumCulled = false;
   scene.add(wall);
 }
 
@@ -472,7 +474,6 @@ function ticks(count, radius, lenOf) {
     _q.setFromEuler(_e.set(0, 0, a - Math.PI / 2));
     m.setMatrixAt(k, _M.compose(_p, _q, _s.set(1, L, 1)));
   }
-  m.frustumCulled = false;
   return m;
 }
 const rings = [];
@@ -493,7 +494,6 @@ const rings = [];
     const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot, color: 0xffc66e, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false, fog: false }));
     halo.scale.setScalar(R * 3.4);
     g.add(spin, arc, halo);
-    g.traverse((o) => { o.frustumCulled = false; });
     scene.add(g);
     rings.push({ g, spin, arc, halo, T, dir: i % 2 ? -1 : 1 });
   }
@@ -532,7 +532,6 @@ let hand;
   const axis = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 23, 8), goldMat);
   axis.rotation.z = 0.41;
   clock.add(gem, axis);
-  clock.traverse((o) => { o.frustumCulled = false; });
   scene.add(clock);
 }
 const gem = clock.getObjectByName('gem');
@@ -592,7 +591,6 @@ const HUB = { x: -5, z: -232, r: 11.5 };
 }
 const hubRing = new THREE.Mesh(new THREE.TorusGeometry(3.3, 0.06, 10, 120), goldMat);
 hubRing.position.set(HUB.x, 21.6, HUB.z);
-hubRing.frustumCulled = false;
 scene.add(hubRing);
 const hubGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: softDot, color: 0xffc66e, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false, fog: false }));
 hubGlow.position.set(HUB.x, 20.6, HUB.z);
@@ -639,7 +637,6 @@ const embUniforms = { uOn: { value: 0 }, uTime: uniforms.uTime };
     uniforms: embUniforms,
     vertexShader: 'varying float vU; varying vec3 vN; varying vec3 vV; void main(){ vU = uv.x; vN = normalMatrix * normal; vec4 mv = modelViewMatrix * vec4(position, 1.0); vV = -mv.xyz; gl_Position = projectionMatrix * mv; }'
   }), 8);
-  lit.frustumCulled = false;
   scene.add(at(lit));
 
   /* laurii */
@@ -684,7 +681,6 @@ const embUniforms = { uOn: { value: 0 }, uTime: uniforms.uTime };
     uniforms: embUniforms, vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }'
   }));
   rays.position.set(0, 20, EMB.z - 5);
-  rays.frustumCulled = false;
   rays.renderOrder = -5;
   scene.add(rays);
 }
@@ -757,7 +753,8 @@ const embUniforms = { uOn: { value: 0 }, uTime: uniforms.uTime };
 /* ---------- strălucirea: imaginea se desenează întâi într-o țintă HDR, apoi luminile se revarsă ---------- */
 const hdr = renderer.extensions.has('EXT_color_buffer_float') || renderer.extensions.has('EXT_color_buffer_half_float');
 const rtType = hdr ? THREE.HalfFloatType : THREE.UnsignedByteType;
-const sceneRT = new THREE.WebGLRenderTarget(4, 4, { type: rtType, samples: lowEnd ? 2 : 4, depthBuffer: true });
+/* adâncimea servește doar la desenare; fără să fie copiată la fiecare cadru, placa video lucrează cu o treime mai puțin */
+const sceneRT = new THREE.WebGLRenderTarget(4, 4, { type: rtType, samples: lowEnd ? 2 : 4, depthBuffer: true, resolveDepthBuffer: false });
 const LEVELS = lite ? 4 : 5;
 const mkRT = () => new THREE.WebGLRenderTarget(2, 2, { type: rtType, depthBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter });
 const downs = Array.from({ length: LEVELS }, mkRT), ups = Array.from({ length: LEVELS - 1 }, mkRT);
@@ -795,7 +792,8 @@ const finalMat = postMat({ tScene: { value: sceneRT.texture }, tBloom: { value: 
     c += (n - 0.5) * 0.014;
     gl_FragColor = vec4(c, 1.0);
   }`);
-function pass(mat, target) { postMesh.material = mat; renderer.setRenderTarget(target); renderer.render(postScene, postCam); }
+/* fiecare trecere acoperă tot ecranul, deci nu mai e nevoie de ștergere înainte */
+function pass(mat, target) { postMesh.material = mat; renderer.setRenderTarget(target); renderer.autoClear = false; renderer.render(postScene, postCam); renderer.autoClear = true; }
 function sizeTargets() {
   let w = Math.max(2, Math.floor(W * dpr)), h = Math.max(2, Math.floor(H * dpr));
   sceneRT.setSize(w, h);
@@ -924,11 +922,12 @@ function render(T, time) {
 }
 
 /* ---------- buclă ---------- */
-let curT = 0, dirty = true, running = false, visible = true, lastTime = 0, clockT = 0, slowSum = 0, slowCount = 0, settleUntil = performance.now() + 1500;
+let curT = 0, dirty = true, running = false, visible = true, lastTime = 0, clockT = 0, slowSum = 0, settleUntil = performance.now() + 4000;
+const frameTimes = [];
 const animated = () => !reduced.matches;
 /* la fiecare cadru; o dată din două doar ca ultimă soluție, după ce rezoluția a coborât la minim */
 let idleStride = 1, idleCount = 0;
-let goodRuns = 0, raisedAt = -1e9, canRaise = true;
+let goodRuns = 0, slowRuns = 0, raisedAt = -1e9, canRaise = true;
 function kick() { if (!running && visible) { running = true; lastTime = performance.now(); requestAnimationFrame(tick); } }
 function setScale(v) {
   if (v === dpr) return;
@@ -970,18 +969,24 @@ function step(now) {
     render(curT, clockT);
     dirty = false;
   }
-  /* sub ~52 de cadre pe secundă coboară rezoluția; după 8 s bune urcă înapoi, dar renunță dacă urcarea nu ține */
-  if (now < settleUntil) { slowSum = 0; slowCount = 0; }
+  /* rezoluția coboară doar dacă cadrul tipic (mediana, nu media) rămâne sub ~52 pe secundă două secunde la rând:
+     o sacadare scurtă a paginii, cum e încărcarea unui formular, nu mai strică imaginea; după 8 s bune urcă înapoi */
+  if (now < settleUntil) { slowSum = 0; frameTimes.length = 0; }
   else if (raw < 1000 && (moving || animated())) {
     slowSum += raw;
-    if (++slowCount === 60 || slowSum > 1000) {
-      const avg = slowSum / slowCount;
-      if (avg > 19) {
+    frameTimes.push(raw);
+    if (frameTimes.length === 60 || slowSum > 1000) {
+      frameTimes.sort((a, b) => a - b);
+      const typical = frameTimes[frameTimes.length >> 1];
+      if (typical > 19) {
         goodRuns = 0;
-        if (now - raisedAt < 4000) canRaise = false;
-        if (dpr > minDpr) setScale(Math.max(minDpr, dpr * 0.85));
-        else idleStride = 2;
-      } else if (avg < 17.6 && canRaise && (dpr < topDpr || idleStride > 1)) {
+        if (++slowRuns >= 2) {
+          slowRuns = 0;
+          if (now - raisedAt < 4000) canRaise = false;
+          if (dpr > minDpr) setScale(Math.max(minDpr, dpr * 0.85));
+          else idleStride = 2;
+        }
+      } else if (slowRuns = 0, typical < 17.6 && canRaise && (dpr < topDpr || idleStride > 1)) {
         if (++goodRuns >= 8) {
           goodRuns = 0;
           raisedAt = now;
@@ -990,7 +995,7 @@ function step(now) {
         }
       } else goodRuns = 0;
       slowSum = 0;
-      slowCount = 0;
+      frameTimes.length = 0;
     }
   }
   return visible && (animated() || curT !== target);
@@ -1013,4 +1018,7 @@ lastW = window.innerWidth; lastH = window.innerHeight;
 readSessions();
 resize();
 curT = targetT();
+/* toate shaderele se compilează acum, la încărcare, nu în mijlocul scroll-ului când apare prima dată o piesă */
+renderer.setRenderTarget(sceneRT);
+renderer.compile(scene, camera);
 render(curT, 0);
